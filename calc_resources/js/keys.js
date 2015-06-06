@@ -6,43 +6,56 @@
 \*********************************************/
 function keydown(e)
 {
-	if (enableKeys)
+	if(enableKeys)
 	{
 		//grab the key event, if no event able to be grabbed then exit the function
 		var keyCode=(msie)?event.keyCode:(window.event)?window.event.keyCode:(e)?e.which:false;
-		if (!keyCode)
+		if(!keyCode)
 			return false;
-		
 		//detect the keys pressed
-		switch (keyCode)
+		switch(keyCode)
 		{
-			case 8:
-				//BackspaceKey
+			case 8://Backspace Key
 				deleteChar();
 				calc.backbtn.focus();
 				break;
-			case 13:
-			case 61:
-				//EnterKey
+			case 13://Enter key
+			case 61://'=' sign
 				calc.enter.focus();
-				if (checkNum(display.value))
-				{
+				if(checkNum(display.value))
 					compute(calc);
-				}
 				break;
-			case 46:
-				//DeleteKey
-				display.value = 0;
+			case 42://'*' in Opera
+			case 106://'*' in other browsers
+				calc.multiply.focus();
+				addChar('*');
+				break;
+			case 43://'+' in Opera
+			case 107://'+' in other browsers
+				calc.add.focus();
+				addChar('+');
+				break;
+			case 45://'-' in Opera
+			case 109://'-' in other browsers
+				calc.subtract.focus();
+				addChar('-');
+				break;
+			case 46://Delete Key
+				display.value=0;
 				calc.delbtn.focus();
 				break;
-			default:
-				return false;
+			case 47://'/' in Opera
+			case 111://'/' in other browsers
+				calc.divide.focus();
+				addChar('/');
+				break;
+			case 78://'.' in Opera
+			case 110://'.' in other browsers
+				calc.dot.focus();
+				addChar('.');
 				break;
 		}
-		// Every time the '/' key is used in firefox a search comes up
-		// This grabs focus away from the search so the calculator can still be used
-		if (firefox) 
-			setTimeout("window.focus()", 1);
+		return false;
 	}
 }
 
@@ -50,18 +63,24 @@ function keydown(e)
 
 function keypress(e)
 {
-	if (enableKeys)
+	var keyCode=(msie)?event.keyCode:(window.event)?window.event.keyCode:(e)?e.which:false;
+	if(!keyCode)
+		return false;
+	if(enableKeys)
 	{
-		//grab the key event, if no event able to be grabbed then exit the function
-		var keyCode=(msie)?event.keyCode:(window.event)?window.event.keyCode:(e)?e.which:false;
-		if (!keyCode) 
+		if('function'==typeof e.preventDefault)
 		{
-			alert("Either key events are not compatible with your browser or you need to enable your Num Lock.");
-			return false;
+			e.preventDefault();
 		}
+		else
+		{
+			e.returnValue=false;
+		}
+		if(!keyCode)
+			return false;
 		
 		//detect the keys pressed
-		switch (keyCode)
+		switch(keyCode)
 		{
 			case 40:
 				calc.parl.focus();
@@ -71,28 +90,8 @@ function keypress(e)
 				calc.parr.focus();
 				addChar(')');
 				break;
-			case 42:
-				calc.multiply.focus();
-				addChar('*');
-				break;
-			case 43:
-				calc.add.focus();
-				addChar('+');
-				break;
 			case 44:
 				addChar(',');
-				break;
-			case 45:
-				calc.subtract.focus();
-				addChar('-');
-				break;
-			case 46:
-				calc.dot.focus();
-				addChar('.');
-				break;
-			case 47:
-				calc.divide.focus();
-				addChar('/');
 				break;
 			case 48:
 				calc.btn0.focus();
@@ -170,13 +169,10 @@ function keypress(e)
 				calc.mStore.focus();
 				StoreMem();
 				break;
-			default:
-				return false;
+			case 94://'^'
+				calc.c7.focus();
+				addChar('^');
 				break;
 		}
-		// Every time the '/' key is used in firefox a search comes up
-		// This grabs focus away from the search so the calculator can still be used
-		if (firefox)
-			setTimeout("window.focus()", 1);
 	}
 }

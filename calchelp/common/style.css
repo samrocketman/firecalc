@@ -4,6 +4,10 @@ body
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
+a:link,a:active,a:visited
+{
+	color: blue;
+}
 .highlight
 {
 	background: #FFFF40;
