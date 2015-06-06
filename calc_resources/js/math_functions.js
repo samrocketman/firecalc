@@ -3,6 +3,10 @@
 *              Calc buttons Code              *
 *                                             *
 \*********************************************/
+var general_error=[
+	"There are errors in the equation.\n\nCheck for:\nMissing symbols next to parenthesis. 3(10) will not work but 3*(10) will.\nHanging equation symbols like (3*(10)+) where the + is the error.\nOpen parenthesis. (2*(4+3) will not work but (2*(4+3)) will.",
+	"Invalid characters in display"
+	];
 function addChar(character) 
 {
 	if(display.value==null || display.value=="0")
@@ -77,7 +81,7 @@ function changeSign()
 		}
 		catch(e)
 		{
-			alert("There are errors in the equation.\nFix the equation and try pressing the +/- button again.");
+			alert(general_error[0]);
 			return false;
 		}
 		//if no errors then flip the sign
@@ -113,11 +117,13 @@ function changeSign()
 			else
 				display.value="-("+display.value+")";
 		}
-		else
+		else if(displayToPower(display.value))
 			display.value="-("+display.value+")";
+		else
+			alert(general_error[0]);
 	}
 	else
-		alert("Invalid characters in display");
+		alert(general_error[1]);
 }
 function displayToPower(str)
 {
@@ -221,30 +227,37 @@ function displayToPower(str)
 function compute()
 {
 	var result;
-	if(checkNum())
+	try
 	{
-		if(display.value=='pi')
-			display.value="3.1415926535897932384626433832795";
-		else if(displayToPower(display.value))
+		if(checkNum())
 		{
-			result=displayToPower(display.value);
-			if(eval(result)=="Infinity")
+			if(display.value=='pi')
+				display.value="3.1415926535897932384626433832795";
+			else if(displayToPower(display.value))
 			{
-				alert("Can't divide by zero.");
-				return false;
+				result=displayToPower(display.value);
+				if(eval(result)=="Infinity")
+				{
+					alert("Can't divide by zero.");
+					return false;
+				}
+				else
+					display.value=eval(result);
 			}
 			else
-				display.value=eval(result);
+			{
+				alert(general_error[0]);
+				return false;
+			}
+			return true;
 		}
 		else
-		{
-			alert("Incorrectly formated equation");
-			return false;
-		}
-		return true;
+			alert(general_error[1]);
 	}
-	else
-		alert("Invalid characters in display");
+	catch(e)
+	{
+		alert(general_error[0]);
+	}
 	return false;
 }
 function flip()

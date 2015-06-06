@@ -9,6 +9,32 @@ when the code is searched through it is very easy to read.  Not only that but it
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
+Whats new in 1.3.1? (05/10/2008)
+HTML/CSS Changes:
+1.	Bug fix where when page is reloaded by using File > Reload in the calc menu, if the
+	calculator file is renamed away from fire_calc.htm the browser would throw a page not found
+	error.  Fixed using window.location.reload() method.
+2.	Removed the settings menu and associated submenus, mostly unnecessary until further
+	development.
+3.	Changed method of display for copy/past in Edit menu within init() function.
+4.	Calc Display is no longer readonly and when focused the shortcut keys are disabled.
+5.	Added favicon link in calculator.
+
+Javascript Changes (core functionality of the calculator):
+1.	Bug fix where by using the equation 10^-(1+2 then click the +/- button twice the equation 
+	would have an error.
+2.	Renamed toggle_titles() to set_titles().  Modified it and is now called in init() function
+3.	Updated compute() function to handle equation errors and alert the user.
+4.	Call calculator resetting functions in init() function for when File > Reload is used.
+
+Documentation changes:
+1.	Moved/renamed button shortcuts to keyboard shortcuts.
+2.	Updated documentation to reflect any HTML/CSS changes
+3.	Added example equation to disclaimer.
+4.	Further updated documentation.
+5.	Updated documentation search engine.
+
+
 Whats new in 1.3? (10/27/2008)
 Javascript Changes (core functionality of the calculator):
 1.	Bug fix where calculator would throw errors (not compute) when computing 10^-(1+2) or 10^-3

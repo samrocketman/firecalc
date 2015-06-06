@@ -4,15 +4,8 @@
 *                                             *
 \*********************************************/
 //Toggle functions for the View Menu
-function toggle_titles()
+function set_titles()
 {
-	var checkbox=document.getElementById('radio1');
-	//toggle the checkbox
-	checkbox.checked=!checkbox.checked;
-
-	//set the values
-	if(checkbox.checked)
-	{
 		calc.memory.title="Shows if there is something stored in memory";
 		calc.backbtn.title="Delete a value from right to left";
 		calc.delbtn.title="Clears the Equation";
@@ -52,13 +45,6 @@ function toggle_titles()
 		calc.f5.title="Computes sine of the current Equation";
 		calc.f6.title="Computes tangent of the current Equation";
 		calc.ekey.title="Inserts the 'e' character\n[1e3=1x10^(3)=1000] (not exp)";
-	}
-	else if(checkbox.checked==false)
-	{
-		for(i=1;i<calc.elements.length;i++)
-			calc.elements[i].title="";
-	}
-	window.focus();
 }
 
 function toggle_display()
@@ -75,18 +61,16 @@ function toggle_display()
 	window.focus();
 }
 
-function toggle_keys()
+function toggle_keys(opt)
 {
-	var checkbox=document.getElementById('radio3');
-	//toggle the checkbox
-	checkbox.checked=!checkbox.checked;
-
-	//enable/disable the display
-	if(!checkbox.checked)
-		enableKeys=false;
-	else
-		enableKeys=true;
-	window.focus();
+	//toggle hotkeys when focused on calc display
+	if(opt)
+	{
+		if(opt=='on')
+			enableKeys=true;
+		else if(opt=='off')
+			enableKeys=false;
+	}
 }
 
 function setFloat()
@@ -127,13 +111,13 @@ function unitCheck()
 	isDec=convert.isDec(display.value);
 	isHex=convert.isHex(display.value);
 	isOct=convert.isOct(display.value);
-	for(var i=1;i<4;i++)
-	{
-		document.getElementById("bin"+i).style.display=(isBin)?"":"none";
-		document.getElementById("dec"+i).style.display=(isDec)?"":"none";
-		document.getElementById("hex"+i).style.display=(isHex)?"":"none";
-		document.getElementById("oct"+i).style.display=(isOct)?"":"none";
-	}
+	//for(var i=1;i<4;i++)
+	//{
+		document.getElementById("bin").style.display=(isBin)?"":"none";
+		document.getElementById("dec").style.display=(isDec)?"":"none";
+		document.getElementById("hex").style.display=(isHex)?"":"none";
+		document.getElementById("oct").style.display=(isOct)?"":"none";
+	//}
 	document.getElementById("nooption1").style.display=(isBin||isDec||isHex||isOct)?"none":"";
 	
 	//Temp converter

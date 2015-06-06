@@ -4,18 +4,19 @@
 	<title>Scientific Calculator</title>
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="SHORTCUT ICON" href="calc_resources/imgs/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="calc_resources/css/en-default.css">
 	<script language="JavaScript" type="text/javascript">
 		/*Copyright must stay intact*/
 		/******************************************************************\
 		*                                                    ***************
 		***     Calculator Created by Sam Gleske               *************
-		******      Thanks to Kyle Winters for init help.         **********
+		******                                                    **********
 		*********              Copyright (c) 2005 Sam Gleske          ******
 		************                Notice must stay intact for use.     ***
-		*********                The source can be modified           ******
+		*********                The source can be modified.          ******
 		******                                                    **********
-		***      Visit http://www.pages.drexel.edu/~sag47/     *************
+		***      Visit http://www.gleske.net/                  *************
 		*                                                    ***************
 		\******************************************************************/
 		
@@ -59,18 +60,16 @@
 			store=false;
 			enableKeys=true;
 			
-			if(!msie&&!firefox&&!mozilla&&!opera&&!safari)
-			{
-				toggle_display();
-				display.focus();
-				toggle_keys();
-			}
-			if(msie)
+			//initial setup
+			set_titles();
+			if(document.calc.display.createTextRange)
 			{
 				document.getElementById("copy-menu").style.display="";
 				document.getElementById("paste-menu").style.display="";
 				document.getElementById("hr-menu").style.display="";
 			}
+			calc.reset();
+			ClearMem();
 		}
 
 
@@ -104,14 +103,11 @@
 			<td  style="border: none;width:37px">
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'convMenu');" onmouseover="buttonMouseover(0, this, 'convMenu');">Conv</a>
 			</td>
-			<td  style="border: none;width:50px">
-				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'settingsMenu');" onmouseover="buttonMouseover(0, this, 'settingsMenu');">Settings</a>
-			</td>
 			<td  style="border: none;text-align:left">
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3.1</span></span>
 			</td>
 		</tr>
 		</table>
@@ -120,7 +116,7 @@
 <!-- Start Tags for the drop down menus. -->
 
 	<div class="menu" id="fileMenu">
-		<a class="menuItem" href="fire_calc.htm?true" onclick="resetMenu()">Reload</a>
+		<a class="menuItem" href="javascript:window.location.reload();" onclick="resetMenu()">Reload</a>
 		<a class="menuItem" href="javascript:window.close();" onclick="resetMenu()">Exit</a>
 	</div>
 
@@ -135,26 +131,46 @@
 	<div class="menu" id="convMenu">
 		<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(1,this, 'convMenu-1')" onfocus="this.blur()">Base</a>
 		<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(1,this, 'convMenu-2')" onfocus="this.blur()">Temperature</a>
-		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton[1]){resetMenu(1)}" onfocus="this.blur()" target="_blank">Other Conversions</a>
+		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton[1]){resetMenu(1)}" onfocus="this.blur()" target="_blank">More Conversions</a>
 	</div>
 
 	<!--Start extended Submenus convMenu-->
 		<!-- Base submenu -->
 		<div class="menu" id="convMenu-1">
-			<a class="menuItem" href="javascript:convBase('bin','Dec');" id="bin1" onclick="resetMenu();">Bin &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('bin','Hex');" id="bin2" onclick="resetMenu();">Bin &gt; Hex</a>
-			<a class="menuItem" href="javascript:convBase('bin','Oct');" id="bin3" onclick="resetMenu();">Bin &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('dec','Bin');" id="dec1" onclick="resetMenu();">Dec &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('dec','Hex');" id="dec2" onclick="resetMenu();">Dec &gt; Hex</a>
-			<a class="menuItem" href="javascript:convBase('dec','Oct');" id="dec3" onclick="resetMenu();">Dec &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('hex','Bin');" id="hex1" onclick="resetMenu();">Hex &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('hex','Dec');" id="hex2" onclick="resetMenu();">Hex &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('hex','Oct');" id="hex3" onclick="resetMenu();">Hex &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('oct','Bin');" id="oct1" onclick="resetMenu();">Oct &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('oct','Dec');" id="oct2" onclick="resetMenu();">Oct &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('oct','Hex');" id="oct3" onclick="resetMenu();">Oct &gt; Hex</a>
+			<a class="submenu" href="javascript:void(0);" onmouseover="buttonMouseover(2,this, 'convMenu-1-1')" id="bin" onfocus="this.blur()">Binary</a>
+			<a class="submenu" href="javascript:void(0);" onmouseover="buttonMouseover(2,this, 'convMenu-1-2')" id="dec" onfocus="this.blur()">Decimal</a>
+			<a class="submenu" href="javascript:void(0);" onmouseover="buttonMouseover(2,this, 'convMenu-1-3')" id="hex" onfocus="this.blur()">Hexidecimal</a>
+			<a class="submenu" href="javascript:void(0);" onmouseover="buttonMouseover(2,this, 'convMenu-1-4')" id="oct" onfocus="this.blur()">Octal</a>
 			<a class="menuDisabled" id="nooption1" onfocus="this.blur()" style="display:none;">Not Available.</a>
 		</div>
+			<!-- Binary submenu -->
+			<div class="menu" id="convMenu-1-1">
+				<a class="menuItem" href="javascript:convBase('bin','Dec');" onclick="resetMenu();">to Dec</a>
+				<a class="menuItem" href="javascript:convBase('bin','Hex');" onclick="resetMenu();">to Hex</a>
+				<a class="menuItem" href="javascript:convBase('bin','Oct');" onclick="resetMenu();">to Oct</a>
+			</div>
+			<!-- End Binary submenu -->
+			<!-- Decimal submenu -->
+			<div class="menu" id="convMenu-1-2">
+				<a class="menuItem" href="javascript:convBase('dec','Bin');" onclick="resetMenu();">to Bin</a>
+				<a class="menuItem" href="javascript:convBase('dec','Hex');" onclick="resetMenu();">to Hex</a>
+				<a class="menuItem" href="javascript:convBase('dec','Oct');" onclick="resetMenu();">to Oct</a>
+			</div>
+			<!-- End Decimal submenu -->
+			<!-- Hexidecimal submenu -->
+			<div class="menu" id="convMenu-1-3">
+				<a class="menuItem" href="javascript:convBase('hex','Bin');" onclick="resetMenu();">to Bin</a>
+				<a class="menuItem" href="javascript:convBase('hex','Dec');" onclick="resetMenu();">to Dec</a>
+				<a class="menuItem" href="javascript:convBase('hex','Oct');" onclick="resetMenu();">to Oct</a>
+			</div>
+			<!-- End Hexidecimal submenu -->
+			<!-- Octal submenu -->
+			<div class="menu" id="convMenu-1-4">
+				<a class="menuItem" href="javascript:convBase('oct','Bin');" onclick="resetMenu();">to Bin</a>
+				<a class="menuItem" href="javascript:convBase('oct','Dec');" onclick="resetMenu();">to Dec</a>
+				<a class="menuItem" href="javascript:convBase('oct','Hex');" onclick="resetMenu();">to Hex</a>
+			</div>
+			<!-- End Octal submenu -->
 		<!-- End Base submenu -->
 		
 		<!-- Temperature submenu -->
@@ -209,23 +225,9 @@
 		<!-- End Temperature submenu -->
 	<!--End extended Submenus-->
 
-	<div class="menu" id="settingsMenu">
-		<a class="menuItem" href="javascript:void(0);" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
-		<input type="radio" name="radio" id="radio" checked>Standard</a>
-		<a class="menuDisabled" onfocus="this.blur()">
-		<input type="radio" disabled>Scientific</a>
-		<hr>
-
-		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
-		<input type="radio" id="radio1" name="radio1" onclick="toggle_titles(document.getElementById('radio1'),document.calc,1)"> Tooltips</a>
-		<a class="menuItem" href="javascript:toggle_display()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
-		<input type="radio" id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>
-		<a class="menuItem" href="javascript:toggle_keys()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
-		<input type="radio" id="radio3" name="radio3" onclick="toggle_keys()" checked> Keys Enabled</a>
-	</div>
-
 	<div class="menu" id="helpMenu">
-		<a class="menuItem" href="javascript:(function(){window.open('calchelp/index.html','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetMenu()">Help</a>
+		<a class="menuItem" href="javascript:(function(){window.open('calchelp/index.html','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetMenu()">Documentation</a>
+		<hr class="hr">
 		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetMenu()">About Calculator</a>
 	</div>
 
@@ -244,7 +246,7 @@
 	<form action="javascript:void(0)" method="get" name="calc" id="calc" onsubmit="compute();return false">
 		<table class="calc_table" align="center" cellspacing="0" cellpadding="1" style="background-color:buttonface;width:300px">
 		<tr>
-			<td style="text-align:center" colspan="7"><input type="text" name="display" style="width:99%;text-align:right;cursor:default" onkeypress="if(this.value==0){this.value=''}" onkeyup="if(this.value==''){this.value=0};" value="0" readonly></td>
+			<td style="text-align:center" colspan="7"><input type="text" name="display" style="width:99%;text-align:right;cursor:default" value="0" onfocus="toggle_keys('off');if(this.value==0){this.value=''};" onblur="toggle_keys('on');if(this.value==''){this.value=0};"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input type="text" name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly></td>
