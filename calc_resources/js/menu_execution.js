@@ -85,17 +85,10 @@ function roundFloat(num,float_val)
 		alert('Float Not Set');
 		return void(0);
 	};
-	if(!float_val)
-		float_val=document.getElementById('float').value;
-	comp=1;
-	for(var i=float_val; i > 0; i--)
+	if(compute.result(display.value.toString()))
 	{
-		comp=comp+'0'
-	};
-	if(!num)
-		display.value=Math.round(eval(document.calc.display.value)*comp)/comp;
-	else
-		return Math.round(eval(num)*comp)/comp;
+		display.value=compute.roundFloat(compute.result(display.value.toString()),document.getElementById('float').value);
+	}
 }
 
 function setFloat()
@@ -104,12 +97,10 @@ function setFloat()
 	var thevalue=prompt('Set the number of decimal places for rounding',floatObj.value); 
 	if(thevalue)
 	{
-		if(!convert.test(thevalue,/[0-9]/))
+		if(!compute.test.regex(thevalue,/[0-9\-]/))
 			alert('Letters and symbols not allowed.\nOnly numbers');
 		else if(thevalue>17)
 			alert('Float can\'t go above 17 digits.');
-		else if(eval(thevalue)==0)
-			alert('Float can\'t be set to 0');
 		else
 			floatObj.value=thevalue;
 	}
@@ -117,7 +108,38 @@ function setFloat()
 
 function convBase(base1,base2)
 {
-	display.value = eval("convert."+base1+base2+"(\""+display.value+"\")");
+	var b1,b2;
+	switch(base1)
+	{
+		case "bin":
+			b1=2;
+			break;
+		case "dec":
+			b1=10;
+			break;
+		case "hex":
+			b1=16;
+			break;
+		case "oct":
+			b1=8;
+			break;
+	}
+	switch(base2)
+	{
+		case "Bin":
+			b2=2;
+			break;
+		case "Dec":
+			b2=10;
+			break;
+		case "Hex":
+			b2=16;
+			break;
+		case "Oct":
+			b2=8
+			break;
+	}
+	display.value = compute.d2b(compute.b2d(display.value,b1),b2);
 }
 
 function convTemp(temp1,temp2)
@@ -132,25 +154,32 @@ function unitCheck()
 	//Base converter
 	//Example: if there are chars that can't be converted such as there is a 2 then binary to whatever will be hidden
 	var isBin,isDec,isHex,isOct;
-	isBin=convert.isBin(display.value);
-	isDec=convert.isDec(display.value);
-	isHex=convert.isHex(display.value);
-	isOct=convert.isOct(display.value);
-	//for(var i=1;i<4;i++)
-	//{
-		document.getElementById("bin").style.display=(isBin)?"":"none";
-		document.getElementById("dec").style.display=(isDec)?"":"none";
-		document.getElementById("hex").style.display=(isHex)?"":"none";
-		document.getElementById("oct").style.display=(isOct)?"":"none";
-	//}
+	isBin=compute.test.regex(display.value,/[01]/);
+	isDec=compute.test.regex(display.value,/[0-9]/);
+	isHex=compute.test.regex(display.value,/[0-9A-F]/i);
+	isOct=compute.test.regex(display.value,/[0-7]/);
+	
+	document.getElementById("bin").style.display=(isBin)?"":"none";
+	document.getElementById("dec").style.display=(isDec)?"":"none";
+	document.getElementById("hex").style.display=(isHex)?"":"none";
+	document.getElementById("oct").style.display=(isOct)?"":"none";
 	document.getElementById("nooption1").style.display=(isBin||isDec||isHex||isOct)?"none":"";
 	
 	//Temp converter
 	var isCon,isCel,isFah,isKel,isRan,isRea;
 	try
 	{
-		var disp=eval(display.value);
-		isCon=(checkNum()&&(convert.test(disp,/[0-9\-\.]/)))?1:0;
+		var temp
+		temp=compute.showErrors;
+		compute.showErrors=false;
+		if(!compute.result(display.value.toString())&&display.value.toString()!='0')
+		{
+			compute.showErrors=temp;
+			throw "error";
+		}
+		compute.showErrors=temp;
+		var disp=compute.result(display.value.toString());
+		isCon=(compute.test.regex(disp,/[0-9\-\.]/))?1:0;
 		isCel=(disp>=-273.15)?1:0;
 		isFah=(disp>=-459.66999999999996)?1:0;
 		isKel=(disp>=0)?1:0;

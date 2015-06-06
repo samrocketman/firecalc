@@ -21,24 +21,31 @@
 		\******************************************************************/
 		
 		//search for a browser type (this is only for browser specific settings, any browsers not listed should work with default code)
-		var msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
-		var firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
-		var netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
-		var mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
+		if(navigator.userAgent)
+		{
+			var msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
+			var firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
+			var netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
+			var mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
+		}
 		var opera=(window.opera)?1:0;
-		var safari=(navigator.vendor.indexOf("Apple")!=-1)?1:0;
-		var konqueror=(navigator.vendor.indexOf("KDE")!=-1)?1:0;
+		if(navigator.vendor)
+		{
+			var safari=(navigator.vendor.indexOf("Apple")!=-1)?1:0;
+			var konqueror=(navigator.vendor.indexOf("KDE")!=-1)?1:0;
+		}
+
 	</script>
 	
 	<!-- Custom JS objects -->
-	<script language="JavaScript" type="text/javascript" src="calc_resources/js/convert_object.js"></script>
 	<script language="JavaScript" type="text/javascript" src="calc_resources/js/temperature_object.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/compute_object.js"></script>
 	
 	<!-- Core functionality JS files -->
-	<script language="JavaScript" type="text/javascript" src="calc_resources/js/keys.js"></script>
 	<script language="JavaScript" type="text/javascript" src="calc_resources/js/menu_execution.js"></script>
 	<script language="JavaScript" type="text/javascript" src="calc_resources/js/math_functions.js"></script>
 	<script language="JavaScript" type="text/javascript" src="calc_resources/js/menu_functionality.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/keys.js"></script>
 	
 	<script language="JavaScript" type="text/javascript">
 		// define global variables
@@ -61,6 +68,7 @@
 			enableKeys=true;
 			
 			//initial setup
+			keyEvents();
 			set_titles();
 			if(document.calc.display.createTextRange)
 			{
@@ -70,6 +78,7 @@
 			}
 			calc.reset();
 			ClearMem();
+			document.getElementById('float').value=3;
 
 			//grab calculator focus for typing
 			display.focus();
@@ -89,7 +98,7 @@
 		}
 	</script>
 </head>
-<body onload="init()" onkeypress="keypress(event);resetMenu();" onkeydown="keydown(event)">
+<body onload="init()">
 <!-- My personal coding hierarchy preferences: <tag class=? href=? type=? id=? name=? onclick=? onmouseover=? onmouseout=? onfocus=? onblur=? style=? onload=? action=? method=? onsubmit=? onkeypress=? onkeyup=? onkeydown=? value=? title=? target=? checked readonly> -->
 	<!-- MENU CODE -->
 
@@ -111,7 +120,7 @@
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3.2</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3.3</span></span>
 			</td>
 		</tr>
 		</table>
@@ -268,8 +277,8 @@
 			<td style="text-align:center"><input class="num" type="button" name="btn8" onclick="addChar('8')" style="width:33px;height:28px" value="8"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn9" onclick="addChar('9')" style="width:33px;height:28px" value="9"></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="divide" onclick="addChar('/')" style="width:33px;height:28px" value="/"></td>
-			<td style="text-align:center"><input class="AdvFunc" type="button" name="b6" onclick="exp()" style="width:40px;height:28px" value="exp"></td>
-			<td style="text-align:center"><input class="AdvFunc" type="button" name="b7" onclick="ln()" style="width:40px;height:28px" value="ln"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="b6" onclick="addChar('e^(')" style="width:40px;height:28px" value="exp"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="b7" onclick="addChar('ln(')" style="width:40px;height:28px" value="ln"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mRecall" onclick="RecallMem()" style="width:40px;height:28px" value="MR"></td>
@@ -292,7 +301,7 @@
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mPlus" onclick="MemPlus()" style="width:40px;height:28px" value="M+"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn0" onclick="addChar('0')" style="width:33px;height:28px" value="0"></td>
-			<td style="text-align:center"><input class="num" type="button" name="e3" onclick="changeSign()" style="width:33px;height:28px" value="+/-"></td>
+			<td style="text-align:center"><input class="num" type="button" name="e3" onclick="if(compute.changeSign(display.value.toString())) display.value=compute.changeSign(display.value.toString())" style="width:33px;height:28px" value="+/-"></td>
 			<td style="text-align:center"><input class="num" type="button" name="dot" onclick="addChar('.')" style="width:33px;height:28px" value="."></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="add" onclick="addChar('+')" style="width:33px;height:28px" value="+"></td>
 			<td style="text-align:center"><input class="BasFunc" type="submit" name="enter" style="width:33px;height:28px" value="="></td>
@@ -311,7 +320,7 @@
 			<td style="text-align:center" colspan="2"><button class="AdvFunc" type="button" name="g1" onclick="addChar('acos(')" style="width:60px;height:28px">cos<sup>-1</sup></button></td>
 			<td style="text-align:center" colspan="2"><button class="AdvFunc" type="button" name="g3" onclick="addChar('asin(')" style="width:60px;height:28px">sin<sup>-1</sup></button></td>
 			<td style="text-align:center" colspan="2"><button class="AdvFunc" type="button" name="g5" onclick="addChar('atan(')" style="width:60px;height:28px">tan<sup>-1</sup></button></td>
-			<td style="text-align:center"><input class="AdvFunc" type="button" name="log" onclick="rlog()" style="width:40px;height:28px" value="log"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="log" onclick="addChar('log(')" style="width:40px;height:28px" value="log"></td>
 		</tr>
 		</table>
 	</form>

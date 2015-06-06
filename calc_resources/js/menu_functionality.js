@@ -6,7 +6,7 @@
 
 // Capture mouse clicks on the page so any active button can be deactivated.
 
-document.onkeypress = pageMousedown;
+//document.onkeypress = pageMousedown;
 
 if (msie)
 	document.onmousedown = pageMousedown;
@@ -23,7 +23,7 @@ function pageMousedown(event)
 		className = window.event.srcElement.className;
 	else
 		className = (event.target.className)?event.target.className:event.target.parentNode.className;
-	if(className != "submenu" && className != "menuButton" && className != "menuItem" && className != "menuDisabled" && activeButton)
+	if(className != "submenu" && className != "menuButton" && className != "menuItem" && className != "menuDisabled" && activeButton && className != "hr")
 	{
 		resetMenu();
 		if(activeButton2)
