@@ -3,7 +3,7 @@
 *              Calc buttons Code              *
 *                                             *
 \*********************************************/
-function addChar(character) 
+function addChar(character)
 {
 	if(display.value.toString()==null || display.value=="0")
 		display.value=character;

@@ -49,7 +49,7 @@ function set_titles()
 		calc.g3.title="Inserts 'asin('";
 		calc.g5.title="Inserts 'atan('";
 		calc.log.title="Computes and then takes the log of the current equation";
-		
+
 }
 
 function toggle_keys(opt)
@@ -80,7 +80,7 @@ function roundFloat(num,float_val)
 function setFloat()
 {
 	var floatObj=document.getElementById('float');
-	var thevalue=prompt('Set the number of decimal places for rounding',floatset); 
+	var thevalue=prompt('Set the number of decimal places for rounding',floatset);
 	if(thevalue)
 	{
 		if(!compute.test.regex(thevalue,/[0-9\-]/))
@@ -140,7 +140,7 @@ function convTemp(temp1,temp2)
 function unitCheck()
 {
 	//Change the conversion lists based on the display
-	
+
 	//Base converter
 	//Example: if there are chars that can't be converted such as there is a 2 then binary to whatever will be hidden
 	var isBin,isDec,isHex,isOct;
@@ -148,13 +148,13 @@ function unitCheck()
 	isDec=compute.test.regex(display.value,/[0-9]/);
 	isHex=compute.test.regex(display.value,/[0-9A-F]/i);
 	isOct=compute.test.regex(display.value,/[0-7]/);
-	
+
 	document.getElementById("bin").style.display=(isBin)?"":"none";
 	document.getElementById("dec").style.display=(isDec)?"":"none";
 	document.getElementById("hex").style.display=(isHex)?"":"none";
 	document.getElementById("oct").style.display=(isOct)?"":"none";
 	document.getElementById("nooption1").style.display=(isBin||isDec||isHex||isOct)?"none":"";
-	
+
 	//Temp converter
 	var isCon,isCel,isFah,isKel,isRan,isRea;
 	try

@@ -5,18 +5,18 @@
  * @link http://www.sourceforge.net/projects/webtechtools/
  * @created 05/06/2010
  * @version 0.5
- * @description 
+ * @description
  *     compute object is an interpreter.  It takes a mathematical string and formats it so that the JavaScript math engine
  *     can process it, calculating a result.  I like to refer to the mathematical string as containing human readable math
- *     computational functions such as pi, tan, and exponentials x^y.  This is a single object so that integration into 
+ *     computational functions such as pi, tan, and exponentials x^y.  This is a single object so that integration into
  *     web applications is seamless and simple.
- *     
+ *
  *     Examples of human readable computations this library can handle that are unique to this library:
  *         compute.result("2^3") returns 8
  *         compute.result("16^(1/2)") returns 4
  *
  *     See the full documentation and all possible human readable functions in the non-compact version of the compute object.
- *     
+ *
  *     If you are using the value of an input element then it is best to convert the value to a string before computing the
  *     result.  For example
  *         document.getElementById("myElementId").value = compute.result(document.getElementById("myElementId").value.toString());

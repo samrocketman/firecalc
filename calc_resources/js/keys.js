@@ -26,7 +26,7 @@ function detectEvent(e) {
 			evt.returnValue=false;
 		}
 	}
-	
+
 	if(evt.type=='keydown')
 	{
 		keydown(evt.keyCode,evt.shiftKey);

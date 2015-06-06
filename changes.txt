@@ -1,11 +1,11 @@
 Why was this calculator created?
-This calculator was created to have easy integration into web applications.  There are many advanced 
-javascript/web interface calculators on the web.  This calculator was programmed to be totally 
-standards compliant unless a specific browser is being used (Internet Explorer to be exact).  Not only 
-is it W3C and MSDN (for IE) standards compliant, but the code itself has a consistent format.  All 
-javascript is tabbed the same way, all CSS is tabbed the same way, and all of the HTML is tabbed the 
-same way.  What this calculator aims to do is to work in every condition, be standards compliant, and 
-when the code is searched through it is very easy to read.  Not only that but it is heavily commented 
+This calculator was created to have easy integration into web applications.  There are many advanced
+javascript/web interface calculators on the web.  This calculator was programmed to be totally
+standards compliant unless a specific browser is being used (Internet Explorer to be exact).  Not only
+is it W3C and MSDN (for IE) standards compliant, but the code itself has a consistent format.  All
+javascript is tabbed the same way, all CSS is tabbed the same way, and all of the HTML is tabbed the
+same way.  What this calculator aims to do is to work in every condition, be standards compliant, and
+when the code is searched through it is very easy to read.  Not only that but it is heavily commented
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
@@ -16,39 +16,39 @@ http://sourceforge.net/projects/webtechtools/
 
 What's new in 1.3.4? (09/08/2011)
 HTML/CSS Changes:
-1.	Updated UI: Make the backspace span 3 cols and AC span 1 col.  Make the widths of the backspace 
-	and CE button wider so they line with the edges of the buttons below them.  I am currently 
+1.	Updated UI: Make the backspace span 3 cols and AC span 1 col.  Make the widths of the backspace
+	and CE button wider so they line with the edges of the buttons below them.  I am currently
 	researching a good GUI alternative to the calculator.  I'm hoping to come out with an all new UI
 	within a few releases.  Possibly even the next release.
-2.	New Feature: Changed button functions. Replaced some buttons in the calculator with other 
-	functions.  This way the calculator utilizes more of the compute objects functionality.  Replace 
+2.	New Feature: Changed button functions. Replaced some buttons in the calculator with other
+	functions.  This way the calculator utilizes more of the compute objects functionality.  Replace
 	sqrt with %.  Replace x^2 with <<.  Replace x^3 with >>.
 3.	New Feature: Group Equation Added to the Edit menu.  Grouping the equation display is now easier
-	than ever.  For example if you have 1+2 and you wanted to multiply the whole thing by 3.  Just 
+	than ever.  For example if you have 1+2 and you wanted to multiply the whole thing by 3.  Just
 	doing 1+2*3 will give you 7.  But if you click Edit > Group Equation then 1+2 turns into (1+2).
 	Now (1+2)*3 will return 9 as expected.  Utilizes new equation in Compute Object.
 4.	Fixed bug in Edit menu where clicking on the number in Float = 3 did not ask to set a new float.
 	Also changed the default value to Float = 0.
 
 Javascript Changes (core functionality of the calculator):
-1.	Fixed bug for 2*ln(3) whenever you keep pushing +/- it will infinitely at -( ... ) to the 
+1.	Fixed bug for 2*ln(3) whenever you keep pushing +/- it will infinitely at -( ... ) to the
 	equation instead of taking them away like it should.
-2.	Fixed bug where xe-y and xe+y throws error as incorrect equation.  Example 1e-3 should return 
+2.	Fixed bug where xe-y and xe+y throws error as incorrect equation.  Example 1e-3 should return
 	0.001 and 1e+3 should return 1000.  Both cases threw an error in 1.3.3.
-3.	Fixed bug where x/e^(y) throws multiple errors including incorrect equation and dividing by 
+3.	Fixed bug where x/e^(y) throws multiple errors including incorrect equation and dividing by
 	zero.  Example 1/e^(1) should return 0.36 but instead exploded the earth.
-4.	Upgraded Compute Object 0.3 to 0.5 which fixes arithmetic bugs and adds more functions.  See 
+4.	Upgraded Compute Object 0.3 to 0.5 which fixes arithmetic bugs and adds more functions.  See
 	compute object changelog.
 5.	Updated calc_resources/js/keys.js to add '<<' or '>>' to calc display instead of just '<' or '>'
 	when the < or > key is pressed.
-6.	Set up the backspace function so that when << is deleted it deletes both << and not just a 
+6.	Set up the backspace function so that when << is deleted it deletes both << and not just a
 	single <. Same for >>.
 7.	Fixed some minor bugs so that addChar does not add the following symbols if the display=0.
 	) * % ^ << >>
 
 Documentation changes:
 1.	Updated all of the documentation to reflect recent changes to calculator functionality.
-2.	Remade all of the images displayed to conform to the exact same style and shadowing offset.  
+2.	Remade all of the images displayed to conform to the exact same style and shadowing offset.
 	This improves the professional consistency of the documentation.  Excluding the logo.
 3.	Tested calculator in Internet Explorer 9 successfully on Windows 7.
 
@@ -58,24 +58,24 @@ Whats new in 1.3.3? (10/06/2010)
 HTML/CSS Changes:
 1.	Fixed bug where clicking on the hr in the Help menu closed it.  Now it stays open.
 2.	New Feature: Negative float rounding.  Set the float 2 and 4394379.368313105 becomes 4394379.37.
-	Set the float 0 and 4394379.368313105 becomes 4394379.  Set the float -2 and 4394379.368313105 
+	Set the float 0 and 4394379.368313105 becomes 4394379.  Set the float -2 and 4394379.368313105
 	becomes 4394400.
 3.	New Feature: Now new functions have been added to the calculator.  And certain buttons have
-	different functionality than before.  Now logarithmic functions have been included into the 
+	different functionality than before.  Now logarithmic functions have been included into the
 	calculations for example ln(e^2)+2=4.  Now for the added buttons...
 	Clicking ln adds 'ln(' to the equation display.
 	Clicking exp adds 'e^(' to the equation display.
 	Clicking log adds 'log(' to the equation display.
 
 Javascript Changes (core functionality of the calculator):
-1.	Fixed bug with key detection.  Completely rewrote keys.js to accommodate for IE8 and other 
+1.	Fixed bug with key detection.  Completely rewrote keys.js to accommodate for IE8 and other
 	browsers.  Functionality seems to have been degrading over time and I decided it was time for a
 	rewrite.
 2.	Fixed bug where JS error was thrown if navigator.userAgent or navigator.vendor didn't exist.
-3.	New Feature: Incorporated the compute object replacing calculator math functions, testing, the 
+3.	New Feature: Incorporated the compute object replacing calculator math functions, testing, the
 	convert object, and float rounding.  Main function for compute is compute.result().  See the
-	compute object source under calc_resources/js/compute_object.js for documentation on all 
-	available functions and features in the compute object.  This involves updating dozens of 
+	compute object source under calc_resources/js/compute_object.js for documentation on all
+	available functions and features in the compute object.  This involves updating dozens of
 	functions so I thought it would be easier to simply list it as a new feature.
 
 Documentation changes:
@@ -100,7 +100,7 @@ Javascript Changes (core functionality of the calculator):
 	is loaded into the Firefox sidebar).  Now calculator will always grab focus no matter what
 	for the shortcut keys to work upon opening.
 3.	Created roundFloat() function in menu_execution.js to clean up the html for the edit menu.
-4.	Modified compute() function in math_functions.js to prepare for the new sin, cos, tan 
+4.	Modified compute() function in math_functions.js to prepare for the new sin, cos, tan
 	functions.
 5.	Created display_compute() function in math_functions.js to utilize the new compute()
 	function.
@@ -140,7 +140,7 @@ HTML/CSS Changes:
 5.	Added favicon link in calculator.
 
 Javascript Changes (core functionality of the calculator):
-1.	Bug fix where by using the equation 10^-(1+2 then click the +/- button twice the equation 
+1.	Bug fix where by using the equation 10^-(1+2 then click the +/- button twice the equation
 	would have an error.
 2.	Renamed toggle_titles() to set_titles().  Modified it and is now called in init() function
 3.	Updated compute() function to handle equation errors and alert the user.
@@ -164,11 +164,11 @@ Javascript Changes (core functionality of the calculator):
 
 Whats new in 1.2.9? (02/22/2008)
 HTML/CSS Changes:
-1.	Made modifactions to the menu shadow giving it true opacity rather than just a gif.  It is 
+1.	Made modifactions to the menu shadow giving it true opacity rather than just a gif.  It is
 	now a png which is better quality than gif format.
 
 Javascript Changes (core functionality of the calculator):
-1.	Bug fix where calc would changeSign -43-3 to 43-3 rather than doing it to the entire equation 
+1.	Bug fix where calc would changeSign -43-3 to 43-3 rather than doing it to the entire equation
 	such as -(-43-3).
 2.	Bug fix so there can't be a -0 by changeSign
 3.	Bug fix where if the calc display is 0 then x^y won't add ^ to the display which would give
@@ -182,7 +182,7 @@ Documentation changes:
 
 Whats new in 1.2.8? (02/17/2008)
 HTML/CSS Changes:
-1.	Removed the trademark symbol from "Scientific Calculator" because it is not a legally 
+1.	Removed the trademark symbol from "Scientific Calculator" because it is not a legally
 	registered trademark.
 2.	Removed my name from the title of the calculator page because I thought it was unnecessary. It
 	was there from when I first programmed it back in 2005 and I just simply never payed attention
@@ -190,7 +190,7 @@ HTML/CSS Changes:
 
 Javascript Changes (core functionality of the calculator):
 1.	Programmed new key functionality so the calc is now fully compatible with Safari and Opera
-	as well as Firefox, IE, Mozilla, and Netscape.  Hot keys work in all of those browsers. Any 
+	as well as Firefox, IE, Mozilla, and Netscape.  Hot keys work in all of those browsers. Any
 	unsupported browsers including but not limited to Konqueror probably don't have proper key
 	functionality with the calculator.  Functionality for Konqueror will be coming soon.
 2.	The pow( function is no longer seen by the user.  Now the user can literally type 2^3 and the
@@ -202,7 +202,7 @@ Documentation changes:
 1.	Updated documentation to take note of the JavaScript changes.
 2.	Minor revisions and spelling corrections.
 3.	Made a pretty new logo for the Calculator documentation.
-4.	Added a contributor page under About Author folder to recognise some of those who have 
+4.	Added a contributor page under About Author folder to recognise some of those who have
 	directly helped me with either development, testing, or conceptual design (ideas).
 5.	Reindexed the search to reflect changes.
 
@@ -218,8 +218,8 @@ HTML/CSS Changes:
 Documentation changes:
 1.	Reindexed and updated documentation for the added features.
 2.	Revised documentation correcting spelling errors.
-3.	After more browser testing I have split the browsers compatible with the calculator in to 
-	two categories: Fully supported and other (not fully supported).  The full support is if 
+3.	After more browser testing I have split the browsers compatible with the calculator in to
+	two categories: Fully supported and other (not fully supported).  The full support is if
 	the calc can use the shortcut keys to compute equations.
 
 Javascript Changes (core functionality of the calculator):
@@ -233,12 +233,12 @@ Other:
 
 Whats new in 1.2.6? (02/05/2008)
 Javascript Changes (core functionality of the calculator):
-1.	Finally I totally rewrote calc_resources\js\keys.js.  Keystroke/keycode detection is heavily 
+1.	Finally I totally rewrote calc_resources\js\keys.js.  Keystroke/keycode detection is heavily
 	simplified. Now it uses a switch statement rather than a bunch of if statements for executing
 	the keys.
-2.	Fixed bug: In Firefox, the '/' key is a shortcut for searching for text.  This is a problem 
-	because every time someone divides in Firefox it goes all wierd trying to "search" for text 
-	rather than computing the equation.  At the bottom of the functions keydown() and keypress() 
+2.	Fixed bug: In Firefox, the '/' key is a shortcut for searching for text.  This is a problem
+	because every time someone divides in Firefox it goes all wierd trying to "search" for text
+	rather than computing the equation.  At the bottom of the functions keydown() and keypress()
 	in calc_resources\js\keys.js I added a new piece of code that grabs focus away from the search
 	that way the next key the user types will still interact with the calculator and not the
 	Firefox search box.  Does anyone have a better fix?  Please let me know if you do.
@@ -258,9 +258,9 @@ Javascript Changes (core functionality of the calculator):
 
 
 Whats new in 1.2.4? (01/21/2008)
-Created a completely custom written help system designed by me so the help source can be 
+Created a completely custom written help system designed by me so the help source can be
 released.  I had used RoboHelp Office at a previous company I worked at because I could have
-a copy of it and since that was a $1000 closed source program it didn't make much sense to 
+a copy of it and since that was a $1000 closed source program it didn't make much sense to
 release its content under any kind of open source license.  Now I've designed my own which I
 will turn into a sourceforge project so other open source users can benefit from it as well.
 
@@ -272,10 +272,10 @@ HTML/CSS Changes:
 1.	Organized the menu into a table so the branding/version can always be at the right.
 
 Javascript Changes (core functionality of the calculator):
-1.	Added menuShadow() which is called in depressButton() in menu_functionality.js  and altered 
-	buttonclick() to dynamically create the new shadows.  This feature now adds a shadow to all 
+1.	Added menuShadow() which is called in depressButton() in menu_functionality.js  and altered
+	buttonclick() to dynamically create the new shadows.  This feature now adds a shadow to all
 	menus.  This feature wass added for all browsers other than IE.
-2.	Changed the way the menu opens so if it overlaps the edge of the window to offset onto the 
+2.	Changed the way the menu opens so if it overlaps the edge of the window to offset onto the
 	screen so the user can still use it.
 
 Other:
@@ -284,60 +284,60 @@ Other:
 
 Whats new in 1.2.2? (01/11/2008)
 HTML/CSS Changes:
-1.	Created submenu class name for menu_functionality.js and updated other source files 
+1.	Created submenu class name for menu_functionality.js and updated other source files
 	accordingly.
 2.	Added submenus to Conv menu so user can convert between temperature units
 
 Javascript Changes (core functionality of the calculator):
 1.	Fixed bug with browser detection
-2.	Totally rewrote menu_functionality.js so it can handle an unlimited amount of submenus and 
+2.	Totally rewrote menu_functionality.js so it can handle an unlimited amount of submenus and
 	run more efficiently.  Also updated all other code to work with the new menu_functionality.js
 3.	Separated custom objects into separate js files
 4.	Rewrote the changeSign function in math_functions.js to apply to the whole equation
-5.	Changed checkBase to unitCheck function in menu_execution.js and now it runs when 
+5.	Changed checkBase to unitCheck function in menu_execution.js and now it runs when
 	buttonMouseover in menu_functionality.js is executed.
 6.	Added temperature object to calculator
-7.	unitCheck now checks for invalid chars and below absolute zero on all temperatures in 
+7.	unitCheck now checks for invalid chars and below absolute zero on all temperatures in
 	menu_execution.js
 
 
 Whats new in 1.2.1? (01/10/2008)
 HTML/CSS Changes:
 1.	Added charset encoding to .css files
-2.	Fixed bug, onclick in submit button was causing display to be calculated twice.  (it is done 
+2.	Fixed bug, onclick in submit button was causing display to be calculated twice.  (it is done
 	through onsubmit of the form)
-3.	Changed CSS files by removing transparent as a color so en-default.css is compatable with all 
+3.	Changed CSS files by removing transparent as a color so en-default.css is compatable with all
 	browsers
 4.	Renamed the View menu to Settings.  I thought it was more appropriate.
 
 Javascript Changes (core functionality of the calculator):
 1.	Fixed Bug computing errors with Regular Expressions
 2.	Completely rewrote functions compute and deleteChar in math_functions.js
-3.	Rewrote functions cos, sin, tan, sqrt, ln, exp, square, and cube to incorporate the newly 
+3.	Rewrote functions cos, sin, tan, sqrt, ln, exp, square, and cube to incorporate the newly
 	rewritten compute function in math_functions.js
-4.	Global variables are first specified and then initialized after page loads.  This ensures 
+4.	Global variables are first specified and then initialized after page loads.  This ensures
 	maximum compatibility.
 5.	Added a for loop to checkBase function in menu_execution.js
 
 
 Whats new in 1.2? (12/21/2007)
 HTML/CSS Changes:
-1.	Converted HTML (it used to be a mess) to HTML 4.01 transitional but allows future 
+1.	Converted HTML (it used to be a mess) to HTML 4.01 transitional but allows future
 	compatability with XHTML by using all lowercase tags and properties.
 2.	All html files have been validated successfully at http://validator.w3.org/
-3.	The base template (en-default.css) has been validated successfully at 
+3.	The base template (en-default.css) has been validated successfully at
 	http://jigsaw.w3.org/css-validator/
-4.	Rewrote the stylesheets to incorportate a base template and then add in needed changes on a 
-	per browser basis (only for IE basically).  The base template (lang-default.css, right now its 
-	just en-default.css) is W3C complaint.  Any other additions or modifications to the style due 
+4.	Rewrote the stylesheets to incorportate a base template and then add in needed changes on a
+	per browser basis (only for IE basically).  The base template (lang-default.css, right now its
+	just en-default.css) is W3C complaint.  Any other additions or modifications to the style due
 	to other style sheets may not be W3C compliant since it is browser specific.
 
 Javascript Changes (core functionality of the calculator):
 1.	Rewrote all code according to MSDN and W3C.
-2.	Totally rewrote the function for converting between bases (e.g. base2, base10, etc.).  Now 
+2.	Totally rewrote the function for converting between bases (e.g. base2, base10, etc.).  Now
 	there is a convert object.
 3.	Added feature.  Now handles octal conversion (base8) because of the new convert object.
-4.	Rewrote the function that shows/hides the base conversion list in the menu (to incorporate the 
+4.	Rewrote the function that shows/hides the base conversion list in the menu (to incorporate the
 	new convert object)
 5.	rewrote checkNum() to use the new convert.test object method.
 6.	reformatted all programming to have a standard format and indentation that is easiest to read.
@@ -349,20 +349,20 @@ THE BIG CHANGE OVER 1.0 AND 1.1
 
 This section isn't needed but I left it anyway:
 	I could not find a validator for the Javascript so I assume there isn't one.
-	It has been programmed according to W3C and w3schools.com guidelines unless there is browser 
-	specific programming (for IE).  IE specific javascript was written according to MSDN 
+	It has been programmed according to W3C and w3schools.com guidelines unless there is browser
+	specific programming (for IE).  IE specific javascript was written according to MSDN
 	specifications.
 
 Created by Sam Gleske
-If you want to use bits and pieces of this code in other projects of yours then please do so!  It would be 
-nice to get recognition if you use a piece of my code in another project however since you are not using 
-this calculator (and just a piece of it, such as that convert object, it really is nice and took me a long 
+If you want to use bits and pieces of this code in other projects of yours then please do so!  It would be
+nice to get recognition if you use a piece of my code in another project however since you are not using
+this calculator (and just a piece of it, such as that convert object, it really is nice and took me a long
 time to write/refine/optimize) then I don't require recognition or copyrights to be posted.
 
-Just remember where you get your code from and it would be nice to let others benefit from it just as you 
-may have.  The help source is not available for download, sorry.  This may change in the future but it is 
+Just remember where you get your code from and it would be nice to let others benefit from it just as you
+may have.  The help source is not available for download, sorry.  This may change in the future but it is
 not the case for the time being.
 
 ver 1.1 released around 01/19/2007
-ver 1.0 released around 09/??/2005 
+ver 1.0 released around 09/??/2005
 (unfortunately I didn't document it very well in the beginning development stages.  Now I'm a better developer)
