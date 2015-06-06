@@ -44,14 +44,15 @@ function keydown(keyCode,shiftKey)
 			{
 				case 48://')'
 					calc.parr.focus();
-					addChar(')');
+					if(display.value!='0')addChar(')');
 					break;
 				case 53://'%'
-					addChar('%');
+					calc.c6.focus();
+					if(display.value!='0')addChar('%');
 					break;
 				case 54://'^'
 					calc.c7.focus();
-					addChar('^');
+					if(display.value!='0')addChar('^');
 					break;
 				case 56://'*' main keyboard
 					calc.multiply.focus();
@@ -92,10 +93,12 @@ function keydown(keyCode,shiftKey)
 					addChar('+');
 					break;
 				case 188://'<'
-					addChar('<');
+					calc.d6.focus()
+					if(display.value!='0')addChar('<<');
 					break;
 				case 190://'>'
-					addChar('>');
+					calc.d7.focus()
+					if(display.value!='0')addChar('>>');
 					break;
 			}
 		}
@@ -191,7 +194,7 @@ function keydown(keyCode,shiftKey)
 				case 42://'*' in Opera
 				case 106://'*' in other browsers
 					calc.multiply.focus();
-					addChar('*');
+					if(display.value!='0')addChar('*');
 					break;
 				case 43://'+' in Opera
 				case 107://'+' in other browsers
@@ -221,13 +224,16 @@ function keydown(keyCode,shiftKey)
 				case 191://main keyboard
 				case 111://'/' in other browsers
 					calc.divide.focus();
-					addChar('/');
+					if(display.value!='0')addChar('/');
 					break;
 				case 78://'.' in Opera
 				case 190://'.' on main keyboard
 				case 110://'.' in other browsers
-					calc.dot.focus();
-					addChar('.');
+					if(!konqueror)
+					{
+						calc.dot.focus();
+						addChar('.');
+					}
 					break;
 				case 127://Delete key in Konqueror
 					if(konqueror)

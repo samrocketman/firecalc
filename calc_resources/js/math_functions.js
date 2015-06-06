@@ -26,21 +26,6 @@ function addChar(character)
 	}
 }
 
-function sqrt()
-{
-	if(compute.result(display.value.toString()))
-		display.value=Math.sqrt(compute.result(display.value.toString()));
-}
-function square()
-{
-	if(compute.result(display.value.toString()))
-		display.value=Math.pow(compute.result(display.value.toString()),2);
-}
-function cube()
-{
-	if(compute.result(display.value.toString()))
-		display.value=Math.pow(compute.result(display.value.toString()),3);
-}
 function deleteChar()
 {//deletes a char from right to left in display
 	//detect trig functions but delete single chars if trig functions are misspelled
@@ -51,15 +36,19 @@ function deleteChar()
 		else
 			display.value=display.value.substring(0,display.value.length-4);//delete cos(, sin(, tan(
 	}
-	else if(display.value.charAt(display.value.length-1)=='i'&&display.value.charAt(display.value.length-2)=='p')
-		display.value=display.value.substring(0,display.value.length-2);//delete pi
+	else if((display.value.charAt(display.value.length-1)=='i'&&display.value.charAt(display.value.length-2)=='p')||(display.value.charAt(display.value.length-1)=='<'&&display.value.charAt(display.value.length-2)=='<')||(display.value.charAt(display.value.length-1)=='>'&&display.value.charAt(display.value.length-2)=='>'))
+	{
+		display.value=display.value.substring(0,display.value.length-2);//delete two chars from the end
+	}
 	else
-		display.value=display.value.substring(0,display.value.length-1);//delete single char
-
+	{
+		display.value=display.value.substring(0,display.value.length-1);//delete single char from the end
+	}
 	if(display.value=='')
+	{
 		display.value=0;//if there are no chars to delete,then set display=0
+	}
 }
-
 function display_compute()
 {
 	if(compute.result(display.value.toString()).toString()!="false")

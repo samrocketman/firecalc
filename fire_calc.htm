@@ -49,7 +49,7 @@
 	
 	<script language="JavaScript" type="text/javascript">
 		// define global variables
-		var activeButton,activeButton2,button2,mem,pi,store,calc,display,enableKeys;
+		var activeButton,activeButton2,button2,mem,pi,store,calc,display,enableKeys,floatset;
 
 		if(msie)
 			document.writeln('<link rel="stylesheet" type="text/css" href="calc_resources/css/en-msie.css">');
@@ -66,19 +66,20 @@
 			pi=3.1415926535897932384626433832795;
 			store=false;
 			enableKeys=true;
+			floatset=0;
 			
 			//initial setup
 			keyEvents();
 			set_titles();
-			if(document.calc.display.createTextRange)
+			if(calc.display.createTextRange)
 			{
 				document.getElementById("copy-menu").style.display="";
 				document.getElementById("paste-menu").style.display="";
 				document.getElementById("hr-menu").style.display="";
-			}
+			};
 			calc.reset();
 			ClearMem();
-			document.getElementById('float').value=3;
+			document.getElementById('float').innerHTML=floatset;
 
 			//grab calculator focus for typing
 			display.focus();
@@ -120,7 +121,7 @@
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3.3</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.3.4</span></span>
 			</td>
 		</tr>
 		</table>
@@ -137,8 +138,9 @@
 		<a class="menuItem" href="javascript:docmd(1);" id="copy-menu" onclick="resetMenu()" style="display:none;">Copy</a>
 		<a class="menuItem" href="javascript:docmd(0);" id="paste-menu" onclick="resetMenu()" style="display:none;">Paste</a>
 		<hr class="hr" id="hr-menu" style="display:none;">
+		<a class="menuItem" href="javascript:groupEquation()" id="group-equation" onclick="resetMenu()">Group Equation</a>
 		<a class="menuItem" href="javascript:roundFloat()" id="round-float" onclick="resetMenu()">Round Answer</a>
-		<a class="menuItem" href="javascript:setFloat()" id="set-float" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">Float = <input class="setvalue" type="text" id="float" onclick="setFloat();" value="3" readonly></a>
+		<a class="menuItem" href="javascript:setFloat()" id="set-float" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">Float = <span id="float">0</span></a>
 	</div>
 
 	<div class="menu" id="convMenu">
@@ -267,16 +269,16 @@
 		</tr>
 		<tr>
 			<td style="text-align:center"><input type="text" name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="backbtn" onclick="deleteChar()" style="width:75px;height:28px" value="Backspace"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="delbtn" onclick="this.form.display.value=0" style="width:68px;height:28px" value="CE"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="ac" onclick="this.form.reset();ClearMem()" style="width:68px;height:28px" value="AC"></td>
+			<td style="text-align:center" colspan="3"><input class="BasFunc" type="button" name="backbtn" onclick="deleteChar()" style="width:117px;height:28px" value="Backspace"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="delbtn" onclick="this.form.display.value=0" style="width:84px;height:28px" value="CE"></td>
+			<td style="text-align:center" colspan="1"><input class="BasFunc" type="button" name="ac" onclick="this.form.reset();ClearMem()" style="width:40px;height:28px" value="AC"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mClear" onclick="ClearMem()" style="width:40px;height:28px" value="MC"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn7" onclick="addChar('7')" style="width:33px;height:28px" value="7"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn8" onclick="addChar('8')" style="width:33px;height:28px" value="8"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn9" onclick="addChar('9')" style="width:33px;height:28px" value="9"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" name="divide" onclick="addChar('/')" style="width:33px;height:28px" value="/"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="divide" onclick="if(display.value!='0')addChar('/')" style="width:33px;height:28px" value="/"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="b6" onclick="addChar('e^(')" style="width:40px;height:28px" value="exp"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="b7" onclick="addChar('ln(')" style="width:40px;height:28px" value="ln"></td>
 		</tr>
@@ -285,8 +287,8 @@
 			<td style="text-align:center"><input class="num" type="button" name="btn4" onclick="addChar('4')" style="width:33px;height:28px" value="4"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn5" onclick="addChar('5')" style="width:33px;height:28px" value="5"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn6" onclick="addChar('6')" style="width:33px;height:28px" value="6"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" name="multiply" onclick="addChar('*')" style="width:33px;height:28px" value="*"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" name="c6" onclick="sqrt()" style="width:40px;height:28px" value="sqrt"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="multiply" onclick="if(display.value!='0')addChar('*')" style="width:33px;height:28px" value="*"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="c6" onclick="if(display.value!='0')addChar('%')" style="width:40px;height:28px" value="%"></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="c7" onclick="if(display.value!='0')addChar('^')" style="width:40px;height:28px" value="x^y"></td>
 		</tr>
 		<tr>
@@ -295,13 +297,13 @@
 			<td style="text-align:center"><input class="num" type="button" name="btn2" onclick="addChar('2')" style="width:33px;height:28px" value="2"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn3" onclick="addChar('3')" style="width:33px;height:28px" value="3"></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="subtract" onclick="addChar('-')" style="width:33px;height:28px" value="-"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" name="d6" onclick="square()" style="width:40px;height:28px" value="x^2"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" value="x^3" onclick="cube()" style="width:40px;height:28px" name="d7"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="d6" onclick="if(display.value!='0')addChar('<<')" style="width:40px;height:28px" value="<<"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="d7" onclick="if(display.value!='0')addChar('>>')" style="width:40px;height:28px" value=">>"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mPlus" onclick="MemPlus()" style="width:40px;height:28px" value="M+"></td>
 			<td style="text-align:center"><input class="num" type="button" name="btn0" onclick="addChar('0')" style="width:33px;height:28px" value="0"></td>
-			<td style="text-align:center"><input class="num" type="button" name="e3" onclick="if(compute.changeSign(display.value.toString())) display.value=compute.changeSign(display.value.toString())" style="width:33px;height:28px" value="+/-"></td>
+			<td style="text-align:center"><input class="num" type="button" name="e3" onclick="if(compute.changeSign(display.value.toString())) display.value=compute.changeSign(display.value.toString())" style="width:33px;height:28px" value="±"></td>
 			<td style="text-align:center"><input class="num" type="button" name="dot" onclick="addChar('.')" style="width:33px;height:28px" value="."></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="add" onclick="addChar('+')" style="width:33px;height:28px" value="+"></td>
 			<td style="text-align:center"><input class="BasFunc" type="submit" name="enter" style="width:33px;height:28px" value="="></td>
@@ -310,7 +312,7 @@
 		<tr>
 			<td style="text-align:center"><input class="num" type="button" name="pi" onclick="addChar('pi')" style="width:40px;height:28px;font-family:times;" value="π"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="parl" onclick="addChar('(')" style="width:33px;height:28px" value="("></td>
-			<td style="text-align:center"><input class="AdvFunc" type="button" name="parr" onclick="addChar(')')" style="width:33px;height:28px" value=")"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="parr" onclick="if(display.value!='0')addChar(')')" style="width:33px;height:28px" value=")"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="f4" onclick="addChar('cos(')" style="width:37px;height:28px" value="cos"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="f5" onclick="addChar('sin(')" style="width:37px;height:28px" value="sin"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="f6" onclick="addChar('tan(')" style="width:40px;height:28px" value="tan"></td>

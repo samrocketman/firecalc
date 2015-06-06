@@ -5,7 +5,7 @@
 \*********************************************/
 //Toggle functions for the View Menu
 function set_titles()
-{
+{//builtin, runs on init()
 		calc.memory.title="Shows if there is something stored in memory";
 		calc.backbtn.title="Delete a character from Equation from right to left";
 		calc.delbtn.title="Clears the Equation";
@@ -15,22 +15,22 @@ function set_titles()
 		calc.btn8.title="Inserts the character 8";
 		calc.btn9.title="Inserts the character 9";
 		calc.divide.title="Inserts the '/' character";
-		calc.b6.title="Takes the exponential of the Equation [e^x]";
-		calc.b7.title="Takes the natural log of the Equation";
+		calc.b6.title="Inserts an exponential equation [e^x]";
+		calc.b7.title="Inserts a natural log equation";
 		calc.mRecall.title="Recalls the memory into the Equation (inserts)";
 		calc.btn4.title="Inserts the character 4";
 		calc.btn5.title="Inserts the character 5";
 		calc.btn6.title="Inserts the character 6";
 		calc.multiply.title="Inserts the '*' character";
-		calc.c6.title="Computes and then takes the square root of the Equation";
+		calc.c6.title="Inserts the modulo operator";
 		calc.c7.title="Power of X to Y";
 		calc.mStore.title="Computes and then stores the Equation into memory";
 		calc.btn1.title="Inserts the character 1";
 		calc.btn2.title="Inserts the character 2";
 		calc.btn3.title="Inserts the character 3";
 		calc.subtract.title="Inserts the '+' character";
-		calc.d6.title="Computes and then squares the Equation";
-		calc.d7.title="Computes and then cubes the Equation";
+		calc.d6.title="Inserts bit shift left operator";
+		calc.d7.title="Inserts bit shift right operator";
 		calc.mPlus.title="Computes and then adds Equation to the value stored in memory";
 		calc.btn0.title="Inserts the character 0";
 		calc.e3.title="Changes the negativity of the whole equation";
@@ -52,22 +52,8 @@ function set_titles()
 		
 }
 
-function toggle_display()
-{
-	var checkbox=document.getElementById('radio2');
-	//toggle the checkbox
-	checkbox.checked=!checkbox.checked;
-
-	//enable/disable the display
-	if(!checkbox.checked)
-		display.readOnly=false;
-	else
-		display.readOnly=true;
-	window.focus();
-}
-
 function toggle_keys(opt)
-{
+{//builtint (this is the two input modes)
 	//toggle hotkeys when focused on calc display
 	if(opt)
 	{
@@ -83,18 +69,18 @@ function roundFloat(num,float_val)
 	if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null')
 	{
 		alert('Float Not Set');
-		return void(0);
 	};
-	if(compute.result(display.value.toString()))
+	if(compute.result(display.value))
 	{
-		display.value=compute.roundFloat(compute.result(display.value.toString()),document.getElementById('float').value);
+		display.value=compute.roundFloat(compute.result(display.value),floatset);
 	}
+	return void(0);
 }
 
 function setFloat()
 {
 	var floatObj=document.getElementById('float');
-	var thevalue=prompt('Set the number of decimal places for rounding',floatObj.value); 
+	var thevalue=prompt('Set the number of decimal places for rounding',floatset); 
 	if(thevalue)
 	{
 		if(!compute.test.regex(thevalue,/[0-9\-]/))
@@ -102,8 +88,12 @@ function setFloat()
 		else if(thevalue>17)
 			alert('Float can\'t go above 17 digits.');
 		else
-			floatObj.value=thevalue;
+		{
+			floatObj.innerHTML=thevalue;
+			floatset=thevalue;
+		}
 	}
+	return void(0);
 }
 
 function convBase(base1,base2)
@@ -172,13 +162,13 @@ function unitCheck()
 		var temp
 		temp=compute.showErrors;
 		compute.showErrors=false;
-		if(!compute.result(display.value.toString())&&display.value.toString()!='0')
+		if(!compute.result(display.value)&&display.value!='0')
 		{
 			compute.showErrors=temp;
 			throw "error";
 		}
 		compute.showErrors=temp;
-		var disp=compute.result(display.value.toString());
+		var disp=compute.result(display.value);
 		isCon=(compute.test.regex(disp,/[0-9\-\.]/))?1:0;
 		isCel=(disp>=-273.15)?1:0;
 		isFah=(disp>=-459.66999999999996)?1:0;
@@ -196,6 +186,15 @@ function unitCheck()
 	document.getElementById("rankine").style.display=(isCon&&isRan)?"":"none";
 	document.getElementById("reaumur").style.display=(isCon&&isRea)?"":"none";
 	document.getElementById("nooption2").style.display=(isCon&&isCel||isFah||isKel||isRan||isRea)?"none":"";
+}
+
+function groupEquation()
+{
+	if(compute.groupEquation(calc.display.value))
+	{
+		calc.display.value = compute.groupEquation(calc.display.value);
+	}
+	return void(0);
 }
 
 /*********************************************\
