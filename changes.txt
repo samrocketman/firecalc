@@ -9,6 +9,49 @@ when the code is searched through it is very easy to read.  Not only that but it
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
+Whats new in 1.3.2? (06/27/2009)
+HTML/CSS Changes:
+1.	Added "Disabled Javascript" warning to calculator (noscript tags).
+2.	Added id attributes to the Round Answer and Float=3 menu options in the Edit menu html.
+3.	Added degree/radian boolean to calculator display.
+4.	Gave each button 2px of space on each side (widened calculator table to 328px).
+5.	Added acos, asin, atan, and log buttons to the calculator.
+6.	Added Radian/Degree mode for trig calculations.
+
+Javascript Changes (core functionality of the calculator):
+1.	Removed coma key shortcut from calculator.  Deprecated by displayToPower() function.
+2.	Added new method of calculator focus within init function (in case calculator as a bookmark
+	is loaded into the Firefox sidebar).  Now calculator will always grab focus no matter what
+	for the shortcut keys to work upon opening.
+3.	Created roundFloat() function in menu_execution.js to clean up the html for the edit menu.
+4.	Modified compute() function in math_functions.js to prepare for the new sin, cos, tan 
+	functions.
+5.	Created display_compute() function in math_functions.js to utilize the new compute()
+	function.
+6.	Modified memory functions in math_functions.js to utilize the new compute() function.
+7.	Modified deleteChar() function in math_functions.js to prepare for new sin, cos, tan
+	functions.
+8.	Heavily modifed checkNum() function in math_functions.js to prepare for new sin, cos, tan
+	functions.
+9.	Added sin, cos, tan, asin, acos, atan functions to be incorporated into the equation
+	display.
+10.	Added some automatic error computing when the addChar() function is called in
+	math_functions.js
+11.	Modified all other calculator button functions for the new compute() function.
+12.	Added acos, asin, atan, and log functions to math_functions.js
+13. Updated set_titles() function in menu_execution.js for the added buttons
+
+Documentation changes:
+1.	Created noframes tags in the index.html of documentation.  Revalidated with w3.org.
+2.	Validated the previously invalid folderview.html with w3.org.
+3.	Validated the previously invalid search.html with w3.org.
+4.	Removed coma key from shortcuts documentation.  Deprecated by displayToPower() function.
+5.	Renamed Menu Help > About Menu to Overview.
+6.	Corrected a few documentation errors.
+7.	Updated all documentation to reflect the current calculator.
+8.	Updated PDF documentation to reflect changes.
+
+
 Whats new in 1.3.1? (05/10/2008)
 HTML/CSS Changes:
 1.	Bug fix where when page is reloaded by using File > Reload in the calc menu, if the
@@ -33,6 +76,7 @@ Documentation changes:
 3.	Added example equation to disclaimer.
 4.	Further updated documentation.
 5.	Updated documentation search engine.
+6.	Updated menu images
 
 
 Whats new in 1.3? (10/27/2008)

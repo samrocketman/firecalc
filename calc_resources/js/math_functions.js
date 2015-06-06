@@ -4,59 +4,238 @@
 *                                             *
 \*********************************************/
 var general_error=[
-	"There are errors in the equation.\n\nCheck for:\nMissing symbols next to parenthesis. 3(10) will not work but 3*(10) will.\nHanging equation symbols like (3*(10)+) where the + is the error.\nOpen parenthesis. (2*(4+3) will not work but (2*(4+3)) will.",
-	"Invalid characters in display"
+	"There are errors in the equation.\n\nCheck for:\nMissing symbols next to parenthesis. 3(10) will not work but 3*(10) will.\nHanging equation symbols like (3*(10)+) where the + is the error.\nOpen parenthesis. (2*(4+3) will not work but (2*(4+3)) will.\nBroken, misspelled, or undefined trig functions.",
+	"Invalid characters in display or misspelled trig functions."
 	];
 function addChar(character) 
 {
-	if(display.value==null || display.value=="0")
+	if(display.value.toString()==null || display.value=="0")
 		display.value=character;
 	else
-		display.value+=character;
+	{
+		if(character=="pi"||character=='('||character=='sin('||character=='cos('||character=='tan('||character=='asin('||character=='acos('||character=='atan(')
+		{
+			if(convert.test(display.value.charAt(display.value.length-1),/[0-9i\)]/i))
+				display.value+='*'+character;
+			else
+				display.value+=character;
+		}
+		else
+		{
+			if(convert.test(display.value.charAt(display.value.length-1),/[\)i]/i)&&!convert.test(character.toString(), /[\)\+\-\*\/\^]/i))
+				display.value+='*'+character;
+			else
+				display.value+=character;
+		}
+	}
 }
 function checkNum()
 {
-	return convert.test(display.value,/[0-9peiow\(\),\+\-\*\/\.\^]/i);
+	//checks for correctly spelled trig functions and pi (checktrig object)
+	var checktrig={
+		test:function(str){
+			return (this.sin(str)&&this.cos(str)&&this.tan(str)&&this.pi(str)&&this.check_a(str)&&this.check_i(str)&&this.check_n(str)&&this.check_o(str));
+		},
+		pi:function(str){
+			var c=str.indexOf('p');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c)+str.charAt(c+1)!="pi")
+				return false;
+			return this.pi(str.substring(c+2))
+		},
+		sin:function(str){
+			var c=str.indexOf('s');
+			if(c==-1)
+				return true;
+			//check for sin but make sure it's not the end of cos(
+			else if(str.charAt(c)+str.charAt(c+1)+str.charAt(c+2)+str.charAt(c+3)!="sin("&&str.charAt(c-2)!='c')
+				return false;
+			return this.sin(str.substring(c+4));
+		},
+		cos:function(str){
+			var c=str.indexOf('c');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c)+str.charAt(c+1)+str.charAt(c+2)+str.charAt(c+3)!="cos(")
+				return false;
+			return this.cos(str.substring(c+4));
+		},
+		tan:function(str){
+			var c=str.indexOf('t');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c)+str.charAt(c+1)+str.charAt(c+2)+str.charAt(c+3)!="tan(")
+				return false;
+			return this.tan(str.substring(c+4));
+		},
+		check_a:function(str){
+			var c=str.indexOf('a');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c-1)!="t"&&!(str.charAt(c+1)=="c"||str.charAt(c+1)=="s"||str.charAt(c+1)=="t"))
+				return false;
+			return this.check_a(str.substring(c+1))
+		},
+		check_i:function(str){
+			var c=str.indexOf('i');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c-1)!="p"&&str.charAt(c-1)!="s")
+				return false;
+			return this.check_i(str.substring(c+1))
+		},
+		check_n:function(str){
+			var c=str.indexOf('n');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c-1)!="i"&&str.charAt(c-1)!="a")
+				return false;
+			return this.check_n(str.substring(c+1))
+		},
+		check_o:function(str){
+			var c=str.indexOf('o');
+			if(c==-1)
+				return true;
+			else if(str.charAt(c-1)!="c")
+				return false;
+			return this.check_o(str.substring(c+1))
+		}
+	}
+	return (checktrig.test(display.value)&&convert.test(display.value, /[0-9pesincota\(\)\+\-\.\*\/\^]/i));
 }
-function cos()
+function cos(eqtn)
 {
-	if(compute())
-		display.value=Math.cos(display.value);
+	if(eqtn.toString()==null)
+		throw "error";
+	else
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(Math.cos(eval(compute(eqtn.toString())*pi/180)),13);
+		else
+			return roundFloat(Math.cos(compute(eqtn.toString())),13);
+	}
 }
-function sin()
+function sin(eqtn)
 {
-	if(compute())
-		display.value=Math.sin(display.value);
+	if(eqtn)
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(Math.sin(eval(compute(eqtn.toString())*pi/180)),13);
+		else
+			return roundFloat(Math.sin(compute(eqtn.toString())),13);
+	}
+	else if(eqtn.toString()==null)
+		throw "error";
+	else
+		return 0;
 }
-function tan()
+function tan(eqtn)
 {
-	if(compute())
-		display.value=Math.tan(display.value);
+	if(eqtn.toString()==null)
+		throw "error";
+	else if(cos(eqtn).toString()=='0')
+	{
+		alert("tangent is undefined, can't divide by zero.");
+		throw "error";
+	}
+	else
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(Math.tan(eval(compute(eqtn.toString())*pi/180)),13);
+		else
+			return roundFloat(Math.tan(compute(eqtn.toString())),13);
+	}
+}
+function acos(eqtn)
+{
+	if(eqtn.toString()==null)
+		throw "error";
+	if(eqtn.toString()=="1")
+		return 0;
+	else if(compute(eqtn.toString())>1||compute(eqtn.toString())<-1)
+	{
+		alert("acos(x) error:\nx was either greater than 1 or less than -1\nacos Domain: {x|-1<=x<=1}");
+		throw "error";
+	}
+	else
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(eval(Math.acos(compute(eqtn.toString()))*180/pi),13);
+		else
+			return Math.acos(compute(eqtn.toString()));
+	}
+}
+function asin(eqtn)
+{
+	if(eqtn.toString()==null)
+		throw "error";
+	if(eqtn.toString()=="0")
+		return 0;
+	else if(compute(eqtn.toString())>1||compute(eqtn.toString())<-1)
+	{
+		alert("asin(x) error:\nx was either greater than 1 or less than -1\nasin Domain: {x|-1<=x<=1}");
+		throw "error";
+	}
+	else
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(eval(Math.asin(compute(eqtn.toString()))*180/pi),13);
+		else
+			return Math.asin(compute(eqtn.toString()));
+	}
+}
+function atan(eqtn)
+{
+	if(eqtn.toString()==null)
+		throw "error";
+	else
+	{
+		if(calc.angle[0].checked)
+			return roundFloat(eval(Math.atan(compute(eqtn.toString()))*180/pi),13);
+		else
+			return Math.atan(compute(eqtn.toString()));
+	}
 }
 function sqrt()
 {
-	if(compute())
-		display.value=Math.sqrt(display.value);
+	if(compute(display.value.toString()))
+		display.value=Math.sqrt(compute(display.value.toString()));
 }
 function ln()
 {
-	if(compute())
-		display.value=Math.log(display.value);
+	if(display.value.toString()=='0')
+		alert("ln(0)=Undefined or Negative Infinity\nln(x) Domain: {x|x>0}")
+	if(compute(display.value.toString())<=0)
+		alert("Can't compute ln of a negative number.\nOutside of domain.\nln(x) Domain: {x|x>0}")
+	else if(compute(display.value.toString()))
+		display.value=Math.log(compute(display.value.toString()));
+}
+function rlog()
+{
+	if(display.value.toString()=='0')
+		alert("ln(0)=Undefined or Negative Infinity\nlog(x) Domain: {x|x>0}")
+	if(compute(display.value.toString())<=0)
+		alert("Can't compute log of a negative number.\nOutside of domain.\nlog(x) Domain: {x|x>0}")
+	else if(compute(display.value.toString()))
+		display.value=eval(Math.log(compute(display.value.toString()))/Math.log(10));
 }
 function exp()
 {
-	if(compute())
-		display.value=Math.exp(display.value);
+	if(display.value.toString()=='0')
+		display.value=Math.exp(0);
+	else if(compute(display.value.toString()))
+		display.value=Math.exp(compute(display.value.toString()));
 }
 function square()
 {
-	if(compute())
-		display.value*=display.value;
+	if(compute(display.value.toString()))
+		display.value=eval(compute(display.value.toString())*compute(display.value.toString()));
 }
 function cube()
 {
-	if(compute())
-		display.value=pow(display.value,3);
+	if(compute(display.value.toString()))
+		display.value=pow(compute(display.value.toString()),3);
 }
 function pow(x,y)
 {//power function simplified for calculator use
@@ -64,9 +243,21 @@ function pow(x,y)
 }
 function deleteChar()
 {//deletes a char from right to left in display
-	display.value=display.value.substring(0,display.value.length-1);
+	//detect trig functions but delete single chars if trig functions are misspelled
+	if(display.value.charAt(display.value.length-1)=='('&&(display.value.charAt(display.value.length-4)=='s'||display.value.charAt(display.value.length-4)=='c'||display.value.charAt(display.value.length-4)=='t'))
+	{
+		if(display.value.charAt(display.value.length-5)=='a')
+		display.value=display.value.substring(0,display.value.length-5);//delete acos(, asin(, atan(
+		else
+			display.value=display.value.substring(0,display.value.length-4);//delete cos(, sin(, tan(
+	}
+	else if(display.value.charAt(display.value.length-1)=='i'&&display.value.charAt(display.value.length-2)=='p')
+		display.value=display.value.substring(0,display.value.length-2);//delete pi
+	else
+		display.value=display.value.substring(0,display.value.length-1);//delete single char
+
 	if(display.value=='')
-		display.value=0;
+		display.value=0;//if there are no chars to delete,then set display=0
 }
 function changeSign()
 {
@@ -75,7 +266,7 @@ function changeSign()
 	if(checkNum())
 	{
 		try
-		{
+		{//test for equation errors
 			result=displayToPower(display.value);
 			eval(result);
 		}
@@ -130,7 +321,8 @@ function displayToPower(str)
 	var regExp=/[\+\-\*\/\(\)]/;
 	var results=new Array();
 	var exit,i,j;
-	
+	if(str=='0')
+		return 0;
 	if(str.indexOf('^')!=-1)
 	{
 		if(str.charAt(str.indexOf('^')-1)==')')
@@ -148,7 +340,15 @@ function displayToPower(str)
 					j--;
 				if(j==0)
 				{
-					results[0]=str.substring(i,str.indexOf('^'));
+					if(str.charAt(i-3)=='s'||str.charAt(i-3)=='c'||str.charAt(i-3)=='t')//detect trig functions
+					{
+						if(str.charAt(i-4)=='a')
+							results[0]=str.substring(i-4,str.indexOf('^'));
+							else
+								results[0]=str.substring(i-3,str.indexOf('^'));
+					}
+					else
+						results[0]=str.substring(i,str.indexOf('^'));//handle normally
 					exit=true;
 				}
 			}
@@ -224,25 +424,36 @@ function displayToPower(str)
 	}
 	return str;
 }
-function compute()
+function display_compute()
+{
+	var original=display.value,result=compute(display.value.toString());
+	if(result.toString()!="false")		
+		display.value=compute(display.value.toString());
+}
+function compute(eqtn)
 {
 	var result;
 	try
 	{
 		if(checkNum())
 		{
-			if(display.value=='pi')
-				display.value="3.1415926535897932384626433832795";
-			else if(displayToPower(display.value))
+			if(eqtn=='pi')
+				return "3.1415926535897932384626433832795";
+			else if(eqtn=='0')
+				return 0;
+			else if(displayToPower(eqtn))
 			{
-				result=displayToPower(display.value);
+				result=displayToPower(eqtn);
 				if(eval(result)=="Infinity")
 				{
 					alert("Can't divide by zero.");
 					return false;
 				}
 				else
-					display.value=eval(result);
+				{
+					return eval(result);
+				}
+					
 			}
 			else
 			{
@@ -252,7 +463,9 @@ function compute()
 			return true;
 		}
 		else
+		{
 			alert(general_error[1]);
+		}
 	}
 	catch(e)
 	{
@@ -262,23 +475,23 @@ function compute()
 }
 function flip()
 {
-	if(compute())
+	if(compute(display.value.toString()))
 	{
 		if(display.value=='pi')
 			display.value=eval("1/3.1415926535897932384626433832795");
 		else
-			display.value=eval("1/("+display.value+")");
+			display.value=eval("1/("+compute(display.value.toString())+")");
 	}
 	else
 		return false;
 }
 function StoreMem()
 {
-	if(compute())
+	if(compute(display.value.toString()))
 	{
 		if(display.value!=0)
 		{
-			mem=display.value;
+			mem=compute(display.value.toString());
 			store=true;
 			calc.memory.value="M";
 		}
@@ -302,11 +515,11 @@ function RecallMem()
 }
 function MemPlus()
 {
-	if(compute())
+	if(compute(display.value.toString()))
 	{
 		if(mem)
 		{
-			arg=eval(mem+"+"+display.value);
+			arg=eval(mem+"+"+compute(display.value.toString()));
 			mem=arg;
 		}
 	}

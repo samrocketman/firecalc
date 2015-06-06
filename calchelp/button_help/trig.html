@@ -11,15 +11,24 @@
 	<h1 style="font-weight:normal">Trigonometric Functions</h1>
 
 	<p><img alt="trig" src="trig.png"></p>
-
-	<p><b>exp</b> and <b>ln</b> are inverse of each other meaning <b>exp<sup>ln</sup></b>=1</p>
-
+	
 	<ul>
-		<li><b>exp</b> (exponential) takes the exponential of the current equation</li>
-		<li><b>ln</b> (natural log) takes the natural log of the current equation</li>
-		<li><b>sin</b> takes the sin of the current equation</li>
-		<li><b>cos</b> takes the cos of the current equation</li>
-		<li><b>tan</b> takes the tan of the current equation</li>
+		<li>At the top you can select a mode for the trig functions to be calculated in, Degrees or Radians.  Depending on what you need to calculate is how you decide what mode you need to be in.  Most commonly it's Degrees unless you're calculating angular kinematics or simple harmonic motion.</li>
+		<li><b>exp</b> (exponential, <b>e<sup>x</sup></b>) calculates the current equation and then takes the exponential of it</li>
+		<li><b>ln</b> (natural log) calculates the current equation and then takes the natural log of it.</li>
+		<li><b>log</b> calculates the current current equation and takes the log of it.
+		<li><b>cos</b> inserts 'cos(' into the current equation.</li>
+		<li><b>sin</b> inserts 'sin(' into the current equation.</li>
+		<li><b>tan</b> inserts 'tan(' into the current equation.</li>
+		<li><b>cos<sup>-1</sup></b> inserts 'acos(' into the current equation. Also known as the inverse cos or arc-cos.</li>
+		<li><b>sin<sup>-1</sup></b> inserts 'asin(' into the current equation. Also known as the inverse sin or arc-sin.</li>
+		<li><b>tan<sup>-1</sup></b> inserts 'atan(' into the current equation. Also known as the inverse tan or arc-tan.</li>
 	</ul>
+	
+	<h3>Common Math rules</h3>
+	<p><b>e<sup>x</sup></b> and <b>ln(x)</b> are inverse of each other meaning <b>e<sup>ln(x)</sup>=x</b> and <b>ln(e<sup>x</sup>)=x</b></p>
+	<p>ln(x) (natural log) is the integral of 1/x which was proven by Euler.</p>
+	<p>log(x) is the ratio of ln(x)/ln(10).  The inverse of <b>log(x)</b> is <b>10<sup>x</sup></b> so <b>log(10<sup>x</sup>)=x</b> and <b>10<sup>log(x)</sup>=x</b>.  By default <b>log(x)</b> is <b>log<sub>10</sub>(x)</b></p>
+	<p>To calculate a different base of log, for example <b>log<sub>3</sub>(x)=3<sup>x</sup></b>, you would have to calculate <b>ln(x)/ln(3)=3<sup>x</sup></b></p>
 </body>
 </html>

@@ -7,7 +7,7 @@
 function set_titles()
 {
 		calc.memory.title="Shows if there is something stored in memory";
-		calc.backbtn.title="Delete a value from right to left";
+		calc.backbtn.title="Delete a character from Equation from right to left";
 		calc.delbtn.title="Clears the Equation";
 		calc.ac.title="Clears the Equation and the memory";
 		calc.mClear.title="Clears the memory";
@@ -15,36 +15,41 @@ function set_titles()
 		calc.btn8.title="Inserts the character 8";
 		calc.btn9.title="Inserts the character 9";
 		calc.divide.title="Inserts the '/' character";
-		calc.b6.title="Takes the exponential of the Equation\n[pow(e,x)]";
+		calc.b6.title="Takes the exponential of the Equation [e^x]";
 		calc.b7.title="Takes the natural log of the Equation";
-		calc.mRecall.title="Recalls the memory into the Equation\n(inserts)";
+		calc.mRecall.title="Recalls the memory into the Equation (inserts)";
 		calc.btn4.title="Inserts the character 4";
 		calc.btn5.title="Inserts the character 5";
 		calc.btn6.title="Inserts the character 6";
 		calc.multiply.title="Inserts the '*' character";
-		calc.c6.title="Takes the square root of the Equation";
-		calc.c7.title="Power of X to Y\n[pow(X,Y)]";
-		calc.mStore.title="Stores the Equation into memory";
+		calc.c6.title="Computes and then takes the square root of the Equation";
+		calc.c7.title="Power of X to Y";
+		calc.mStore.title="Computes and then stores the Equation into memory";
 		calc.btn1.title="Inserts the character 1";
 		calc.btn2.title="Inserts the character 2";
 		calc.btn3.title="Inserts the character 3";
 		calc.subtract.title="Inserts the '+' character";
-		calc.d6.title="Squares the Equation\n[pow(X,2)]";
-		calc.d7.title="Cubes the Equation\n[pow(X,3)]";
-		calc.mPlus.title="Adds the current Equation to the one stored in memory";
+		calc.d6.title="Computes and then squares the Equation";
+		calc.d7.title="Computes and then cubes the Equation";
+		calc.mPlus.title="Computes and then adds Equation to the value stored in memory";
 		calc.btn0.title="Inserts the character 0";
-		calc.e3.title="calcs the negativity sign of a number";
+		calc.e3.title="Changes the negativity of the whole equation";
 		calc.dot.title="Inserts the '.' character";
 		calc.add.title="Inserts the '+' character";
 		calc.enter.title="Computes the current Equation";
-		calc.e7.title="Flips the current Equation";
+		calc.e7.title="Computes and then inverts the current Equation";
 		calc.pi.title="Inserts 'pi'";
 		calc.parl.title="Inserts the '(' character";
 		calc.parr.title="Inserts the ')' character";
-		calc.f4.title="Computes cosine of the current Equation";
-		calc.f5.title="Computes sine of the current Equation";
-		calc.f6.title="Computes tangent of the current Equation";
-		calc.ekey.title="Inserts the 'e' character\n[1e3=1x10^(3)=1000] (not exp)";
+		calc.f4.title="Inserts 'cos('";
+		calc.f5.title="Inserts 'sin('";
+		calc.f6.title="Inserts 'tan('";
+		calc.ekey.title="Inserts the 'e' character [1e3=1x10^3=1000] (not exp)";
+		calc.g1.title="Inserts 'acos('";
+		calc.g3.title="Inserts 'asin('";
+		calc.g5.title="Inserts 'atan('";
+		calc.log.title="Computes and then takes the log of the current equation";
+		
 }
 
 function toggle_display()
@@ -71,6 +76,26 @@ function toggle_keys(opt)
 		else if(opt=='off')
 			enableKeys=false;
 	}
+}
+
+function roundFloat(num,float_val)
+{
+	if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null')
+	{
+		alert('Float Not Set');
+		return void(0);
+	};
+	if(!float_val)
+		float_val=document.getElementById('float').value;
+	comp=1;
+	for(var i=float_val; i > 0; i--)
+	{
+		comp=comp+'0'
+	};
+	if(!num)
+		display.value=Math.round(eval(document.calc.display.value)*comp)/comp;
+	else
+		return Math.round(eval(num)*comp)/comp;
 }
 
 function setFloat()

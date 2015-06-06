@@ -21,9 +21,8 @@ function keydown(e)
 				break;
 			case 13://Enter key
 			case 61://'=' sign
+				calc.enter.click();
 				calc.enter.focus();
-				if(checkNum(display.value))
-					compute(calc);
 				break;
 			case 42://'*' in Opera
 			case 106://'*' in other browsers
@@ -104,9 +103,6 @@ function keypress(e)
 			case 41:
 				calc.parr.focus();
 				addChar(')');
-				break;
-			case 44:
-				addChar(',');
 				break;
 			case 48:
 				calc.btn0.focus();
