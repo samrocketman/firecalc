@@ -38,7 +38,7 @@
 	
 	<script language="JavaScript" type="text/javascript">
 		// define global variables
-		var activeButton,activeButton2,button2,mem,pi,store,calc,display;
+		var activeButton,activeButton2,button2,mem,pi,store,calc,display,enableKeys;
 
 		if(msie)
 			document.writeln('<link rel="stylesheet" type="text/css" href="calc_resources/css/en-msie.css">');
@@ -54,11 +54,13 @@
 			mem='';
 			pi=3.1415926535897932384626433832795;
 			store=false;
+			enableKeys=true;
 			
-			if(!msie&&!firefox&&!netscape&&!mozilla)
+			if(!msie&&!firefox&&!mozilla)
 			{
-				toggle_display(document.getElementById('radio2'),document.calc.display);
-				document.calc.display.focus();
+				toggle_display();
+				display.focus();
+				toggle_keys();
 			}
 			if(msie)
 			{
@@ -106,7 +108,7 @@
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.6</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.7</span></span>
 			</td>
 		</tr>
 		</table>
@@ -214,11 +216,15 @@
 		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
 		<input type="radio" id="radio1" name="radio1" onclick="toggle_titles(document.getElementById('radio1'),document.calc,1)"> Tooltips</a>
 		<a class="menuItem" href="javascript:toggle_display()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
-	<input type="radio" id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>	</div>
+		<input type="radio" id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>
+		<a class="menuItem" href="javascript:toggle_keys()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
+		<input type="radio" id="radio3" name="radio3" onclick="toggle_keys()" checked> Keys Enabled</a>
+	</div>
 
 	<div class="menu" id="helpMenu">
-		<a class="menuItem" href="javascript:(function(){window.open('calchelp','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetMenu()">Help</a>
-		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetMenu()">About Calculator</a>	</div>
+		<a class="menuItem" href="javascript:(function(){window.open('calchelp/index.html','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetMenu()">Help</a>
+		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetMenu()">About Calculator</a>
+	</div>
 
 	<!-- End Tags for the drop down menus. -->
 

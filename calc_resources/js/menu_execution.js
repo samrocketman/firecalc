@@ -11,7 +11,7 @@ function toggle_titles()
 	checkbox.checked=!checkbox.checked;
 
 	//set the values
-	if(checkbox.checked==true)
+	if(checkbox.checked)
 	{
 		calc.memory.title="Shows if there is something stored in memory";
 		calc.backbtn.title="Delete a value from right to left";
@@ -58,6 +58,7 @@ function toggle_titles()
 		for(i=1;i<calc.elements.length;i++)
 			calc.elements[i].title="";
 	}
+	window.focus();
 }
 
 function toggle_display()
@@ -67,10 +68,25 @@ function toggle_display()
 	checkbox.checked=!checkbox.checked;
 
 	//enable/disable the display
-	if(checkbox.checked==false)
+	if(!checkbox.checked)
 		display.readOnly=false;
 	else
 		display.readOnly=true;
+	window.focus();
+}
+
+function toggle_keys()
+{
+	var checkbox=document.getElementById('radio3');
+	//toggle the checkbox
+	checkbox.checked=!checkbox.checked;
+
+	//enable/disable the display
+	if(!checkbox.checked)
+		enableKeys=false;
+	else
+		enableKeys=true;
+	window.focus();
 }
 
 function setFloat()

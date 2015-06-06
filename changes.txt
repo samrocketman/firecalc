@@ -9,6 +9,31 @@ when the code is searched through it is very easy to read.  Not only that but it
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
+
+Whats new in 1.2.7? (02/07/2008)
+HTML/CSS Changes:
+1.	Added a new entry to the Settings menu, "Keys Enabled".  This allows the user to toggle the
+	shortcut keys for the calculator on/off.  This step was imparative for this calculator to
+	be cross platform because of browsers like opera where it has key events but has shortcuts
+	for several of the keys used in this calculator.  This incompatibility lead to problems when
+	trying to type in the calculator.
+
+Documentation changes:
+1.	Reindexed and updated documentation for the added features.
+2.	Revised documentation correcting spelling errors.
+3.	After more browser testing I have split the browsers compatible with the calculator in to 
+	two categories: Fully supported and other (not fully supported).  The full support is if 
+	the calc can use the shortcut keys to compute equations.
+
+Javascript Changes (core functionality of the calculator):
+1.	toggle_keys() function added to calc_resources\js\menu_execution.js
+2.	Slimmed a little bit more code in fire_calc.html and calc_resources\js\menu_execution.js
+
+Other:
+1.	Currently Internet Explorer, Mozilla 1.7, Firefox, and Netscape 9 are fully supported for
+	the shortcut key functionality.  Other browsers are either not fully supported or untested.
+
+
 Whats new in 1.2.6? (02/05/2008)
 Javascript Changes (core functionality of the calculator):
 1.	Finally I totally rewrote calc_resources\js\keys.js.  Keystroke/keycode detection is heavily 
@@ -20,6 +45,7 @@ Javascript Changes (core functionality of the calculator):
 	in calc_resources\js\keys.js I added a new piece of code that grabs focus away from the search
 	that way the next key the user types will still interact with the calculator and not the
 	Firefox search box.  Does anyone have a better fix?  Please let me know if you do.
+
 
 Whats new in 1.2.5? (02/03/2008)
 Documentation changes:
@@ -98,7 +124,6 @@ Javascript Changes (core functionality of the calculator):
 
 
 Whats new in 1.2? (12/21/2007)
-
 HTML/CSS Changes:
 1.	Converted HTML (it used to be a mess) to HTML 4.01 transitional but allows future 
 	compatability with XHTML by using all lowercase tags and properties.
@@ -120,6 +145,7 @@ Javascript Changes (core functionality of the calculator):
 5.	rewrote checkNum() to use the new convert.test object method.
 6.	reformatted all programming to have a standard format and indentation that is easiest to read.
 7.	rewrote setFloat() to use the new convert.test object method
+
 
 THE BIG CHANGE OVER 1.0 AND 1.1
 	Reorganized the code into SEPARATE css and js files.  It used to all be in the same file.

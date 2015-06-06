@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// Zoom Search Engine 5.1 (9/8/2007)
+// Zoom Search Engine 5.1 (13/11/2007)
 //
 // This file (search.js) is the JavaScript search front-end for client side
 // searches using index files created by the Zoom Search Engine Indexer.
@@ -71,7 +71,11 @@ function getParam(paramName)
     arg = (paramStr.split("&"));
     for (i=0; i < arg.length; i++) {
         arg_values = arg[i].split("=")
-        if (unescape(arg_values[0]) == paramName) {
+        if (unescape(arg_values[0]) == paramName) 
+        {
+        	if (paramName == "zoom_query")
+        		arg_values[1] = arg_values[1].replace(/[\+]/g, " ");  // replace the '+' with spaces
+        		        		
             if (UseUTF8 == 1 && self.decodeURIComponent) // check if decodeURIComponent() is defined
                 ret = decodeURIComponent(arg_values[1]);
             else
@@ -267,8 +271,7 @@ function FixQueryForAsianWords(query) {
 // ----------------------------------------------------------------------------
 
 var query = getParam("zoom_query");
-query = query.replace(/[\++]/g, " ");  // replace the '+' with spaces
-query = query.replace(/[\"+]/g, " ");
+query = query.replace(/[\"]/g, " ");
 
 var per_page = parseInt(getParam("zoom_per_page"));
 if (isNaN(per_page)) per_page = 10;
@@ -427,10 +430,10 @@ function ZoomSearch()
         return;
     }
 
-    if (MapAccents == 1) {
-        for (i = 0; i < NormalChars.length; i++) {
-            query = query.replace(AccentChars[i], NormalChars[i]);
-        }
+    if (MapAccents == 1) 
+    {
+        for (i = 0; i < NormalChars.length; i++)
+            query = query.replace(new RegExp(AccentChars[i], "g"), NormalChars[i]);                
     }
 
     // Special query processing required when SearchAsSubstring is enabled
@@ -439,41 +442,47 @@ function ZoomSearch()
 
     // prepare search query, strip quotes, trim whitespace
     if (WordJoinChars.indexOf(".") == -1)
-        query = query.replace(/[\.+]/g, " ");
+        query = query.replace(/[\.]/g, " ");
 
     if (WordJoinChars.indexOf("-") == -1)
         query = query.replace(/(\S)\-/g, "$1 ");
 
+    if (WordJoinChars.indexOf("#") == -1)
+        query = query.replace(/\#(\S)/g, " $1");
+
+    if (WordJoinChars.indexOf("+") == -1)
+    {
+        query = query.replace(/[\+]+([^\+\s])/g, " $1");
+		query = query.replace(/([^\+\s])\+\s/g, "$1 ");
+    }
+
     if (WordJoinChars.indexOf("_") == -1)
-        query = query.replace(/[\_+]/g, " ");
+        query = query.replace(/[\_]/g, " ");
 
     if (WordJoinChars.indexOf("'") == -1)
-        query = query.replace(/[\'+]/g, " ");
-
-    if (WordJoinChars.indexOf("#") == -1)
-        query = query.replace(/[\#+]/g, " ");
+        query = query.replace(/[\']/g, " ");
 
     if (WordJoinChars.indexOf("$") == -1)
-        query = query.replace(/[\$+]/g, " ");
+        query = query.replace(/[\$]/g, " ");
 
     if (WordJoinChars.indexOf("&") == -1)
-        query = query.replace(/[\&+]/g, " ");
+        query = query.replace(/[\&]/g, " ");
 
     if (WordJoinChars.indexOf(":") == -1)
-        query = query.replace(/[\:+]/g, " ");
+        query = query.replace(/[\:]/g, " ");
 
     if (WordJoinChars.indexOf(",") == -1)
-        query = query.replace(/[\,+]/g, " ");
+        query = query.replace(/[\,]/g, " ");
 
     if (WordJoinChars.indexOf("/") == -1)
-        query = query.replace(/[\/+]/g, " ");
+        query = query.replace(/[\/]/g, " ");
 
     if (WordJoinChars.indexOf("\\") == -1)
-        query = query.replace(/[\\+]/g, " ");
+        query = query.replace(/[\\]/g, " ");
         
     // substitute multiple whitespace chars to single character
     // also strip any of the wordjoinchars if followed immediately by a space
-    query = query.replace(/[\s\(\)\^\[\]\|\+\{\}\%]+|[\-._',:&\/\\\\](\s|$)/g, " ");   
+    query = query.replace(/[\s\(\)\^\[\]\|\{\}\%]+|[\-._',:&\/\\\\](\s|$)/g, " ");   
     
     // trim trailing/leading whitespace
     query = query.replace(/^\s*|\s*$/g,""); 
@@ -524,7 +533,7 @@ function ZoomSearch()
     ipage = 0;
     matches = 0;
     var SWord;
-    pagesCount = pageinfo.length;
+    pagesCount = NumPages;
     
     exclude_count = 0;
     ExcludeTerm = 0;
@@ -598,7 +607,7 @@ function ZoomSearch()
 
             data = dictwords[kw_ptr].split(" ");
 
-            if (UseWildCards[sw] == 0) {
+            if (UseWildCards[sw] == 0) {            	
                 if (SearchAsSubstring == 0)
                     match_result = wordcasecmp(data[0], searchWords[sw]);
                 else
@@ -846,14 +855,8 @@ function ZoomSearch()
         pgurl = pagedata[ipage][PAGEDATA_URL];
         pgtitle = pagedata[ipage][PAGEDATA_TITLE];
         pgdesc = pagedata[ipage][PAGEDATA_DESC];
-        pgimage = pagedata[ipage][PAGEDATA_IMG];        
-        pgdate = pageinfo[ipage][PAGEINFO_DATETIME];
-        filesize = pageinfo[ipage][PAGEINFO_FILESIZE];
-        filesize = Math.ceil(filesize / 1024);
-        if (filesize < 1)
-            filesize = 1;
-        catpage = pageinfo[ipage][PAGEINFO_CAT];
-        
+        pgimage = pagedata[ipage][PAGEDATA_IMG];                
+                
         urlLink = pgurl;                                        
         if (GotoHighlight == 1)             
         {
@@ -878,7 +881,7 @@ function ZoomSearch()
             if (pgimage.length > 1)
             {
                 document.writeln("<div class=\"result_image\">");           
-                document.writeln("<a href=\"" + urlLink + "\"" + target + "><img src=\"" + pgimage + "\" class=\"result_image\"></a>");
+                document.writeln("<a href=\"" + urlLink + "\"" + target + "><img src=\"" + pgimage + "\" alt=\"\" class=\"result_image\"></a>");
                 document.writeln("</div>");
             }
         }
@@ -898,6 +901,7 @@ function ZoomSearch()
                    
         if (UseCats) 
         {           
+        	catpage = pageinfo[ipage][PAGEINFO_CAT];        	
             document.write("<span class=\"category\">");
             for (cati = 0; cati < NumCats; cati++)
             {
@@ -927,15 +931,25 @@ function ZoomSearch()
             info_str += STR_RESULT_SCORE + " " + score;
         }
         
-        if (DisplayDate == 1 && pgdate > 0) 
+        if (DisplayDate == 1) 
         {
-            datetime = new Date(pgdate*1000);
-            if (info_str.length > 0)
-                info_str += "&nbsp; - &nbsp;";
-            info_str += datetime.getDate() + " " + months[datetime.getMonth()] + " " + datetime.getFullYear();
+        	pgdate = pageinfo[ipage][PAGEINFO_DATETIME];
+        	if (pgdate > 0)
+        	{        	
+	            datetime = new Date(pgdate*1000);
+	            if (info_str.length > 0)
+	                info_str += "&nbsp; - &nbsp;";
+	            info_str += datetime.getDate() + " " + months[datetime.getMonth()] + " " + datetime.getFullYear();
+	        }
         }
         
-        if (DisplayFilesize == 1) {
+        if (DisplayFilesize == 1) 
+        {
+			filesize = pageinfo[ipage][PAGEINFO_FILESIZE];
+        	filesize = Math.ceil(filesize / 1024);
+        	if (filesize < 1)
+            	filesize = 1;
+            	        	
             if (info_str.length > 0)
                 info_str += "&nbsp; - &nbsp;";
             info_str += filesize + "k";
