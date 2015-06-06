@@ -1,8 +1,0 @@
-/*Internet Explorer settings*/
-/*This is not W3C complaint but written according to MSDN specifications.*/
-@charset "utf-8";
-
-.menu
-{
-	filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=3, OffY=3, Color='#22000', Positive='true', type='inset');
-}

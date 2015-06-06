@@ -1,6 +1,6 @@
+@charset "utf-8";
 /*Default settings...incorporate other browsers with css files*/
 /*These settings work with Firefox, Opera, Mozilla definately and possibly others*/
-@charset "utf-8";
 
 body 
 {
@@ -142,9 +142,10 @@ table,td
 	padding-right: 14px;
 	text-decoration: none;
 	border: 1px solid #FFF;
-	background: url(arrow_r.gif);
+	background: url(../imgs/arrow_r.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
+	z-index: 102;
 }
 
 .menuItem
@@ -214,4 +215,24 @@ table,td
 	font-size: 8pt;
 	font-weight: normal;
 	cursor: default;
+}
+
+/*This is the drop shadow for the menus, no need to edit at all*/
+._drop_shadow_r
+{
+	position: absolute;
+	background-image: url(../imgs/shadow-right.gif);
+	background-repeat: repeat-y;
+	background-position: bottom right;
+	visibility: hidden;
+	z-index: 102;
+}
+._drop_shadow_b
+{
+	position: absolute;
+	background-image: url(../imgs/shadow-bottom.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	visibility: hidden;
+	z-index: 102;
 }

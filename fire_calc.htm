@@ -4,7 +4,7 @@
 	<title>Scientific Calculator - Sam Gleske</title>
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="en-default.css">
+	<link rel="stylesheet" type="text/css" href="calc_resources/css/en-default.css">
 	<script language="JavaScript" type="text/javascript">
 		/*Copyright must stay intact*/
 		/******************************************************************\
@@ -27,21 +27,21 @@
 	</script>
 	
 	<!-- Custom JS objects -->
-	<script language="JavaScript" type="text/javascript" src="convert_object.js"></script>
-	<script language="JavaScript" type="text/javascript" src="temperature_object.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/convert_object.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/temperature_object.js"></script>
 	
 	<!-- Core functionality JS files -->
-	<script language="JavaScript" type="text/javascript" src="keys.js"></script>
-	<script language="JavaScript" type="text/javascript" src="menu_execution.js"></script>
-	<script language="JavaScript" type="text/javascript" src="math_functions.js"></script>
-	<script language="JavaScript" type="text/javascript" src="menu_functionality.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/keys.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/menu_execution.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/math_functions.js"></script>
+	<script language="JavaScript" type="text/javascript" src="calc_resources/js/menu_functionality.js"></script>
 	
 	<script language="JavaScript" type="text/javascript">
 		// define global variables
 		var activeButton,activeButton2,button2,mem,pi,store,calc,display;
 
 		if(msie)
-			document.writeln('<link rel="stylesheet" type="text/css" href="en-msie.css">');
+			document.writeln('<link rel="stylesheet" type="text/css" href="calc_resources/css/en-msie.css">');
 
 		function init()
 		{
@@ -88,12 +88,28 @@
 	<!-- Tags for the menu bar. -->
 
 	<div id="menuBar" style="cursor:default;">
-		<a class="menuButton" href="" onclick="return buttonclick(0, this, 'fileMenu');" onmouseover="buttonMouseover(0, this, 'fileMenu');">File</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'editMenu');" onmouseover="buttonMouseover(0, this, 'editMenu');">Edit</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'convMenu');" onmouseover="buttonMouseover(0, this, 'convMenu');">Conv</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'settingsMenu');" onmouseover="buttonMouseover(0, this, 'settingsMenu');">Settings</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
-		&nbsp;<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.2</span></span>
+		<table style="border: none;width:100%">
+		<tr>
+			<td  style="border: none;width:29px">
+				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'fileMenu');" onmouseover="buttonMouseover(0, this, 'fileMenu');">File</a>
+			</td>
+			<td  style="border: none;width:30px">
+				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'editMenu');" onmouseover="buttonMouseover(0, this, 'editMenu');">Edit</a>
+			</td>
+			<td  style="border: none;width:37px">
+				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'convMenu');" onmouseover="buttonMouseover(0, this, 'convMenu');">Conv</a>
+			</td>
+			<td  style="border: none;width:50px">
+				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'settingsMenu');" onmouseover="buttonMouseover(0, this, 'settingsMenu');">Settings</a>
+			</td>
+			<td  style="border: none;text-align:left">
+				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
+			</td>
+			<td  style="border: none;text-align:right">
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.3</span></span>
+			</td>
+		</tr>
+		</table>
 	</div>
 
 <!-- Start Tags for the drop down menus. -->
