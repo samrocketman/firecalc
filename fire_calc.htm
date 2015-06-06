@@ -26,6 +26,7 @@
 		var mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
 		var opera=(window.opera)?1:0;
 		var safari=(navigator.vendor.indexOf("Apple")!=-1)?1:0;
+		var konqueror=(navigator.vendor.indexOf("KDE")!=-1)?1:0;
 	</script>
 	
 	<!-- Custom JS objects -->
@@ -110,7 +111,7 @@
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.2.8</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator <span style="color:red;">v1.2.9</span></span>
 			</td>
 		</tr>
 		</table>
@@ -267,7 +268,7 @@
 			<td style="text-align:center"><input class="num" type="button" name="btn6" onclick="addChar('6')" style="width:33px;height:28px" value="6"></td>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="multiply" onclick="addChar('*')" style="width:33px;height:28px" value="*"></td>
 			<td style="text-align:center"><input class="AdvFunc" type="button" name="c6" onclick="sqrt()" style="width:40px;height:28px" value="sqrt"></td>
-			<td style="text-align:center"><input class="BasFunc" type="button" name="c7" onclick="addChar('^')" style="width:40px;height:28px" value="x^y"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="c7" onclick="if(display.value!='0')addChar('^')" style="width:40px;height:28px" value="x^y"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mStore" onclick="StoreMem()" style="width:40px;height:28px" value="MS"></td>

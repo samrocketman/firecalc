@@ -66,14 +66,22 @@ function deleteChar()
 }
 function changeSign()
 {
+	if(display.value=="0")
+		return;
 	if(checkNum())
 	{
 		if(convert.test(display.value,/[0-9\.\-]/))
 		{
-			if(display.value.substring(0, 1)=="-")
-				display.value=display.value.substring(1, display.value.length);
+			if(convert.test(display.value.substring(1,display.value.length),/[0-9\.]/))
+			{
+				if(display.value.substring(0, 1)=="-")
+					display.value=display.value.substring(1, display.value.length);
+				else
+					display.value="-"+display.value;
+			}
 			else
-				display.value="-"+display.value;
+				display.value="-("+display.value+")";
+			
 		}
 		else if(display.value.substring(0, 2)=="-(")
 		{

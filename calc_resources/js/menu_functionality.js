@@ -241,7 +241,7 @@ function resetMenu(j)
 if(!msie)
 	document.writeln('<div id="_menu_drop_shadows" style="position:absolute;top:0px;left:0px;z-index:0"></div>');
 
-function menuShadow(elem,x,y)
+function menuShadow(elem,x,y,opacity)
 {
 	//width,height,left,top (w,h,l,t)
 	var w,h;
@@ -262,11 +262,35 @@ function menuShadow(elem,x,y)
 	elem.shadow_r.style.left=x-1+"px";
 	elem.shadow_r.style.top=y+"px";
 	elem.shadow_r.style.width=w+"px";
-	elem.shadow_r.style.height=h+"px";
+	elem.shadow_r.style.height=h-1+"px";
 	//apply bottom shadow properties
 	elem.shadow_b.style.left=(x+4)+"px";
-	elem.shadow_b.style.top=y+"px";
+	elem.shadow_b.style.top=y-1+"px";
 	elem.shadow_b.style.width=(w-offset-4)+"px";
 	elem.shadow_b.style.height=h+"px";
+	//apply opacity to the shadow
+	if(!opacity)
+		opacity="55";
+	if(firefox||mozilla)
+	{
+		elem.shadow_r.style["-moz-opacity"]=opacity/100;
+		elem.shadow_r.style["opacity"]=opacity/100;
+		elem.shadow_b.style["-moz-opacity"]=opacity/100;
+		elem.shadow_b.style["opacity"]=opacity/100;
+	}
+	else if(msie)
+	{
+		elem.shadow_r.style["filter"]="alpha(opacity="+opacity+")";
+		elem.shadow_b.style["filter"]="alpha(opacity="+opacity+")";
+	}
+	else
+	{
+		elem.shadow_r.style["opacity"]=opacity/100;
+		elem.shadow_r.style["-moz-opacity"]=opacity/100;
+		elem.shadow_r.style["filter"]="alpha(opacity="+opacity+")";
+		elem.shadow_b.style["opacity"]=opacity/100;
+		elem.shadow_b.style["-moz-opacity"]=opacity/100;
+		elem.shadow_b.style["filter"]="alpha(opacity="+opacity+")";
+	}
 	//show the shadows
 }

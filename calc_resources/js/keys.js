@@ -40,9 +40,17 @@ function keydown(e)
 				calc.subtract.focus();
 				addChar('-');
 				break;
-			case 46://Delete Key
-				display.value=0;
-				calc.delbtn.focus();
+			case 46://Delete Key in others (or period in Konqueror)
+				if(konqueror)
+				{
+					calc.dot.focus();
+					addChar('.');
+				}
+				else
+				{
+					calc.delbtn.focus();
+					display.value=0;
+				}
 				break;
 			case 47://'/' in Opera
 			case 111://'/' in other browsers
@@ -53,6 +61,13 @@ function keydown(e)
 			case 110://'.' in other browsers
 				calc.dot.focus();
 				addChar('.');
+				break;
+			case 127://Delete key in Konqueror
+				if(konqueror)
+				{
+					calc.delbtn.focus();
+					display.value=0;
+				}
 				break;
 		}
 		return false;
@@ -174,5 +189,6 @@ function keypress(e)
 				addChar('^');
 				break;
 		}
+		return false;
 	}
 }

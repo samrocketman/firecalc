@@ -221,7 +221,7 @@ table,td
 ._drop_shadow_r
 {
 	position: absolute;
-	background-image: url(../imgs/shadow-right.gif);
+	background-image: url(../imgs/shadow-right.png);
 	background-repeat: repeat-y;
 	background-position: bottom right;
 	visibility: hidden;
@@ -230,7 +230,7 @@ table,td
 ._drop_shadow_b
 {
 	position: absolute;
-	background-image: url(../imgs/shadow-bottom.gif);
+	background-image: url(../imgs/shadow-bottom.png);
 	background-repeat: repeat-x;
 	background-position: bottom;
 	visibility: hidden;
