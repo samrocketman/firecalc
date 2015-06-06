@@ -4,16 +4,33 @@ calculators on the web.  This calculator was programmed to be totally standards 
 Explorer to be exact).  Not only is it W3C and MSDN (for IE) standards compliant, but the code itself has a consistent format.  All 
 javascript is tabbed the same way, all CSS it tabbed the same way, and all of the HTML is tabbed the same way.  What this calculator aims
 to do is to work in every condition, be standards compliant, and when the code is searched through it is very easy to read.  Not only that
-but it is heavily commented to explain the different functions and features from within.
+but it is heavily commented to explain the different functions and features from within.  All dates are in mm/dd/yyyy format.
 
-Whats new in 1.2.1? 01/10/2008
+Whats new in 1.2.2? (01/11/2008)
+Javascript Changes (core functionality of the calculator):
+1.	Fixed bug with browser detection
+2.	Totally rewrote menu_functionality.js so it can handle an unlimited amount of submenus and run more efficiently.  Also updated
+	all other code to work with the new menu_functionality.js
+3.	Separated custom objects into separate js files
+4.	Rewrote the changeSign function in math_functions.js to apply to the whole equation
+5.	Changed checkBase to unitCheck function in menu_execution.js and now it runs when buttonMouseover in menu_functionality.js is 
+	executed.
+6.	Added temperature object to calculator
+7.	unitCheck now checks for invalid chars and below absolute zero on all temperatures in menu_execution.js
+
+HTML/CSS Changes:
+1.	Created submenu class name for menu_functionality.js and updated other source files accordingly
+2.	Added submenus to Conv menu so user can convert between temperature units
+
+
+Whats new in 1.2.1? (01/10/2008)
 HTML/CSS Changes:
 1.	Added charset encoding to .css files
 2.	Fixed bug, onclick in submit button was causing display to be calculated twice.  (it is done through onsubmit of the form)
 3.	Changed CSS files by removing transparent as a color so en-default.css is compatable with all browsers
 4.	Renamed the View menu to Settings.  I thought it was more appropriate.
 
-Javascript Changes
+Javascript Changes (core functionality of the calculator):
 1.	Fixed Bug computing errors with Regular Expressions
 2.	Completely rewrote functions compute and deleteChar in math_functions.js
 3.	Rewrote functions cos, sin, tan, sqrt, ln, exp, square, and cube to incorporate the newly rewritten compute function in 
@@ -22,7 +39,7 @@ Javascript Changes
 5.	Added a for loop to checkBase function in menu_execution.js
 
 
-Whats new in 1.2?
+Whats new in 1.2? (12/21/2007)
 
 HTML/CSS Changes:
 1.	Converted HTML (it used to be a mess) to HTML 4.01 transitional but allows future compatability with XHTML by using all lowercase tags
@@ -58,3 +75,6 @@ object, it really is nice and took me a long time to write/refine/optimize) then
 Just remember where you get your code from and it would be nice to let others benefit from it just as you may have.
 
 The help source is not available for download, sorry.  This may change in the future but it is not the case for the time being.
+
+ver 1.1 released around 01/19/2007
+ver 1.0 released around 09/??/2005 (unfortunately I didn't document it very well in the beginning development stages.  Now I'm a better developer)

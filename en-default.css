@@ -76,7 +76,7 @@ table,td
 	z-index: 100;																																 
 }
 
-a.menuButton
+.menuButton
 {
 	border-style: solid;
 	border-width: 1px;
@@ -96,7 +96,7 @@ a.menuButton
 	text-decoration: none;
 }
 
-a.menuButton:hover
+.menuButton:hover
 {
 	border-style: solid;
 	border-top-color: #316AC5;
@@ -126,7 +126,28 @@ a.menuButton:hover
 	width:125px;
 }
 
-a.menuItem
+.submenu
+{
+	background-color: #FFF;
+	color: #000;
+	cursor: default;
+	display: block;
+	font-family: "MS Sans Serif", Arial, Tahoma,sans-serif;
+	font-size: 8pt;
+	font-weight: normal;
+	margin: 0px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 12px;
+	padding-right: 14px;
+	text-decoration: none;
+	border: 1px solid #FFF;
+	background: url(arrow_r.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+.menuItem
 {
 	background-color: #FFF;
 	color: #000;
@@ -144,7 +165,7 @@ a.menuItem
 	border: 1px solid #FFF;
 }
 
-a.menuItem:hover
+.menuItem:hover
 {
 	background-color: #CED3E1;
 	text-decoration: none;
@@ -163,7 +184,7 @@ a.menuItem:hover
 	border: 1px solid #316AC5;
 }
 
-a.menuDisabled
+.menuDisabled
 {
 	background-color: #FFF;
 	color: #CCC;

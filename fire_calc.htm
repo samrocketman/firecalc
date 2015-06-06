@@ -5,16 +5,12 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="en-default.css">
-	<script language="JavaScript" type="text/javascript" src="keys.js"></script>
-	<script language="JavaScript" type="text/javascript" src="menu_execution.js"></script>
-	<script language="JavaScript" type="text/javascript" src="math_functions.js"></script>
-	<script language="JavaScript" type="text/javascript" src="menu_functionality.js"></script>
 	<script language="JavaScript" type="text/javascript">
 		/*Copyright must stay intact*/
 		/******************************************************************\
 		*                                                    ***************
 		***     Calculator Created by Sam Gleske               *************
-		******        Thanks to Kyle Winters for help.            **********
+		******      Thanks to Kyle Winters for init help.         **********
 		*********              Copyright (c) 2005 Sam Gleske          ******
 		************                Notice must stay intact for use.     ***
 		*********                The source can be modified           ******
@@ -22,40 +18,42 @@
 		***      Visit http://www.pages.drexel.edu/~sag47/     *************
 		*                                                    ***************
 		\******************************************************************/
-
-		//search for a browser type
+		
+		//search for a browser type (this is only for browser specific settings, any browsers not listed should work with default code)
 		var msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
-		var firefox,netscape,mozilla;
-
-		// global variables
+		var firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
+		var netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
+		var mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
+	</script>
+	
+	<!-- Custom JS objects -->
+	<script language="JavaScript" type="text/javascript" src="convert_object.js"></script>
+	<script language="JavaScript" type="text/javascript" src="temperature_object.js"></script>
+	
+	<!-- Core functionality JS files -->
+	<script language="JavaScript" type="text/javascript" src="keys.js"></script>
+	<script language="JavaScript" type="text/javascript" src="menu_execution.js"></script>
+	<script language="JavaScript" type="text/javascript" src="math_functions.js"></script>
+	<script language="JavaScript" type="text/javascript" src="menu_functionality.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+		// define global variables
 		var activeButton,activeButton2,button2,mem,pi,store,calc,display;
 
 		if(msie)
 			document.writeln('<link rel="stylesheet" type="text/css" href="en-msie.css">');
-
-		/*test browsers
-		if (msie) alert('msie');
-		if (firefox) alert('firefox');
-		if (opera) alert('opera');
-		if (safari) alert('safari');//*/
 
 		function init()
 		{
 			//initialize global vars
 			display=document.calc.display;
 			calc=document.calc;
-			activeButton=null;
+			activeButton=new Array();
 			activeButton2=null;
 			button2=null;
 			mem='';
 			pi=3.1415926535897932384626433832795;
 			store=false;
-			
-			//initialize browser vars
-			msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
-			firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
-			netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
-			mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
 			
 			if(!msie&&!firefox&&!netscape&&!mozilla)
 			{
@@ -83,73 +81,128 @@
 		}
 	</script>
 </head>
-<body onload="init()" onkeypress="keypress(event);if(activeButton){resetButton(activeButton)};if(activeButton2){resetButton2(activeButton2)};" onkeydown="keydown(event)">
+<body onload="init()" onkeypress="keypress(event);resetMenu();" onkeydown="keydown(event)">
 <!-- My personal coding hierarchy preferences: <tag class=? href=? type=? id=? name=? onclick=? onmouseover=? onmouseout=? onfocus=? onblur=? style=? onload=? action=? method=? onsubmit=? onkeypress=? onkeyup=? onkeydown=? value=? title=? target=? checked readonly> -->
 	<!-- MENU CODE -->
 
 	<!-- Tags for the menu bar. -->
 
 	<div id="menuBar" style="cursor:default;">
-		<a class="menuButton" href="" onclick="return buttonclick(this, 'fileMenu');" onmouseover="buttonMouseover(this, 'fileMenu');if(activeButton2){resetButton2(activeButton2)};">File</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'editMenu');" onmouseover="buttonMouseover(this, 'editMenu');if(activeButton2){resetButton2(activeButton2)};">Edit</a>
-		&nbsp;<a class="menuButton" href="" onclick="checkBase();return buttonclick(this, 'convMenu');" onmouseover="checkBase();buttonMouseover(this, 'convMenu');if(activeButton2){resetButton2(activeButton2)};">Conv</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'settingsMenu');" onmouseover="buttonMouseover(this, 'settingsMenu');if(activeButton2){resetButton2(activeButton2)};">Settings</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'helpMenu');" onmouseover="buttonMouseover(this, 'helpMenu');if(activeButton2){resetButton2(activeButton2)};">Help</a>
-		&nbsp;<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.1</span></span>
+		<a class="menuButton" href="" onclick="return buttonclick(0, this, 'fileMenu');" onmouseover="buttonMouseover(0, this, 'fileMenu');">File</a>
+		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'editMenu');" onmouseover="buttonMouseover(0, this, 'editMenu');">Edit</a>
+		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'convMenu');" onmouseover="buttonMouseover(0, this, 'convMenu');">Conv</a>
+		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'settingsMenu');" onmouseover="buttonMouseover(0, this, 'settingsMenu');">Settings</a>
+		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
+		&nbsp;<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.2</span></span>
 	</div>
 
 <!-- Start Tags for the drop down menus. -->
 
 	<div class="menu" id="fileMenu">
-		<a class="menuItem" href="fire_calc.htm?true" onclick="resetButton(activeButton);">Reload</a>
-		<a class="menuItem" href="javascript:window.close();" onclick="resetButton(activeButton);">Exit</a>	</div>
+		<a class="menuItem" href="fire_calc.htm?true" onclick="resetMenu()">Reload</a>
+		<a class="menuItem" href="javascript:window.close();" onclick="resetMenu()">Exit</a>
+	</div>
 
 	<div class="menu" id="editMenu">
-		<a class="menuItem" href="javascript:docmd(1);" id="copy-menu" onclick="resetButton(activeButton);" style="display:none;">Copy</a>
-		<a class="menuItem" href="javascript:docmd(0);" id="paste-menu" onclick="resetButton(activeButton);" style="display:none;">Paste</a>
+		<a class="menuItem" href="javascript:docmd(1);" id="copy-menu" onclick="resetMenu()" style="display:none;">Copy</a>
+		<a class="menuItem" href="javascript:docmd(0);" id="paste-menu" onclick="resetMenu()" style="display:none;">Paste</a>
 		<hr class="hr" id="hr-menu" style="display:none;">
-		<a class="menuItem" href="javascript:(function(){if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null'){alert('Float Not Set');return void(0);};comp=1;for(var i=document.getElementById('float').value; i > 0; i--){comp=comp+'0'};original=document.calc.display.value;document.calc.display.value=Math.round(eval(document.calc.display.value)*comp)/comp})();" onclick="resetButton(activeButton);">Round Answer</a>
-		<a class="menuItem" href="javascript:setFloat()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">Float = <input class="setvalue" type="text" id="float" onclick="setFloat();" value="3" readonly></a>
+		<a class="menuItem" href="javascript:(function(){if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null'){alert('Float Not Set');return void(0);};comp=1;for(var i=document.getElementById('float').value; i > 0; i--){comp=comp+'0'};original=document.calc.display.value;document.calc.display.value=Math.round(eval(document.calc.display.value)*comp)/comp})();" onclick="resetMenu()">Round Answer</a>
+		<a class="menuItem" href="javascript:setFloat()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">Float = <input class="setvalue" type="text" id="float" onclick="setFloat();" value="3" readonly></a>
 	</div>
 
 	<div class="menu" id="convMenu">
-		<a class="menuItem" href="javascript:void(0)" onmouseover="return buttonclick2(this, 'convMenu-1');" onfocus="this.blur()" style="background:url(arrow_r.gif);background-repeat:no-repeat;background-position:center right">Base</a>
-		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton2){resetButton2(activeButton2)};" onfocus="this.blur()" target="_blank">Other Conversions</a>	</div>
+		<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(1,this, 'convMenu-1')" onfocus="this.blur()">Base</a>
+		<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(1,this, 'convMenu-2')" onfocus="this.blur()">Temperature</a>
+		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton[1]){resetMenu(1)}" onfocus="this.blur()" target="_blank">Other Conversions</a>
+	</div>
 
-	<!--Start extended Submenu for Base within the convMenu-->
-
+	<!--Start extended Submenus convMenu-->
+		<!-- Base submenu -->
 		<div class="menu" id="convMenu-1">
-			<a class="menuItem" href="javascript:convBase('bin','Dec');" id="bin1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('bin','Hex');" id="bin2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Hex</a>
-			<a class="menuItem" href="javascript:convBase('bin','Oct');" id="bin3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('dec','Bin');" id="dec1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('dec','Hex');" id="dec2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Hex</a>
-			<a class="menuItem" href="javascript:convBase('dec','Oct');" id="dec3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('hex','Bin');" id="hex1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('hex','Dec');" id="hex2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('hex','Oct');" id="hex3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Oct</a>
-			<a class="menuItem" href="javascript:convBase('oct','Bin');" id="oct1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Bin</a>
-			<a class="menuItem" href="javascript:convBase('oct','Dec');" id="oct2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Dec</a>
-			<a class="menuItem" href="javascript:convBase('oct','Hex');" id="oct3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Hex</a>
-			<a class="menuDisabled" id="nooption" onfocus="this.blur()" style="display:none;">Not Available.</a>		</div>
-
+			<a class="menuItem" href="javascript:convBase('bin','Dec');" id="bin1" onclick="resetMenu();">Bin &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('bin','Hex');" id="bin2" onclick="resetMenu();">Bin &gt; Hex</a>
+			<a class="menuItem" href="javascript:convBase('bin','Oct');" id="bin3" onclick="resetMenu();">Bin &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('dec','Bin');" id="dec1" onclick="resetMenu();">Dec &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('dec','Hex');" id="dec2" onclick="resetMenu();">Dec &gt; Hex</a>
+			<a class="menuItem" href="javascript:convBase('dec','Oct');" id="dec3" onclick="resetMenu();">Dec &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('hex','Bin');" id="hex1" onclick="resetMenu();">Hex &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('hex','Dec');" id="hex2" onclick="resetMenu();">Hex &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('hex','Oct');" id="hex3" onclick="resetMenu();">Hex &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('oct','Bin');" id="oct1" onclick="resetMenu();">Oct &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('oct','Dec');" id="oct2" onclick="resetMenu();">Oct &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('oct','Hex');" id="oct3" onclick="resetMenu();">Oct &gt; Hex</a>
+			<a class="menuDisabled" id="nooption1" onfocus="this.blur()" style="display:none;">Not Available.</a>
+		</div>
+		<!-- End Base submenu -->
+		
+		<!-- Temperature submenu -->
+		<div class="menu" id="convMenu-2">
+			<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(2,this, 'convMenu-2-1')" id="celsius" onfocus="this.blur()">Celsius</a>
+			<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(2,this, 'convMenu-2-2')" id="fahr" onfocus="this.blur()">Fahrenheit</a>
+			<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(2,this, 'convMenu-2-3')" id="kelvin" onfocus="this.blur()">Kelvin</a>
+			<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(2,this, 'convMenu-2-4')" id="rankine" onfocus="this.blur()">Rankine</a>
+			<a class="submenu" href="javascript:void(0)" onmouseover="buttonMouseover(2,this, 'convMenu-2-5')" id="reaumur" onfocus="this.blur()">Reaumur</a>
+			<a class="menuDisabled" id="nooption2" onfocus="this.blur()" style="display:none;">Not Available.</a>
+		</div>
+			<!-- Celsius submenu -->
+			<div class="menu" id="convMenu-2-1">
+				<a class="menuItem" href="javascript:convTemp('celsius','toFahr')" onclick="resetMenu();">to Fahrenheit</a>
+				<a class="menuItem" href="javascript:convTemp('celsius','toKelvin')" onclick="resetMenu();">to Kelvin</a>
+				<a class="menuItem" href="javascript:convTemp('celsius','toRankine')" onclick="resetMenu();">to Rankine</a>
+				<a class="menuItem" href="javascript:convTemp('celsius','toReaumur')" onclick="resetMenu();">to Reaumur</a>
+			</div>
+			<!-- End Celsius submenu -->
+			<!-- Fahr submenu -->
+			<div class="menu" id="convMenu-2-2">
+				<a class="menuItem" href="javascript:convTemp('fahr','toCelsius')" onclick="resetMenu();">to Celsius</a>
+				<a class="menuItem" href="javascript:convTemp('fahr','toKelvin')" onclick="resetMenu();">to Kelvin</a>
+				<a class="menuItem" href="javascript:convTemp('fahr','toRankine')" onclick="resetMenu();">to Rankine</a>
+				<a class="menuItem" href="javascript:convTemp('fahr','toReaumur')" onclick="resetMenu();">to Reaumur</a>
+			</div>
+			<!-- End Fahr submenu -->
+			<!-- Kelvin submenu -->
+			<div class="menu" id="convMenu-2-3">
+				<a class="menuItem" href="javascript:convTemp('kelvin','toCelsius')" onclick="resetMenu();">to Celsius</a>
+				<a class="menuItem" href="javascript:convTemp('kelvin','toFahr')" onclick="resetMenu();">to Fahrenheit</a>
+				<a class="menuItem" href="javascript:convTemp('kelvin','toRankine')" onclick="resetMenu();">to Rankine</a>
+				<a class="menuItem" href="javascript:convTemp('kelvin','toReaumur')" onclick="resetMenu();">to Reaumur</a>
+			</div>
+			<!-- End Kelvin submenu -->
+			<!-- Rankine submenu -->
+			<div class="menu" id="convMenu-2-4">
+				<a class="menuItem" href="javascript:convTemp('rankine','toCelsius')" onclick="resetMenu();">to Celsius</a>
+				<a class="menuItem" href="javascript:convTemp('rankine','toFahr')" onclick="resetMenu();">to Fahrenheit</a>
+				<a class="menuItem" href="javascript:convTemp('rankine','toKelvin')" onclick="resetMenu();">to Kelvin</a>
+				<a class="menuItem" href="javascript:convTemp('rankine','toReaumur')" onclick="resetMenu();">to Reaumur</a>
+			</div>
+			<!-- End Rankine submenu -->
+			<!-- Celsius submenu -->
+			<div class="menu" id="convMenu-2-5">
+				<a class="menuItem" href="javascript:resetMenu()" onclick="convTemp('reaumur','toCelsius');">to Celsius</a>
+				<a class="menuItem" href="javascript:convTemp('reaumur','toFahr')" onclick="resetMenu();">to Fahrenheit</a>
+				<a class="menuItem" href="javascript:convTemp('reaumur','toKelvin')" onclick="resetMenu();">to Kelvin</a>
+				<a class="menuItem" href="javascript:convTemp('reaumur','toRankine')" onclick="resetMenu();">to Rankine</a>
+			</div>
+			<!-- End Celsius submenu -->
+		<!-- End Temperature submenu -->
 	<!--End extended Submenus-->
 
 	<div class="menu" id="settingsMenu">
-		<a class="menuItem" href="javascript:void(0);" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+		<a class="menuItem" href="javascript:void(0);" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
 		<input type="radio" name="radio" id="radio" checked>Standard</a>
 		<a class="menuDisabled" onfocus="this.blur()">
 		<input type="radio" disabled>Scientific</a>
 		<hr>
 
-		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
 		<input type="radio" id="radio1" name="radio1" onclick="toggle_titles(document.getElementById('radio1'),document.calc,1)"> Tooltips</a>
-		<a class="menuItem" href="javascript:toggle_display()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+		<a class="menuItem" href="javascript:toggle_display()" onclick="resetMenu()" style="padding-top: 0px;padding-bottom: 0px;">
 	<input type="radio" id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>	</div>
 
 	<div class="menu" id="helpMenu">
-		<a class="menuItem" href="javascript:(function(){window.open('calchelp/help.htm','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetButton(activeButton);">Help</a>
-		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetButton(activeButton);">About Calculator</a>	</div>
+		<a class="menuItem" href="javascript:(function(){window.open('calchelp/help.htm','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetMenu()">Help</a>
+		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetMenu()">About Calculator</a>	</div>
 
 	<!-- End Tags for the drop down menus. -->
 

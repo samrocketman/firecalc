@@ -68,10 +68,25 @@ function changeSign()
 {
 	if(checkNum())
 	{
-		if(display.value.substring(0, 1)=="-")
-			display.value=display.value.substring(1, display.value.length);
+		if(convert.test(display.value,/[0-9\.\-]/))
+		{
+			if(display.value.substring(0, 1)=="-")
+				display.value=display.value.substring(1, display.value.length);
+			else
+				display.value="-"+display.value;
+		}
+		else if(display.value.substring(0, 2)=="-(")
+		{
+			if(display.value.substring(display.value.length-1,display.value.length)==")")
+			{
+				display.value=display.value.substring(2, display.value.length);
+				deleteChar();
+			}
+			else
+				display.value="-("+display.value+")";
+		}
 		else
-			display.value="-"+display.value;
+			display.value="-("+display.value+")";
 	}
 	else
 		alert("Invalid characters in display");
