@@ -9,6 +9,19 @@ when the code is searched through it is very easy to read.  Not only that but it
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
+Whats new in 1.2.5? (02/03/2008)
+Documentation changes:
+1.	Changed version numbers in documentation.
+2.	Reindexed the entire search documentation to allow changes for the new version to take effect.
+3.	Added page numbers to PDF version for easy navigation if document is printed.
+4.	Added Table of Contents to the Table of Contents for easier navigation in the PDF.
+
+Javascript Changes (core functionality of the calculator):
+1.	Fixed bug in changeSign() function of resources\js\math_functions.js.  When user would change
+	the sign by pressing the +/- button on this equation: -(45+3)+(2+3) then rather than changing
+	the sign of the whole equation it would change it to: 45+3)+(2+3 and now it has errors.
+
+
 Whats new in 1.2.4? (01/21/2008)
 Created a completely custom written help system designed by me so the help source can be 
 released.  I had used RoboHelp Office at a previous company I worked at because I could have

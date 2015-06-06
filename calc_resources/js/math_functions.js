@@ -79,8 +79,17 @@ function changeSign()
 		{
 			if(display.value.substring(display.value.length-1,display.value.length)==")")
 			{
+				var backup=display.value;
 				display.value=display.value.substring(2, display.value.length);
 				deleteChar();
+				try
+				{
+					var test_str=eval(display.value);
+				}
+				catch(e)
+				{
+					display.value="-("+backup+")";
+				}
 			}
 			else
 				display.value="-("+display.value+")";
