@@ -3,10 +3,21 @@ This calculator was created to have easy integration into web applications.  The
 javascript/web interface calculators on the web.  This calculator was programmed to be totally 
 standards compliant unless a specific browser is being used (Internet Explorer to be exact).  Not only 
 is it W3C and MSDN (for IE) standards compliant, but the code itself has a consistent format.  All 
-javascript is tabbed the same way, all CSS it tabbed the same way, and all of the HTML is tabbed the 
+javascript is tabbed the same way, all CSS is tabbed the same way, and all of the HTML is tabbed the 
 same way.  What this calculator aims to do is to work in every condition, be standards compliant, and 
 when the code is searched through it is very easy to read.  Not only that but it is heavily commented 
-to explain the different functions and features from within.  All dates are in mm/dd/yyyy format.
+to explain the different functions and features from within.  The calculator should work on all
+JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
+
+Whats new in 1.2.4? (01/21/2008)
+Created a completely custom written help system designed by me so the help source can be 
+released.  I had used RoboHelp Office at a previous company I worked at because I could have
+a copy of it and since that was a $1000 closed source program it didn't make much sense to 
+release its content under any kind of open source license.  Now I've designed my own which I
+will turn into a sourceforge project so other open source users can benefit from it as well.
+
+*Edit 01/31/2008 I have included a PDF version of the documentation allong with an ODT file
+which was created by OpenOffice.org.  1.2.4 is the first SourceForge release of the calculator.
 
 Whats new in 1.2.3? (01/14/2008)
 HTML/CSS Changes:
@@ -104,5 +115,6 @@ Just remember where you get your code from and it would be nice to let others be
 may have.  The help source is not available for download, sorry.  This may change in the future but it is 
 not the case for the time being.
 
-ver 1.1 released 01/19/2007
-ver 1.0 released 11/28/2005
+ver 1.1 released around 01/19/2007
+ver 1.0 released around 09/??/2005 
+(unfortunately I didn't document it very well in the beginning development stages.  Now I'm a better developer)
