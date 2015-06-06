@@ -54,10 +54,10 @@ function buttonclick(i,button, menuName)
 		shadows=document.getElementById("_menu_drop_shadows");
 		shadow_r=document.createElement('div');
 		shadow_b=document.createElement('div');
-		shadow_r.setAttribute('id','_shadow_r'+menuName)
+		shadow_r.setAttribute('id','_shadow_r'+menuName);
 		shadow_r.setAttribute('class','_drop_shadow_r');
 		shadows.appendChild(shadow_r);
-		shadow_b.setAttribute('id','_shadow_b'+menuName)
+		shadow_b.setAttribute('id','_shadow_b'+menuName);
 		shadow_b.setAttribute('class','_drop_shadow_b');
 		shadows.appendChild(shadow_b);
 	}

@@ -60,7 +60,7 @@ function pow(x,y)
 }
 function deleteChar()
 {//deletes a char from right to left in display
-	display.value=display.value.substring(0,display.value.length-1)
+	display.value=display.value.substring(0,display.value.length-1);
 	if(display.value=='')
 		display.value=0;
 }
@@ -70,6 +70,17 @@ function changeSign()
 		return;
 	if(checkNum())
 	{
+		try
+		{
+			result=displayToPower(display.value);
+			eval(result);
+		}
+		catch(e)
+		{
+			alert("There are errors in the equation.\nFix the equation and try pressing the +/- button again.");
+			return false;
+		}
+		//if no errors then flip the sign
 		if(convert.test(display.value,/[0-9\.\-]/))
 		{
 			if(convert.test(display.value.substring(1,display.value.length),/[0-9\.]/))
@@ -156,9 +167,13 @@ function displayToPower(str)
 				results[0]=str.substring(0,str.indexOf('^'));
 		}
 		
-		if(str.charAt(str.indexOf('^')+1)=='(')
+		if(str.charAt(str.indexOf('^')+1)=='('||(((str.charAt(str.indexOf('^')+1)=='+')||(str.charAt(str.indexOf('^')+1)=='-'))&&str.charAt(str.indexOf('^')+2)=='(')?true:false)
 		{
-			i=str.indexOf('^')+1;
+			//this is where you start programming for 2^(2+2) to be turned into pow(2,(2+2))
+			if(str.charAt(str.indexOf('^')+1)=='+'||str.charAt(str.indexOf('^')+1)=='-')//accomodate for 10^-(1+2)
+				i=str.indexOf('^')+3;
+			else
+				i=str.indexOf('^')+1;
 			exit=false;
 			j=1;
 			while(!exit&&i<str.length)
@@ -179,7 +194,10 @@ function displayToPower(str)
 		}
 		else
 		{
-			i=str.indexOf('^');
+			if(str.charAt(str.indexOf('^')+1)=='+'||str.charAt(str.indexOf('^')+1)=='-')//accomodate for 10^-3
+				i=str.indexOf('^')+2;
+			else
+				i=str.indexOf('^');
 			exit=false;
 			do
 			{
@@ -210,7 +228,13 @@ function compute()
 		else if(displayToPower(display.value))
 		{
 			result=displayToPower(display.value);
-			display.value=eval(result);
+			if(eval(result)=="Infinity")
+			{
+				alert("Can't divide by zero.");
+				return false;
+			}
+			else
+				display.value=eval(result);
 		}
 		else
 		{
