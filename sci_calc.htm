@@ -1,0 +1,1230 @@
+<HTML>
+<HEAD>
+<TITLE>Scientific Calculator - Sam Gleske</TITLE>
+<META NAME="AUTHOR" CONTENT="Sam Gleske">
+<META NAME="DESCRIPTION" CONTENT="A scientific calculator bookmarklet for almost everyone's needs, for Internet Explorer">
+<META NAME="KEYWORDS" CONTENT="calculator, scientific, math, bookmarklet, calculator bookmarklet">
+<SCRIPT language="javascript" type="text/javascript">
+/******************************************************************\
+*                                                    ***************
+***     Calculator Created by Sam Gleske               *************
+******        Thanks to Kyle Winters for help.            **********
+*********              Copyright (c) 2005 Sam Gleske          ******
+************                Notice must stay intact for use.     ***
+*********               The Javascript can be modified        ******
+******     Try out my JSEditor found on my site below     **********
+***      Visit http://www.pages.drexel.edu/~sag47/     *************
+*                                                    ***************
+*                   Included Documents:              ***************
+*                   sci_calc.htm                     ***************
+*                   about.htm                        ***************
+*                   favicon.ico                      ***************
+*                                                    ***************
+\******************************************************************/
+editorstatus="nofullscreen"
+proceed = location.search.substring(1,location.search.length)
+if(!proceed || proceed != "true") 
+{
+	window.top.location.href = "http://www.pages.drexel.edu/~sag47/"
+}
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+  var msie = navigator.appVersion.indexOf("MSIE") != -1;
+  var firefox = navigator.appVersion.indexOf("firefox");
+</script>
+<STYLE type="text/css">
+<!--
+body {
+  margin: 0px;
+}
+
+.num {
+  color:blue;
+}
+
+.BasFunc {
+  color:red;
+}
+
+.AdvFunc {
+  color:#FF0099;
+}
+
+#menuBar {
+  background-color: #F4F4F0;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #F4F4F0;
+  border-left-width: 0px;
+  border-bottom-color: #808080;
+  border-right-width: 0px;
+  color: #000000;
+  left: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 100;
+  margin: 0;
+}
+
+#buttonBar {
+  background-color: #F4F4F0;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #FFFFFF;
+  border-left-width: 1px;
+  border-bottom-color: #C0C0C0;
+  border-right-width: 1px;
+  color: #000000;
+  left: 240px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 2px;                                                             
+  padding-bottom: 3px;                                                          
+  position: absolute;                                                           
+  top: 82px;                                                                     
+  width: 400px;                                                                  
+  z-index: 100;                                                                 
+}
+
+a.menuButton {
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #F4F4F0;
+  border-left-color: #F4F4F0;
+  border-bottom-color: #F4F4F0;
+  border-right-color: #F4F4F0;
+  color: #000000;
+  cursor: default;
+  font-family: MS Sans Serif, Arial, Tahoma, sans-serif;
+  font-style: normal;
+  font-size: 8pt;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+
+a.menuButton:hover {
+  border-style: solid;
+  border-top-color: #316AC5;
+  border-left-color: #316AC5;
+  border-bottom-color: #316AC5;
+  border-right-color: #316AC5;
+  color: #000000;
+  text-decoration: none;
+  background-color: #CED3E1;
+}
+
+.menu {
+ filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=3, OffY=3, Color='#22000000', Positive='true', type='inset');
+  background-color: #FFFFFF;
+  border-style: outset;
+  border-width: 1;
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  margin: 0px;
+  padding: 2px;
+  position: absolute;
+  visibility: hidden;
+  z-index: 101;
+  width:8em;/*125px;*/
+}
+
+a.menuItem {
+  background-color: #FFFFFF;
+  color: #000000;
+  cursor: default;
+  display: block;
+  font-family: MS Sans Serif, Arial, Tahoma,sans-serif;
+  font-size: 8pt;
+  font-weight: normal;
+  margin: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 14px;
+  text-decoration: none;
+  border: 1px solid #FFFFFF;
+  width:100%;
+}
+
+a.menuItem:hover {
+  background-color: #CED3E1;
+  text-decoration: none;
+  color: #000000;
+  cursor: default;
+  display: block;
+  font-family: MS Sans Serif, Arial, Tahoma,sans-serif;
+  font-size: 8pt;
+  font-weight: normal;
+  margin: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 14px;
+  text-decoration: none;
+  border: 1px solid #316AC5;
+  width:100%;
+}
+.setvalue {
+  background-color: transparent;
+  border-width: 0;
+  width: 40px;
+  height: 12px;
+  margin: 0px;
+  margin-bottom: 3px;
+  font-family: MS Sans Serif, Arial, Tahoma,sans-serif;
+  font-size: 8pt;
+  font-weight: normal;
+  cursor: default;
+}
+//-->
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+  var msie = navigator.appVersion.indexOf("MSIE") != -1;
+  var firefox = navigator.appVersion.indexOf("firefox");
+
+	mem = ''
+//	pow = ';javascript:pow('
+	pi = 3.1415926535897932384626433832795;
+	store = 0;
+	function addChar(input, character) {
+		if(input.value == null || input.value == "0")
+			input.value = character
+		else
+			input.value += character
+	}
+	
+	function cos(form) {
+		form.display.value = Math.cos(form.display.value);
+	}
+	
+	function sin(form) {
+		form.display.value = Math.sin(form.display.value);
+	}
+	
+	function tan(form) {
+		form.display.value = Math.tan(form.display.value);
+	}
+	
+	function sqrt(form) {
+		compute(document.calc);
+		form.display.value = Math.sqrt(form.display.value);
+	}
+	
+	function ln(form) {
+		form.display.value = Math.log(form.display.value);
+	}
+
+	function exp(form) {
+		form.display.value = Math.exp(form.display.value);
+	}
+	
+	function deleteChar(input) {
+		for (var i = 0; i < input.value.length; i++) {
+			var ch = input.value.substring(i, i+2)
+			if (ch == 'i'){
+					input.value = input.value.substring(0, input.value.length - 1);
+					input.value = input.value.substring(0, input.value.length - 1);
+					if (input.value == '') {
+						input.value = 0
+					}
+					return false;
+			}
+		}
+		input.value = input.value.substring(0, input.value.length - 1)
+		if (input.value == '') {
+			input.value = 0
+		}
+	}
+	
+	function changeSign(input) {
+		if(input.value.substring(0, 1) == "-")
+			input.value = input.value.substring(1, input.value.length)
+		else
+			input.value = "-" + input.value
+	}
+
+	function compute(form) {
+		if (form.display.value == 'pi') {
+			form.display.value = "3.1415926535897932384626433832795";
+			return false
+		}
+		form.display.value = eval(form.display.value)
+	}
+
+	function flip(form) {
+		if (form.display.value == 'pi') {
+			form.display.value = eval("1/3.1415926535897932384626433832795");
+			return false
+		}
+		form.display.value = eval("1/"+form.display.value)
+	}
+	
+	function square(form) {
+		form.display.value = eval(form.display.value) * eval(form.display.value)
+	}
+	
+	function cube(form) {
+		form.display.value = eval(form.display.value) * eval(form.display.value) * eval(form.display.value)
+	}
+	
+	function checkNum(str) {
+		for (var i = 0; i < str.length; i++) {
+			var ch = str.substring(i, i+1)
+			if (ch < "0" || ch > "9") {
+				if (ch != "i" && ch != "p" && ch != "/" && ch != "*" && ch != "+" && ch != "-" && ch != "."
+					&& ch != "(" && ch!= ")" && ch!= "e" && ch!= "^" && ch!= "o" && ch!= "w"
+					&& ch!= "x" && ch!= "y" && ch!= ","  && ch!= "j" && ch!= "a" && ch!= "v"
+					&& ch!= "s" && ch!= "c" && ch!= "r" && ch!= "t" && ch!= ":" && ch!= ";") {
+					alert("invalid entry!")
+					return false
+					}
+				}
+			}
+			return true
+	}
+
+	function pow(x,y) {//Power function
+		return Math.pow(x,y);
+	}
+
+	
+	function StoreMem() {
+		var calc = document.calc
+		if (calc.display.value != 0) {
+			mem = calc.display.value;
+			store = 1
+			document.calc.memory.value = "M"
+		}
+		return false
+	}
+	
+	function ClearMem() {
+		var mem;
+		store = 0
+		mem = "";
+		document.calc.memory.value = ""
+	}
+	function RecallMem() {
+		if (store != 0) {
+			addChar(document.calc.display, mem);
+		}
+		return false;
+	}
+	function MemPlus() {
+		var calc = document.calc;
+		if (mem) {
+			if (mem == '') {
+				return false
+			}
+			else {
+				arg = eval(mem+"+"+calc.display.value);
+				mem = arg;
+			}
+		}
+		else
+			return false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*********************************************\
+*                                             *
+*              Start of Menu Code             *
+*                                             *
+\*********************************************/
+// Determine browser type (IE 5.5).
+
+var isIE5 = (navigator.userAgent.indexOf("MSIE 5") > 0) ? 1 : 0;
+var isIE55 = (navigator.userAgent.indexOf("MSIE 5.5") > 0) ? 1 : 0;
+var isIE6 = (navigator.userAgent.indexOf("MSIE 6") > 0) ? 1 : 0;
+var isNS6 = (navigator.userAgent.indexOf("Gecko")    > 0) ? 1 : 0;
+
+// Global variable for tracking the currently active button.
+var activeButton = null;
+
+// Capture mouse clicks on the page so any active button can be deactivated.
+
+if (isIE5)
+	document.onmousedown = pageMousedown;
+if (isNS6)
+	document.addEventListener("mousedown", pageMousedown, true);
+
+function pageMousedown(event) {
+
+	var className;
+
+  // If the object clicked on was not a menu button or item, close any active
+  // menu.
+
+	if (isIE5)
+		className = window.event.srcElement.className;
+	if (isNS6)
+		className = (event.target.className ?
+	event.target.className : event.target.parentNode.className);
+
+	if (className != "menuButton" && className != "menuItem" && activeButton) {
+		resetButton(activeButton);
+	}
+	}
+
+function buttonClick(button, menuName) {
+  // Blur focus from the link to remove that annoying outline.
+
+	button.blur();
+
+  // Associate the named menu to this button if not already done.
+
+	if (!button.menu)
+		button.menu = document.getElementById(menuName);
+
+  // Reset the currently active button, if any.
+
+	if (activeButton&& activeButton != button)
+		resetButton(activeButton);
+
+  // Toggle the button's state.
+
+	if (button.isDepressed) {
+		resetButton(button);
+	}
+	else {
+		depressButton(button);
+	}
+	return false;
+}
+
+function buttonMouseover(button, menuName) {
+
+  // If any other button menu is active, deactivate it and activate this one.
+  // Note: if this button has no menu, leave the active menu alone.
+
+  if (activeButton && activeButton != button) {
+    resetButton(activeButton);
+    if (menuName)
+      buttonClick(button, menuName);
+  }
+}
+
+function depressButton(button) {
+
+  // Save current style values so they can be restored later.
+  // Only needs to be done once.
+
+  if (!button.oldBackgroundColor) {
+    button.oldBackgroundColor = button.style.backgroundColor;
+    button.oldBorderBottomColor = button.style.borderBottomColor;
+    button.oldBorderRightColor = button.style.borderRightColor;
+    button.oldBorderTopColor = button.style.borderTopColor;
+    button.oldBorderLeftColor = button.style.borderLeftColor;
+    button.oldColor = button.style.color;
+    button.oldLeft = button.style.left;
+    button.oldPosition = button.style.position;
+    button.oldTop = button.style.top;
+  }
+
+  // Change style value to make the button looks like it's
+  // depressed.
+
+  button.style.backgroundColor = "#0066CC";
+  button.style.borderLeftColor = "#003399";
+  button.style.borderRightColor = "#0066FF";
+  button.style.borderTopColor = "#003399";
+  button.style.borderBottomColor = "#0066FF";
+  button.style.color = "#FFFFFF";
+  button.style.left = "0px";
+  button.style.position = "relative";
+  button.style.top = "0px";
+
+  // For IE, force first menu item to the width of the parent menu,
+  // this causes mouseovers work for all items even when cursor is
+  // not over the link text.
+
+  if (isIE5 && !button.menu.firstChild.style.width)
+    button.menu.firstChild.style.width =
+      button.menu.offsetWidth + "px";
+
+  // Position the associated drop down menu under the button and
+  // show it. Note that the position must be adjusted according to
+  // browser, styling and positioning.
+
+  x = getPageOffsetLeft(button);
+  y = getPageOffsetTop(button) + button.offsetHeight;
+  if (isIE5)
+    y += 2;
+  if (isNS6) {
+    x--;
+    y--;
+  }
+  button.menu.style.left = x + "px";
+  button.menu.style.top  = y + "px";
+  button.menu.style.visibility = "visible";
+
+  // Set button state and let the world know which button is
+  // active.
+
+  button.isDepressed = true;
+  activeButton = button;
+}
+
+function resetButton(button) {
+
+  // Restore the button's style settings.
+
+  button.style.backgroundColor = button.oldBackgroundColor;
+  button.style.borderBottomColor = button.oldBorderBottomColor;
+  button.style.borderRightColor = button.oldBorderRightColor;
+  button.style.borderTopColor = button.oldBorderTopColor;
+  button.style.borderLeftColor = button.oldBorderLeftColor;
+  button.style.color = button.oldColor;
+  button.style.left = button.oldLeft;
+  button.style.position = button.oldPosition;
+  button.style.top = button.oldTop;
+
+  // Hide the button's menu.
+
+  if (button.menu)
+    button.menu.style.visibility = "hidden";
+
+  // Set button state and clear active menu global.
+
+  button.isDepressed = false;
+  activeButton = null;
+}
+
+function getPageOffsetLeft(el) {
+
+  // Return the true x coordinate of an element relative to the page.
+
+  return el.offsetLeft + (el.offsetParent ? getPageOffsetLeft(el.offsetParent) : 0);
+}
+
+function getPageOffsetTop(el) {
+
+  // Return the true y coordinate of an element relative to the page.
+
+  return el.offsetTop + (el.offsetParent ? getPageOffsetTop(el.offsetParent) : 0);
+}
+
+function docmd(cmdID) {
+	if (cmdID == 'Copy') {
+		field = document.calc.display.createTextRange();
+		field.execCommand(cmdID);
+	}
+	else if (cmdID == 'Paste') {
+		field = document.all["paste"].createTextRange();
+		field.execCommand(cmdID);
+		addChar(document.calc.display, document.all["paste"].value)
+	}
+}
+
+
+
+
+
+
+//Convert Decimal to Binary
+
+
+function check() {
+     dec = document.calc.display.value;
+ 
+     if (dec == "")
+         {alert("please insert decimal number first.");
+          
+         }
+     else 
+         {scan(dec);};
+};
+
+function scan(ok)
+{
+ var chr="1234567890";
+ count=0;
+ var ex;
+ var h;var hasil=0;
+ for(i=0;i<ok.length;i++)
+      { ex=ok.charAt(i);
+        for(f=0;f<10;f++)
+           {h=chr.charAt(f);
+            if(h==ex){hasil=hasil+1;};
+            };
+      };
+     if (hasil != ok.length)
+     {
+       alert("put number only ->'1234567890' .");
+       document.calc.display.value = "0";
+     }
+     else{bnr();};
+};
+
+function bnr()
+{
+var dec=new Number(); dec=document.calc.display.value; i=dec;
+var hit="";
+ while(i >= 1)
+ {
+   var m=(i*10)/4;
+   while(m > 1){m=m-5;};
+   if(m < 0){i=(i-1)/2;hit+="1";}else{i=i/2;hit+="0";};
+   
+ };
+
+var b ="";
+var bin;
+bin=hit.length;
+for(a=hit.length;a>=0;a--)
+  {
+   b += hit.substring(a-1,a);
+   };
+document.calc.display.value=b;
+if (b.length > 30){alert("the answer is longer than the textbox -> "+b)};
+if (document.calc.display.value == '')
+	document.calc.display.value = 0
+};
+
+
+
+
+
+
+
+
+//Convert Decimal to Hexidecimal
+
+var h="0123456789ABCDEF";
+function hex(c) {
+	var temp = "";
+	var hexStr = "";
+	var remainder, i;
+
+    // divide c by 16 each time
+	for( ; c != 0; c >>= 4) {
+		remainder = c % 16;
+		hexStr += h.charAt(remainder);
+	}
+
+    // only thing with a conversion is that it does it backwards
+    // so this makes it right
+    // you could have also used recursion but that
+    // would have been more complicated
+    
+	for(i=5 ; i >= 0; i--)
+		temp += hexStr.charAt(i);
+	if (temp == '')
+		temp = 0
+    // return the converted hex number
+	document.calc.display.value = temp
+}
+
+
+
+
+
+//convert Hexidecimal to Decimal
+
+function evalDec() {
+	document.calc.display.value=dec2(document.calc.display.value)
+}
+function dec2(n) {
+	return parseInt(n,16);
+}
+
+
+
+
+
+
+//convert Binary to Decimal
+
+function bin_dec(){
+  //This will be the sum of the decimal equivalents of binary digits
+	var sum = 0, 
+  //This is the binary place value: 1, 2, 4, etc.
+	i = 1, 
+  //value to be converted
+	binaryString, 
+  //integer value of binaryString
+	binaryVal = 0, 
+  //binary position value ( 1 or 0)
+	decVal = 0, 
+  //dicimal value converted from binary value after multiplying by i.
+	dec = 0, 
+  //retrieve the value to be converted
+	binaryString = document.calc.display.value;
+  //convert the string to an integer
+	binaryVal = parseInt ( binaryString );
+  //This is a sentinel
+	while ( binaryVal >= 1 )
+	{ 
+		decVal = binaryVal % 2; //determine if the integer is a one or zero
+
+		if ( decVal == 1 ) //Test if '0' or '1'
+		{
+			dec = i * 1; //if it is a one, we multiply it by the binary position
+			sum += dec; //and add that to our running total
+			i = i * 2; //we double our binary value position
+			binaryVal /= 10; //we reduce our val by a digit 
+			binaryVal = parseInt ( binaryVal );
+		} 
+		else 
+		{
+			i = i * 2; //change to the next higher power of 2
+			binaryVal /= 10; //remove the last digit
+			binaryVal = parseInt( binaryVal );
+		}
+	}
+
+	document.calc.display.value = sum;
+}
+
+
+
+
+
+//check to see if numbers are in binary
+	function checkBin(str) {
+		for (var i = 0; i < str.length; i++) {
+			var ch = str.substring(i, i+1)
+			if (ch < "0" || ch > "1") {
+				document.getElementById("binary1").disabled=true;
+				document.getElementById("binary2").disabled=true;
+				checkDec(document.calc.display.value);
+				return false
+				}
+		}
+		document.getElementById("binary1").disabled=false;
+		document.getElementById("binary2").disabled=false;
+		checkDec(document.calc.display.value);
+	}
+
+//Make sure there are no hex numbers (aka letters) for Decimal conversion
+	function checkDec(str) {
+		for (var i = 0; i < str.length; i++) {
+			var ch = str.substring(i, i+1)
+			if (ch < "0" || ch > "9") {
+				document.getElementById("decimal1").disabled=true;
+				document.getElementById("decimal2").disabled=true;
+				checkHex(document.calc.display.value);
+				return false
+			}
+		}
+		document.getElementById("decimal1").disabled=false;
+		document.getElementById("decimal2").disabled=false;
+		checkHex(document.calc.display.value);
+	}
+
+	function checkHex(str) {
+		for (var i = 0; i < str.length; i++) {
+			var ch = str.substring(i, i+1)
+			if (ch < "0" || ch > "9") {
+				if (ch != "a" && ch != "b" && ch != "c" && ch != "d" && ch != "e" && ch != "f" && ch != "C"
+					&& ch != "A" && ch!= "B" && ch!= "D" && ch!= "E" && ch!= "F") {
+					document.getElementById("hex1").disabled=true;
+					document.getElementById("hex2").disabled=true;
+					return false
+					}
+				}
+			}
+		document.getElementById("hex1").disabled=false;
+		document.getElementById("hex2").disabled=false
+	}
+
+
+
+
+
+
+
+//about Calc code below
+
+function about() {
+	alert('Created by Sam Gleske              \n  on Nov. 28th, 2005')
+}
+
+function toggle_titles (checkbox,toggle)
+{
+	checkbox . checked = ! checkbox . checked;
+	if(checkbox.checked == true)
+	{
+		toggle.memory.title = "Shows if there is something stored in memory";
+		toggle.backbtn.title = "Delete a value from right to left";
+		toggle.delbtn.title = "Clears the Equation";
+		toggle.ac.title = "Clears the Equation and the memory";
+		toggle.mClear.title = "Clears the memory";
+		toggle.btn7.title = "Inserts the character 7";
+		toggle.btn8.title = "Inserts the character 8";
+		toggle.btn9.title = "Inserts the character 9";
+		toggle.divide.title = "Inserts the '/' character";
+		toggle.b6.title = "Takes the exponential of the Equation\n[pow(e,x)]";
+		toggle.b7.title = "Takes the natural log of the Equation";
+		toggle.mRecall.title = "Recalls the memory into the Equation\n(inserts)";
+		toggle.btn4.title = "Inserts the character 4";
+		toggle.btn5.title = "Inserts the character 5";
+		toggle.btn6.title = "Inserts the character 6";
+		toggle.multiply.title = "Inserts the '*' character";
+		toggle.c6.title = "Takes the square root of the Equation";
+		toggle.c7.title = "Power of X to Y\n[pow(X,Y)]";
+		toggle.mStore.title = "Stores the Equation into memory";
+		toggle.btn1.title = "Inserts the character 1";
+		toggle.btn2.title = "Inserts the character 2";
+		toggle.btn3.title = "Inserts the character 3";
+		toggle.subtract.title = "Inserts the '+' character";
+		toggle.d6.title = "Squares the Equation\n[pow(X,2)]";
+		toggle.d7.title = "Cubes the Equation\n[pow(X,3)]";
+		toggle.mPlus.title = "Adds the current Equation to the one stored in memory";
+		toggle.btn0.title = "Inserts the character 0";
+		toggle.e3.title = "Toggles the negativity sign of a number";
+		toggle.dot.title = "Inserts the '.' character";
+		toggle.add.title = "Inserts the '+' character";
+		toggle.enter.title = "Computes the current Equation";
+		toggle.e7.title = "Flips the current Equation";
+		toggle.pi.title = "Inserts 'pi'";
+		toggle.parl.title = "Inserts the '(' character";
+		toggle.parr.title = "Inserts the ')' character";
+		toggle.f4.title = "Computes cosine of the current Equation";
+		toggle.f5.title = "Computes sine of the current Equation";
+		toggle.f6.title = "Computes tangent of the current Equation";
+		toggle.ekey.title = "Inserts the 'e' character\n[1e3=1x10^(3)=1000] (not exp)";
+	}
+	else if(checkbox.checked == false)
+	{
+		toggle.memory.title = "";
+		toggle.backbtn.title = "";
+		toggle.delbtn.title = "";
+		toggle.ac.title = "";
+		toggle.mClear.title = "";
+		toggle.btn7.title = "";
+		toggle.btn8.title = "";
+		toggle.btn9.title = "";
+		toggle.divide.title = "";
+		toggle.b6.title = "";
+		toggle.b7.title = "";
+		toggle.mRecall.title = "";
+		toggle.btn4.title = "";
+		toggle.btn5.title = "";
+		toggle.btn6.title = "";
+		toggle.multiply.title = "";
+		toggle.c6.title = "";
+		toggle.c7.title = "";
+		toggle.mStore.title = "";
+		toggle.btn1.title = "";
+		toggle.btn2.title = "";
+		toggle.btn3.title = "";
+		toggle.subtract.title = "";
+		toggle.d6.title = "";
+		toggle.d7.title = "";
+		toggle.mPlus.title = "";
+		toggle.btn0.title = "";
+		toggle.e3.title = "";
+		toggle.dot.title = "";
+		toggle.add.title = "";
+		toggle.enter.title = "";
+		toggle.e7.title = "";
+		toggle.pi.title = "";
+		toggle.parl.title = "";
+		toggle.parr.title = "";
+		toggle.f4.title = "";
+		toggle.f5.title = "";
+		toggle.f6.title = "";
+		toggle.ekey.title = "";
+	}
+}
+
+function setFloat()
+{
+	org = document.getElementById('float').value
+	val = document.getElementById('float').value
+	thevalue = prompt('Set the number of decimal places for rounding',val); 
+	if (thevalue) {
+	document.getElementById('float').value = thevalue;
+	for (var i = 0; i < document.getElementById('float').value.length; i++) 
+	{
+		var ch = document.getElementById('float').value.substring(i, i+1);
+		if (ch < "0" || ch > "9") 
+		{
+			alert('Letters and symbols not allowed.\nOnly numbers');
+			document.getElementById('float').value = org;
+			return void(0);
+		}
+	}
+	if (document.getElementById('float').value > 17)
+	{
+		alert('Float can\'t go above 17 digits.');
+		document.getElementById('float').value = org;
+		return void(0);
+	}
+	if(eval(document.getElementById('float').value) == 0)
+	{
+		alert('Float can\'t be set to 0')
+		document.getElementById('float').value = org
+	}
+	if(document.getElementById('float').value == '')
+	{
+		alert('Float can\'t be empty.')
+		document.getElementById('float').value = org
+	}
+	}
+}
+
+
+/*********************************************\
+*                                             *
+*               End of Menu Code              *
+*                                             *
+\*********************************************/
+
+
+
+
+
+
+/*********************************************\
+*                                             *
+*           Functions below run other         *
+*     functions when pressing certain keys    *
+*                                             *
+\*********************************************/
+
+function Fxn2(e) {
+  var keyCode;
+  if (firefox) {
+	var keyCode;
+	if (window.event) keycode = window.event.keyCode;
+	else if (e) keyCode = e.which;
+  }
+  if (msie) {
+	keyCode = event.keyCode
+  }
+
+  if (firefox) {
+	if (keyCode == 13 || keyCode == 61) {//Enter Key
+		document.calc.enter.focus();
+		if (checkNum(document.calc.display.value)) {
+			return compute(document.calc) 
+		}
+	}
+  }
+  if (keyCode == 46) {//Delete Key
+	document.calc.display.value = 0
+	document.getElementById("delbtn").focus();
+  }
+  if (keyCode == 8) {//Backspace Key
+	deleteChar(document.calc.display);
+	document.getElementById("backbtn").focus();
+  }
+}
+
+function writeFxn(e) {
+  var keyCode;
+  if (firefox) {
+	var keyCode;
+	if (window.event) keycode = window.event.keyCode;
+	else if (e) keyCode = e.which;
+  }
+  if (msie) {
+	keyCode = event.keyCode
+  }
+  if (msie) {
+	if (keyCode == 13 || keyCode == 61) {//Enter Key
+		document.calc.enter.focus();
+		if (checkNum(document.calc.display.value)) {
+			return compute(document.calc) 
+		}
+	}
+  }
+  if (keyCode == 40) {
+	document.calc.parl.focus();
+    addChar(document.calc.display, '(')
+  }
+  if (keyCode == 41) {
+	document.calc.parr.focus();
+    addChar(document.calc.display, ')')
+  }
+  if (keyCode == 42) {
+	document.calc.multiply.focus();
+    addChar(document.calc.display, '*')
+  }
+  if (keyCode == 43) {
+	document.calc.add.focus();
+    addChar(document.calc.display, '+')
+  }
+  if (keyCode == 44) {
+    addChar(document.calc.display, ',')
+  }
+  if (keyCode == 45) {
+	document.calc.subtract.focus();
+    addChar(document.calc.display, '-')
+  }
+  if (keyCode == 46) {
+	document.calc.dot.focus();
+    addChar(document.calc.display, '.')
+  }
+  if (keyCode == 47) {
+	document.calc.divide.focus();
+    addChar(document.calc.display, '/')
+  }
+  if (keyCode == 48) {
+	document.calc.btn0.focus();
+    addChar(document.calc.display, '0')
+  }
+  if (keyCode == 49) {
+	document.calc.btn1.focus();
+    addChar(document.calc.display, '1')
+  }
+  if (keyCode == 50) {
+	document.calc.btn2.focus();
+    addChar(document.calc.display, '2')
+  }
+  if (keyCode == 51) {
+	document.calc.btn3.focus();
+    addChar(document.calc.display, '3')
+  }
+  if (keyCode == 52) {
+	document.calc.btn4.focus();
+    addChar(document.calc.display, '4')
+  }
+  if (keyCode == 53) {
+	document.calc.btn5.focus();
+    addChar(document.calc.display, '5')
+  }
+  if (keyCode == 54) {
+	document.calc.btn6.focus();
+    addChar(document.calc.display, '6')
+  }
+  if (keyCode == 55) {
+	document.calc.btn7.focus();
+    addChar(document.calc.display, '7')
+  }
+  if (keyCode == 56) {
+	document.calc.btn8.focus();
+    addChar(document.calc.display, '8')
+  }
+  if (keyCode == 57) {
+	document.calc.btn9.focus();
+    addChar(document.calc.display, '9')
+  }
+  if (keyCode == 59) {
+    addChar(document.calc.display, ';')
+  }
+  if (keyCode == 99 || keyCode == 67) {//clear the memory when C is pressed (button MC)
+	document.calc.mClear.focus();
+    ClearMem()
+  }
+  if (keyCode == 101 || keyCode == 69) {//insert e when E key is pressed
+	document.calc.ekey.focus();
+    addChar(document.calc.display, 'e')
+  }
+  if (keyCode == 109 || keyCode == 77) {//add to memory when M is pressed (button M+)
+	document.calc.mPlus.focus();
+    MemPlus()
+  }
+  if (keyCode == 112 || keyCode == 80) {//insert pi when P is pressed
+	document.calc.pi.focus();
+    addChar(document.calc.display, 'pi')
+  }
+  if (keyCode == 114 || keyCode == 82) {//recall the memory when R is pressed (button MR)
+	document.calc.mRecall.focus();
+    RecallMem()
+  }
+  if (keyCode == 115 || keyCode == 83) {//store the memory when S is pressed (button MS)
+	document.calc.mStore.focus();
+    StoreMem()
+  }
+}
+
+
+/*********************************************\
+*                                             *
+*            Calculator Info below            *
+*                                             *
+\*********************************************/
+
+function aboutcalc() {
+	window.open("about.htm", "editorinfo", "resizable=yes,width=300,height=250,status=no,menubar=no");
+/*Old Help for pressing F1 Key
+	alert('Created by Sam Gleske              \n  on Nov. 28th, 2005')
+*/
+}
+
+
+</SCRIPT>
+</HEAD>
+<BODY style="background-color:buttonface;" onselectstart="return false" scroll="no" onkeypress="writeFxn(event)" onLoad="this.window.focus()"
+   oncontextmenu="return false" onDrag="return false" onDrop="return false" onkeydown="Fxn2(event)" onhelp="aboutcalc();return false;">
+
+
+<!-- MENU CODE -->
+<!-- Tags for the menu bar. -->
+
+<div id="menuBar" style="cursor:default;"
+><a class="menuButton"
+    href=""
+    onclick="return buttonClick(this, 'fileMenu');"
+    onmouseover="buttonMouseover(this, 'fileMenu');"
+>File</a
+>&nbsp;&nbsp;<a class="menuButton"
+    href=""
+    onclick="return buttonClick(this, 'editMenu');"
+    onmouseover="buttonMouseover(this, 'editMenu');"
+>Edit</a
+>&nbsp;&nbsp;<a class="menuButton"
+    href=""
+    onclick="checkBin(document.calc.display.value);return buttonClick(this, 'convMenu');"
+    onmouseover="checkBin(document.calc.display.value);buttonMouseover(this, 'convMenu');"
+>Conv</a
+>&nbsp;&nbsp;<a class="menuButton"
+    href=""
+    onclick="return buttonClick(this, 'viewMenu');"
+    onmouseover="buttonMouseover(this, 'viewMenu');"
+>View</a
+>&nbsp;&nbsp;<a class="menuButton"
+    href=""
+    onclick="return buttonClick(this, 'helpMenu');"
+    onmouseover="buttonMouseover(this, 'helpMenu');"
+>Help</a
+>&nbsp;<font justify="right" UNSELECTABLE size=1
+face="tahoma" style="font-size:9px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Scientific Calculator&trade; <FONT color="red">v1.0</FONT></font></div>
+<!-- Tags for the drop down menus. -->
+
+<div id="fileMenu" class="menu">
+<a class="menuItem" href="sci_calc.htm?true" onClick="resetButton(activeButton);">Reload</a>
+<a class="menuItem" href="javascript:window.close();" onClick="resetButton(activeButton);">Exit</a>
+</div>
+
+<div id="editMenu" class="menu">
+<a class="menuItem" href="javascript:void(0);" onClick="docmd('Copy');resetButton(activeButton);">Copy</a>
+<a class="menuItem" href="javascript:docmd('Paste');" onClick="resetButton(activeButton);">Paste</a>
+<HR>
+<a class="menuItem" href="javascript:(function(){if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null'){alert('Float Not Set');return void(0);};comp=1;for(var i = document.getElementById('float').value; i > 0; i--){comp=comp+'0'};original=document.calc.display.value;document.calc.display.value=Math.round(eval(document.calc.display.value)*comp)/comp})();" onClick="resetButton(activeButton);">Round Answer</A>
+<a class="menuItem" href="javascript:setFloat();" onClick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+Float = <input type="text" id="float" readonly class="setvalue" value="3" onClick="setFloat();"></A>
+</div>
+
+<div id="convMenu" class="menu">
+<a class="menuItem" href="javascript:bin_dec();" onClick="resetButton(activeButton);" id="binary1">Bin > Dec</a>
+<a class="menuItem" href="javascript:resetButton(activeButton);" onClick="bin_dec();window.setTimeout('hex(document.calc.display.value)',50);" id="binary2">Bin > Hex</a>
+<a class="menuItem" href="javascript:check();" onClick="resetButton(activeButton);" id="decimal1">Dec > Bin</a>
+<a class="menuItem" href="javascript:hex(document.calc.display.value);" onClick="resetButton(activeButton);" id="decimal2">Dec > Hex</a>
+<a class="menuItem" href="javascript:resetButton(activeButton);" onClick="evalDec();window.setTimeout('check()',50);" id="hex1">Hex > Bin</a>
+<a class="menuItem" href="javascript:resetButton(activeButton);" onClick="window.setTimeout('evalDec()',50);" id="hex2">Hex > Dec</a>
+</div>
+
+<div id="viewMenu" class="menu">
+<a class="menuItem" href="javascript:void(0);" onClick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;"><INPUT type=radio checked>Standard</a>
+<a class="menuItem" href="javascript:void(0);" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scientific</a>
+<HR>
+<a class="menuItem" href="javascript:toggle_titles (document.getElementById('radio'),document.calc)" onClick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;"><INPUT type=radio id="radio" onClick="toggle_titles (document.getElementById('radio'),document.calc)"> Tooltips</a>
+</div>
+
+<div id="helpMenu" class="menu">
+<a class="menuItem" href="javascript:(function(){window.open('calchelp/help.htm','help','resizable=yes,width=803,height=500'); return void(0);})()" onClick="resetButton(activeButton);" title="Press F1">Help</a>
+<a class="menuItem" href="javascript:aboutcalc()" onClick="resetButton(activeButton);">About Calculator</a>
+</div>
+<!-- MENU CODE END -->
+
+
+
+
+
+
+
+
+
+
+<FORM NAME="calc" style="position:absolute;top:29px;width:100%;text-align:center;">
+<CENTER>
+<TABLE CELLSPACING="0" CELLPADDING="1" style="background-color:buttonface;" border="3">
+<TR>
+<TD COLSPAN="7" ALIGN="center"><INPUT NAME="display" VALUE="0" style="width:100%;text-align:right;cursor:default" onKeyPress="if(document.calc.display.value==0){document.calc.display.value=''}" readonly></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="text" name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly="true"></TD>
+<TD ALIGN="center" COLSPAN="2"><INPUT TYPE="button" class="BasFunc" VALUE="Backspace" ONCLICK="deleteChar(this.form.display)" style="width:75px;height:28px" id="backbtn"></TD>
+<TD ALIGN="center" COLSPAN="2"><INPUT TYPE="button" class="BasFunc" VALUE="CE" ONCLICK="this.form.display.value = 0" style="width:68px;height:28px" id="delbtn"></TD>
+<TD ALIGN="center" COLSPAN="2"><INPUT TYPE="button" class="BasFunc" VALUE="AC" ONCLICK="document.calc.reset();ClearMem()" style="width:68px;height:28px" id="ac"></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="MC" ONCLICK="ClearMem()" style="width:40px;height:28px" name="mClear"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="7" ONCLICK="addChar(this.form.display, '7')" style="width:33px;height:28px" name="btn7"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="8" ONCLICK="addChar(this.form.display, '8')" style="width:33px;height:28px" name="btn8"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="9" ONCLICK="addChar(this.form.display, '9')" style="width:33px;height:28px" name="btn9"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="/" ONCLICK="addChar(this.form.display, '/')" style="width:33px;height:28px" name="divide"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="exp" ONCLICK="if (checkNum(this.form.display.value)) { exp(this.form) }" style="width:40px;height:28px" name="b6"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="ln" ONCLICK="if (checkNum(this.form.display.value)) { ln(this.form) }" style="width:40px;height:28px" name="b7"></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="MR" ONCLICK="RecallMem()" style="width:40px;height:28px" name="mRecall"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="4" ONCLICK="addChar(this.form.display, '4')" style="width:33px;height:28px" name="btn4"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="5" ONCLICK="addChar(this.form.display, '5')" style="width:33px;height:28px" name="btn5"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="6" ONCLICK="addChar(this.form.display, '6')" style="width:33px;height:28px" name="btn6"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="*" ONCLICK="addChar(this.form.display, '*')" style="width:33px;height:28px" name="multiply"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="sqrt" ONCLICK="if (checkNum(this.form.display.value)) { sqrt(this.form) }" style="width:40px;height:28px" name="c6"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="x^y" ONCLICK="addChar(this.form.display, 'pow(')" style="width:40px;height:28px" name="c7"></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="MS" ONCLICK="StoreMem()" style="width:40px;height:28px" name="mStore"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="1" ONCLICK="addChar(this.form.display, '1')" style="width:33px;height:28px" name="btn1"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="2" ONCLICK="addChar(this.form.display, '2')" style="width:33px;height:28px" name="btn2"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="3" ONCLICK="addChar(this.form.display, '3')" style="width:33px;height:28px" name="btn3"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="-" ONCLICK="addChar(this.form.display, '-')" style="width:33px;height:28px" name="subtract"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="x^2" ONCLICK="if (checkNum(this.form.display.value)) { square(this.form) }" style="width:40px;height:28px" name="d6"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="x^3" ONCLICK="if (checkNum(this.form.display.value)) { cube(this.form) }" style="width:40px;height:28px" name="d7"></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="M+" ONCLICK="MemPlus()" style="width:40px;height:28px" name="mPlus"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="0" ONCLICK="addChar(this.form.display, '0')" style="width:33px;height:28px" name="btn0"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="+/-" ONCLICK="changeSign(this.form.display)" style="width:33px;height:28px" name="e3"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="." ONCLICK="addChar(this.form.display, '.')" style="width:33px;height:28px" name="dot"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="+" ONCLICK="addChar(this.form.display, '+')" style="width:33px;height:28px" name="add"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="=" ONCLICK="if (checkNum(this.form.display.value)) { compute(this.form) }" NAME="enter" style="width:33px;height:28px"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="1/x" ONCLICK="if (checkNum(this.form.display.value)) { flip(this.form) }" style="width:40px;height:28px" name="e7"></TD>
+</TR>
+<TR>
+<TD ALIGN="center"><INPUT TYPE="button" class="num" VALUE="&pi;" ONCLICK="addChar(this.form.display, 'pi')" style="width:40px;height:28px;font-family:times;" name="pi"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="(" ONCLICK="addChar(this.form.display, '(')" style="width:33px;height:28px" name="parl"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE=")" ONCLICK="addChar(this.form.display, ')')" style="width:33px;height:28px" name="parr"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="cos" ONCLICK="if (checkNum(this.form.display.value)) { cos(this.form) }" style="width:33px;height:28px" name="f4"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="sin" ONCLICK="if (checkNum(this.form.display.value)) { sin(this.form) }" style="width:33px;height:28px" name="f5"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="AdvFunc" VALUE="tan" ONCLICK="if (checkNum(this.form.display.value)) { tan(this.form) }" style="width:40px;height:28px" name="f6"></TD>
+<TD ALIGN="center"><INPUT TYPE="button" class="BasFunc" VALUE="EE" ONCLICK="addChar(this.form.display, 'e')" style="width:40px;height:28px" name="ekey"></TD>
+</TR>
+
+</TABLE>
+</CENTER>
+</FORM>
+<input type="text" id="paste" style="position:absolute;top:0;visibility:hidden;">
+</BODY>
+</HTML>
