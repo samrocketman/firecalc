@@ -106,7 +106,7 @@
 				<a class="menuButton" href="" onclick="return buttonclick(0, this, 'helpMenu');" onmouseover="buttonMouseover(0, this, 'helpMenu');">Help</a>
 			</td>
 			<td  style="border: none;text-align:right">
-				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.5</span></span>
+				<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.6</span></span>
 			</td>
 		</tr>
 		</table>
@@ -239,9 +239,9 @@
 		</tr>
 		<tr>
 			<td style="text-align:center"><input type="text" name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="backbtn" onclick="deleteChar()" style="width:75px;height:28px" value="Backspace"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="delbtn" onclick="this.form.display.value=0" style="width:68px;height:28px" value="CE"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="ac" onclick="this.form.reset();ClearMem()" style="width:68px;height:28px" value="AC"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="backbtn" onclick="deleteChar()" style="width:75px;height:28px" value="Backspace"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="delbtn" onclick="this.form.display.value=0" style="width:68px;height:28px" value="CE"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" name="ac" onclick="this.form.reset();ClearMem()" style="width:68px;height:28px" value="AC"></td>
 		</tr>
 		<tr>
 			<td style="text-align:center"><input class="BasFunc" type="button" name="mClear" onclick="ClearMem()" style="width:40px;height:28px" value="MC"></td>

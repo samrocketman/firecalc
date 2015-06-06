@@ -9,6 +9,18 @@ when the code is searched through it is very easy to read.  Not only that but it
 to explain the different functions and features from within.  The calculator should work on all
 JavaScript enabled, CSS 2.0 compatible web browsers.  All dates are in mm/dd/yyyy format.
 
+Whats new in 1.2.6? (02/05/2008)
+Javascript Changes (core functionality of the calculator):
+1.	Finally I totally rewrote calc_resources\js\keys.js.  Keystroke/keycode detection is heavily 
+	simplified. Now it uses a switch statement rather than a bunch of if statements for executing
+	the keys.
+2.	Fixed bug: In Firefox, the '/' key is a shortcut for searching for text.  This is a problem 
+	because every time someone divides in Firefox it goes all wierd trying to "search" for text 
+	rather than computing the equation.  At the bottom of the functions keydown() and keypress() 
+	in calc_resources\js\keys.js I added a new piece of code that grabs focus away from the search
+	that way the next key the user types will still interact with the calculator and not the
+	Firefox search box.  Does anyone have a better fix?  Please let me know if you do.
+
 Whats new in 1.2.5? (02/03/2008)
 Documentation changes:
 1.	Changed version numbers in documentation.
