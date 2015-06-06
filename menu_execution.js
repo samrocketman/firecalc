@@ -7,63 +7,61 @@
 function toggle_titles()
 {
 	var checkbox=document.getElementById('radio1');
-	var toggle=document.calc;
 	//toggle the checkbox
 	checkbox.checked=!checkbox.checked;
 
 	//set the values
 	if(checkbox.checked==true)
 	{
-		toggle.memory.title="Shows if there is something stored in memory";
-		toggle.backbtn.title="Delete a value from right to left";
-		toggle.delbtn.title="Clears the Equation";
-		toggle.ac.title="Clears the Equation and the memory";
-		toggle.mClear.title="Clears the memory";
-		toggle.btn7.title="Inserts the character 7";
-		toggle.btn8.title="Inserts the character 8";
-		toggle.btn9.title="Inserts the character 9";
-		toggle.divide.title="Inserts the '/' character";
-		toggle.b6.title="Takes the exponential of the Equation\n[pow(e,x)]";
-		toggle.b7.title="Takes the natural log of the Equation";
-		toggle.mRecall.title="Recalls the memory into the Equation\n(inserts)";
-		toggle.btn4.title="Inserts the character 4";
-		toggle.btn5.title="Inserts the character 5";
-		toggle.btn6.title="Inserts the character 6";
-		toggle.multiply.title="Inserts the '*' character";
-		toggle.c6.title="Takes the square root of the Equation";
-		toggle.c7.title="Power of X to Y\n[pow(X,Y)]";
-		toggle.mStore.title="Stores the Equation into memory";
-		toggle.btn1.title="Inserts the character 1";
-		toggle.btn2.title="Inserts the character 2";
-		toggle.btn3.title="Inserts the character 3";
-		toggle.subtract.title="Inserts the '+' character";
-		toggle.d6.title="Squares the Equation\n[pow(X,2)]";
-		toggle.d7.title="Cubes the Equation\n[pow(X,3)]";
-		toggle.mPlus.title="Adds the current Equation to the one stored in memory";
-		toggle.btn0.title="Inserts the character 0";
-		toggle.e3.title="Toggles the negativity sign of a number";
-		toggle.dot.title="Inserts the '.' character";
-		toggle.add.title="Inserts the '+' character";
-		toggle.enter.title="Computes the current Equation";
-		toggle.e7.title="Flips the current Equation";
-		toggle.pi.title="Inserts 'pi'";
-		toggle.parl.title="Inserts the '(' character";
-		toggle.parr.title="Inserts the ')' character";
-		toggle.f4.title="Computes cosine of the current Equation";
-		toggle.f5.title="Computes sine of the current Equation";
-		toggle.f6.title="Computes tangent of the current Equation";
-		toggle.ekey.title="Inserts the 'e' character\n[1e3=1x10^(3)=1000] (not exp)";
+		calc.memory.title="Shows if there is something stored in memory";
+		calc.backbtn.title="Delete a value from right to left";
+		calc.delbtn.title="Clears the Equation";
+		calc.ac.title="Clears the Equation and the memory";
+		calc.mClear.title="Clears the memory";
+		calc.btn7.title="Inserts the character 7";
+		calc.btn8.title="Inserts the character 8";
+		calc.btn9.title="Inserts the character 9";
+		calc.divide.title="Inserts the '/' character";
+		calc.b6.title="Takes the exponential of the Equation\n[pow(e,x)]";
+		calc.b7.title="Takes the natural log of the Equation";
+		calc.mRecall.title="Recalls the memory into the Equation\n(inserts)";
+		calc.btn4.title="Inserts the character 4";
+		calc.btn5.title="Inserts the character 5";
+		calc.btn6.title="Inserts the character 6";
+		calc.multiply.title="Inserts the '*' character";
+		calc.c6.title="Takes the square root of the Equation";
+		calc.c7.title="Power of X to Y\n[pow(X,Y)]";
+		calc.mStore.title="Stores the Equation into memory";
+		calc.btn1.title="Inserts the character 1";
+		calc.btn2.title="Inserts the character 2";
+		calc.btn3.title="Inserts the character 3";
+		calc.subtract.title="Inserts the '+' character";
+		calc.d6.title="Squares the Equation\n[pow(X,2)]";
+		calc.d7.title="Cubes the Equation\n[pow(X,3)]";
+		calc.mPlus.title="Adds the current Equation to the one stored in memory";
+		calc.btn0.title="Inserts the character 0";
+		calc.e3.title="calcs the negativity sign of a number";
+		calc.dot.title="Inserts the '.' character";
+		calc.add.title="Inserts the '+' character";
+		calc.enter.title="Computes the current Equation";
+		calc.e7.title="Flips the current Equation";
+		calc.pi.title="Inserts 'pi'";
+		calc.parl.title="Inserts the '(' character";
+		calc.parr.title="Inserts the ')' character";
+		calc.f4.title="Computes cosine of the current Equation";
+		calc.f5.title="Computes sine of the current Equation";
+		calc.f6.title="Computes tangent of the current Equation";
+		calc.ekey.title="Inserts the 'e' character\n[1e3=1x10^(3)=1000] (not exp)";
 	}
 	else if(checkbox.checked==false)
 	{
-		for(i=1;i<toggle.elements.length;i++)
-			toggle.elements[i].title="";
+		for(i=1;i<calc.elements.length;i++)
+			calc.elements[i].title="";
 	}
 }
 
 function toggle_display()
 {
-	var display=document.calc.display;
 	var checkbox=document.getElementById('radio2');
 	//toggle the checkbox
 	checkbox.checked=!checkbox.checked;
@@ -81,7 +79,6 @@ function setFloat()
 	var thevalue=prompt('Set the number of decimal places for rounding',floatObj.value); 
 	if(thevalue)
 	{
-		
 		if(!convert.test(thevalue,/[0-9]/))
 			alert('Letters and symbols not allowed.\nOnly numbers');
 		else if(thevalue>17)
@@ -350,31 +347,24 @@ var convert={
 	}
 function convBase(base1,base2)
 {
-	var display = document.calc.display;
 	display.value = eval("convert."+base1+base2+"(\""+display.value+"\")");
 }
 function checkBase()
 {
 	//Change the conversion list based on the display
 	//if there are chars that can't be converted such as there is a 2 then binary to whatever will be hidden
-	var display = document.calc.display.value;
 	var isBin,isDec,isHex,isOct;
-	isBin=convert.isBin(display);
-	isDec=convert.isDec(display);
-	isHex=convert.isHex(display);
-	isOct=convert.isOct(display);
-	document.getElementById("bin1").style.display=(isBin)?"":"none";
-	document.getElementById("bin2").style.display=(isBin)?"":"none";
-	document.getElementById("bin3").style.display=(isBin)?"":"none";
-	document.getElementById("dec1").style.display=(isDec)?"":"none";
-	document.getElementById("dec2").style.display=(isDec)?"":"none";
-	document.getElementById("dec3").style.display=(isDec)?"":"none";
-	document.getElementById("hex1").style.display=(isHex)?"":"none";
-	document.getElementById("hex2").style.display=(isHex)?"":"none";
-	document.getElementById("hex3").style.display=(isHex)?"":"none";
-	document.getElementById("oct1").style.display=(isOct)?"":"none";
-	document.getElementById("oct2").style.display=(isOct)?"":"none";
-	document.getElementById("oct3").style.display=(isOct)?"":"none";
+	isBin=convert.isBin(display.value);
+	isDec=convert.isDec(display.value);
+	isHex=convert.isHex(display.value);
+	isOct=convert.isOct(display.value);
+	for(var i=1;i<4;i++)
+	{
+		document.getElementById("bin"+i).style.display=(isBin)?"":"none";
+		document.getElementById("dec"+i).style.display=(isDec)?"":"none";
+		document.getElementById("hex"+i).style.display=(isHex)?"":"none";
+		document.getElementById("oct"+i).style.display=(isOct)?"":"none";
+	}
 	document.getElementById("nooption").style.display=(isBin||isDec||isHex||isOct)?"none":"";
 }
 

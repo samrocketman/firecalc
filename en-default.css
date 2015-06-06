@@ -1,5 +1,7 @@
 /*Default settings...incorporate other browsers with css files*/
-/*These settings work with Firefox, Opera, Mozialla definately and possibly others*/
+/*These settings work with Firefox, Opera, Mozilla definately and possibly others*/
+@charset "utf-8";
+
 body 
 {
 	background-color:buttonface;
@@ -51,7 +53,6 @@ table,td
 	padding-bottom: 3px;
 	
 	z-index: 100;
-	/*margin: 0;*/
 }
 
 #buttonBar
@@ -140,8 +141,7 @@ a.menuItem
 	padding-left: 12px;
 	padding-right: 14px;
 	text-decoration: none;
-	border: 1px solid transparent;
-	/*width:97px;*/
+	border: 1px solid #FFF;
 }
 
 a.menuItem:hover
@@ -161,7 +161,6 @@ a.menuItem:hover
 	padding-right: 14px;
 	text-decoration: none;
 	border: 1px solid #316AC5;
-	/*width:97px;*/
 }
 
 a.menuDisabled
@@ -179,8 +178,7 @@ a.menuDisabled
 	padding-left: 12px;
 	padding-right: 14px;
 	text-decoration: none;
-	border: 1px solid transparent;
-	/*width:97px;*/
+	border: 1px solid #FFF;
 }
 
 .setvalue

@@ -3,14 +3,11 @@
 *             Start of Menu Code              *
 *                                             *
 \*********************************************/
-// Determine browser type.
-var msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
-var netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
 
 // Global variable for tracking the currently active button.
-var activeButton;
+/*var activeButton;
 var activeButton2;
-var button2;
+var button2;*/
 
 // Capture mouse clicks on the page so any active button can be deactivated.
 

@@ -3,13 +3,13 @@
 <head>
 	<title>Scientific Calculator - Sam Gleske</title>
 	<meta name="robots" content="noindex, nofollow">
-	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="en-default.css">
-	<script language="javascript" type="text/javascript" src="keys.js"></script>
-	<script language="javascript" type="text/javascript" src="menu_execution.js"></script>
-	<script language="javascript" type="text/javascript" src="math_functions.js"></script>
-	<script language="javascript" type="text/javascript" src="menu_functionality.js"></script>
-	<script language="javascript" type="text/javascript">
+	<script language="JavaScript" type="text/javascript" src="keys.js"></script>
+	<script language="JavaScript" type="text/javascript" src="menu_execution.js"></script>
+	<script language="JavaScript" type="text/javascript" src="math_functions.js"></script>
+	<script language="JavaScript" type="text/javascript" src="menu_functionality.js"></script>
+	<script language="JavaScript" type="text/javascript">
 		/*Copyright must stay intact*/
 		/******************************************************************\
 		*                                                    ***************
@@ -25,19 +25,13 @@
 
 		//search for a browser type
 		var msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
-		var firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
-		var netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
-		var mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
+		var firefox,netscape,mozilla;
 
-		// Global variables
-		var activeButton = null;
-		var activeButton2 = null;
-		var button2 = null;
+		// global variables
+		var activeButton,activeButton2,button2,mem,pi,store,calc,display;
 
 		if(msie)
-			document.writeln('<link rel="stylesheet" type="text/css" href="en-msie.css">')
-		//else
-		//	document.writeln('<link rel="stylesheet" type="text/css" href="en-other.css">');
+			document.writeln('<link rel="stylesheet" type="text/css" href="en-msie.css">');
 
 		/*test browsers
 		if (msie) alert('msie');
@@ -45,18 +39,28 @@
 		if (opera) alert('opera');
 		if (safari) alert('safari');//*/
 
-
-		//global variables
-		var mem = '';
-		var pi = 3.1415926535897932384626433832795;
-		var store = 0;
-
 		function init()
 		{
+			//initialize global vars
+			display=document.calc.display;
+			calc=document.calc;
+			activeButton=null;
+			activeButton2=null;
+			button2=null;
+			mem='';
+			pi=3.1415926535897932384626433832795;
+			store=false;
+			
+			//initialize browser vars
+			msie=(navigator.userAgent.indexOf("MSIE")>0)?1:0;
+			firefox=(navigator.userAgent.indexOf("Firefox")>0)?1:0;
+			netscape=(navigator.userAgent.indexOf("Netscape")>0)?1:0;
+			mozilla=(navigator.userAgent.indexOf("Gecko")>0)?1:0;
+			
 			if(!msie&&!firefox&&!netscape&&!mozilla)
 			{
 				toggle_display(document.getElementById('radio2'),document.calc.display);
-				//document.calc.display.focus();
+				document.calc.display.focus();
 			}
 			if(msie)
 			{
@@ -89,64 +93,63 @@
 		<a class="menuButton" href="" onclick="return buttonclick(this, 'fileMenu');" onmouseover="buttonMouseover(this, 'fileMenu');if(activeButton2){resetButton2(activeButton2)};">File</a>
 		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'editMenu');" onmouseover="buttonMouseover(this, 'editMenu');if(activeButton2){resetButton2(activeButton2)};">Edit</a>
 		&nbsp;<a class="menuButton" href="" onclick="checkBase();return buttonclick(this, 'convMenu');" onmouseover="checkBase();buttonMouseover(this, 'convMenu');if(activeButton2){resetButton2(activeButton2)};">Conv</a>
-		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'viewMenu');" onmouseover="buttonMouseover(this, 'viewMenu');if(activeButton2){resetButton2(activeButton2)};">View</a>
+		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'settingsMenu');" onmouseover="buttonMouseover(this, 'settingsMenu');if(activeButton2){resetButton2(activeButton2)};">Settings</a>
 		&nbsp;<a class="menuButton" href="" onclick="return buttonclick(this, 'helpMenu');" onmouseover="buttonMouseover(this, 'helpMenu');if(activeButton2){resetButton2(activeButton2)};">Help</a>
-		&nbsp;<span style="font-size:9px;font-family:tahoma,verdana,arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Scientific Calculator&trade; <span style="color:red;">v1.2</span></span>
+		&nbsp;<span style="font-size:9px;font-family:tahoma,verdana,arial">Scientific Calculator&trade; <span style="color:red;">v1.2.1</span></span>
 	</div>
 
 <!-- Start Tags for the drop down menus. -->
 
 	<div class="menu" id="fileMenu">
 		<a class="menuItem" href="fire_calc.htm?true" onclick="resetButton(activeButton);">Reload</a>
-		<a class="menuItem" href="javascript:window.close();" onclick="resetButton(activeButton);">Exit</a>
-	</div>
+		<a class="menuItem" href="javascript:window.close();" onclick="resetButton(activeButton);">Exit</a>	</div>
 
 	<div class="menu" id="editMenu">
 		<a class="menuItem" href="javascript:docmd(1);" id="copy-menu" onclick="resetButton(activeButton);" style="display:none;">Copy</a>
 		<a class="menuItem" href="javascript:docmd(0);" id="paste-menu" onclick="resetButton(activeButton);" style="display:none;">Paste</a>
 		<hr class="hr" id="hr-menu" style="display:none;">
-		<a class="menuItem" href="javascript:(function(){if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null'){alert('Float Not Set');return void(0);};comp=1;for(var i = document.getElementById('float').value; i > 0; i--){comp=comp+'0'};original=document.calc.display.value;document.calc.display.value=Math.round(eval(document.calc.display.value)*comp)/comp})();" onclick="resetButton(activeButton);">Round Answer</a>
-		<a class="menuItem" href="javascript:setFloat()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">Float = <input class="setvalue" type=text id="float" onclick="setFloat();" value="3" readonly></a>
+		<a class="menuItem" href="javascript:(function(){if(document.getElementById('float').value=='Not Set' || document.getElementById('float').value=='null'){alert('Float Not Set');return void(0);};comp=1;for(var i=document.getElementById('float').value; i > 0; i--){comp=comp+'0'};original=document.calc.display.value;document.calc.display.value=Math.round(eval(document.calc.display.value)*comp)/comp})();" onclick="resetButton(activeButton);">Round Answer</a>
+		<a class="menuItem" href="javascript:setFloat()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">Float = <input class="setvalue" type="text" id="float" onclick="setFloat();" value="3" readonly></a>
 	</div>
 
 	<div class="menu" id="convMenu">
 		<a class="menuItem" href="javascript:void(0)" onmouseover="return buttonclick2(this, 'convMenu-1');" onfocus="this.blur()" style="background:url(arrow_r.gif);background-repeat:no-repeat;background-position:center right">Base</a>
-		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton2){resetButton2(activeButton2)};" onfocus="this.blur()" target="_blank">Other Conversions</a>
-	</div>
+		<a class="menuItem" href="http://www.onlineconversion.com/" onmouseover="if(activeButton2){resetButton2(activeButton2)};" onfocus="this.blur()" target="_blank">Other Conversions</a>	</div>
 
 	<!--Start extended Submenu for Base within the convMenu-->
 
 		<div class="menu" id="convMenu-1">
-			<a class="menuItem" href="javascript:convBase('bin','Dec');" id="bin1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin > Dec</a>
-			<a class="menuItem" href="javascript:convBase('bin','Hex');" id="bin2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin > Hex</a>
-			<a class="menuItem" href="javascript:convBase('bin','Oct');" id="bin3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin > Oct</a>
-			<a class="menuItem" href="javascript:convBase('dec','Bin');" id="dec1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec > Bin</a>
-			<a class="menuItem" href="javascript:convBase('dec','Hex');" id="dec2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec > Hex</a>
-			<a class="menuItem" href="javascript:convBase('dec','Oct');" id="dec3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec > Oct</a>
-			<a class="menuItem" href="javascript:convBase('hex','Bin');" id="hex1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex > Bin</a>
-			<a class="menuItem" href="javascript:convBase('hex','Dec');" id="hex2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex > Dec</a>
-			<a class="menuItem" href="javascript:convBase('hex','Oct');" id="hex3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex > Oct</a>
-			<a class="menuItem" href="javascript:convBase('oct','Bin');" id="oct1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct > Bin</a>
-			<a class="menuItem" href="javascript:convBase('oct','Dec');" id="oct2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct > Dec</a>
-			<a class="menuItem" href="javascript:convBase('oct','Hex');" id="oct3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct > Hex</a>
-			<a class="menuDisabled" id="nooption" onfocus="this.blur()" style="display:none;">Not Available.</a>
-		</div>
+			<a class="menuItem" href="javascript:convBase('bin','Dec');" id="bin1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('bin','Hex');" id="bin2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Hex</a>
+			<a class="menuItem" href="javascript:convBase('bin','Oct');" id="bin3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Bin &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('dec','Bin');" id="dec1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('dec','Hex');" id="dec2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Hex</a>
+			<a class="menuItem" href="javascript:convBase('dec','Oct');" id="dec3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Dec &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('hex','Bin');" id="hex1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('hex','Dec');" id="hex2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('hex','Oct');" id="hex3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Hex &gt; Oct</a>
+			<a class="menuItem" href="javascript:convBase('oct','Bin');" id="oct1" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Bin</a>
+			<a class="menuItem" href="javascript:convBase('oct','Dec');" id="oct2" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Dec</a>
+			<a class="menuItem" href="javascript:convBase('oct','Hex');" id="oct3" onclick="resetButton2(activeButton2);resetButton(activeButton);">Oct &gt; Hex</a>
+			<a class="menuDisabled" id="nooption" onfocus="this.blur()" style="display:none;">Not Available.</a>		</div>
 
 	<!--End extended Submenus-->
 
-	<div class="menu" id="viewMenu">
-		<a class="menuItem" href="javascript:void(0);" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;"><input type=radio name="radio" id="radio" checked>Standard</a>
-		<a class="menuDisabled" onfocus="this.blur()"><input type=radio disabled>Scientific</a>
-		<HR>
+	<div class="menu" id="settingsMenu">
+		<a class="menuItem" href="javascript:void(0);" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+		<input type="radio" name="radio" id="radio" checked>Standard</a>
+		<a class="menuDisabled" onfocus="this.blur()">
+		<input type="radio" disabled>Scientific</a>
+		<hr>
 
-		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;"><input type=radio id="radio1" name="radio1" onclick="toggle_titles(document.getElementById('radio1'),document.calc,1)"> Tooltips</a>
-		<a class="menuItem" href="javascript:toggle_display()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;"><input type=radio id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>
-	</div>
+		<a class="menuItem" href="javascript:toggle_titles()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+		<input type="radio" id="radio1" name="radio1" onclick="toggle_titles(document.getElementById('radio1'),document.calc,1)"> Tooltips</a>
+		<a class="menuItem" href="javascript:toggle_display()" onclick="resetButton(activeButton);" style="padding-top: 0px;padding-bottom: 0px;">
+	<input type="radio" id="radio2" name="radio2" onclick="toggle_display()" checked> Readonly</a>	</div>
 
 	<div class="menu" id="helpMenu">
 		<a class="menuItem" href="javascript:(function(){window.open('calchelp/help.htm','help','resizable=yes,width=803,height=500'); return void(0);})()" onclick="resetButton(activeButton);">Help</a>
-		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetButton(activeButton);">About Calculator</a>
-	</div>
+		<a class="menuItem" href="javascript:aboutcalc()" onclick="resetButton(activeButton);">About Calculator</a>	</div>
 
 	<!-- End Tags for the drop down menus. -->
 
@@ -160,61 +163,61 @@
 
 
 	<!--Start calculator buttons-->
-	<form name="calc" action="javascript:void(0)" method="get" onsubmit="compute();return false">
-		<table class="calc_table" align=center cellspacing="0" cellpadding="1" style="background-color:buttonface;width:300px">
+	<form action="javascript:void(0)" method="get" name="calc" id="calc" onsubmit="compute();return false">
+		<table class="calc_table" align="center" cellspacing="0" cellpadding="1" style="background-color:buttonface;width:300px">
 		<tr>
-			<td style="text-align:center" colspan="7"><input type=text name="display" style="width:99%;text-align:right;cursor:default" onkeypress="if(this.value==0){this.value=''}" value="0" readonly></td>
+			<td style="text-align:center" colspan="7"><input type="text" name="display" style="width:99%;text-align:right;cursor:default" onkeypress="if(this.value==0){this.value=''}" value="0" readonly></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input type=text name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type=button id="backbtn" onclick="deleteChar()" style="width:75px;height:28px" value="Backspace"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type=button id="delbtn" onclick="this.form.display.value=0" style="width:68px;height:28px" value="CE"></td>
-			<td style="text-align:center" colspan="2"><input class="BasFunc" type=button id="ac" onclick="this.form.reset();ClearMem()" style="width:68px;height:28px" value="AC"></td>
+			<td style="text-align:center"><input type="text" name="memory" style="height:23px;width:30px;border-color:menu;background-color:buttonface;text-align:center;cursor:default;" readonly></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="backbtn" onclick="deleteChar()" style="width:75px;height:28px" value="Backspace"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="delbtn" onclick="this.form.display.value=0" style="width:68px;height:28px" value="CE"></td>
+			<td style="text-align:center" colspan="2"><input class="BasFunc" type="button" id="ac" onclick="this.form.reset();ClearMem()" style="width:68px;height:28px" value="AC"></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input class="BasFunc" type=button name="mClear" onclick="ClearMem()" style="width:40px;height:28px" value="MC"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn7" onclick="addChar('7')" style="width:33px;height:28px" value="7"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn8" onclick="addChar('8')" style="width:33px;height:28px" value="8"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn9" onclick="addChar('9')" style="width:33px;height:28px" value="9"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="divide" onclick="addChar('/')" style="width:33px;height:28px" value="/"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="b6" onclick="if (checkNum()) { exp(this.form) }" style="width:40px;height:28px" value="exp"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="b7" onclick="if (checkNum()) { ln(this.form) }" style="width:40px;height:28px" value="ln"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="mClear" onclick="ClearMem()" style="width:40px;height:28px" value="MC"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn7" onclick="addChar('7')" style="width:33px;height:28px" value="7"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn8" onclick="addChar('8')" style="width:33px;height:28px" value="8"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn9" onclick="addChar('9')" style="width:33px;height:28px" value="9"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="divide" onclick="addChar('/')" style="width:33px;height:28px" value="/"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="b6" onclick="if (checkNum()) { exp(this.form) }" style="width:40px;height:28px" value="exp"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="b7" onclick="if (checkNum()) { ln(this.form) }" style="width:40px;height:28px" value="ln"></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input class="BasFunc" type=button name="mRecall" onclick="RecallMem()" style="width:40px;height:28px" value="MR"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn4" onclick="addChar('4')" style="width:33px;height:28px" value="4"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn5" onclick="addChar('5')" style="width:33px;height:28px" value="5"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn6" onclick="addChar('6')" style="width:33px;height:28px" value="6"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="multiply" onclick="addChar('*')" style="width:33px;height:28px" value="*"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="c6" onclick="sqrt()" style="width:40px;height:28px" value="sqrt"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="c7" onclick="addChar('pow(')" style="width:40px;height:28px" value="x^y"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="mRecall" onclick="RecallMem()" style="width:40px;height:28px" value="MR"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn4" onclick="addChar('4')" style="width:33px;height:28px" value="4"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn5" onclick="addChar('5')" style="width:33px;height:28px" value="5"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn6" onclick="addChar('6')" style="width:33px;height:28px" value="6"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="multiply" onclick="addChar('*')" style="width:33px;height:28px" value="*"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="c6" onclick="sqrt()" style="width:40px;height:28px" value="sqrt"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="c7" onclick="addChar('pow(')" style="width:40px;height:28px" value="x^y"></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input class="BasFunc" type=button name="mStore" onclick="StoreMem()" style="width:40px;height:28px" value="MS"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn1" onclick="addChar('1')" style="width:33px;height:28px" value="1"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn2" onclick="addChar('2')" style="width:33px;height:28px" value="2"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn3" onclick="addChar('3')" style="width:33px;height:28px" value="3"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="subtract" onclick="addChar('-')" style="width:33px;height:28px" value="-"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="d6" onclick="square()" style="width:40px;height:28px" value="x^2"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button value="x^3" onclick="cube()" style="width:40px;height:28px" name="d7"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="mStore" onclick="StoreMem()" style="width:40px;height:28px" value="MS"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn1" onclick="addChar('1')" style="width:33px;height:28px" value="1"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn2" onclick="addChar('2')" style="width:33px;height:28px" value="2"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn3" onclick="addChar('3')" style="width:33px;height:28px" value="3"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="subtract" onclick="addChar('-')" style="width:33px;height:28px" value="-"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="d6" onclick="square()" style="width:40px;height:28px" value="x^2"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" value="x^3" onclick="cube()" style="width:40px;height:28px" name="d7"></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input class="BasFunc" type=button name="mPlus" onclick="MemPlus()" style="width:40px;height:28px" value="M+"></td>
-			<td style="text-align:center"><input class="num" type=button name="btn0" onclick="addChar('0')" style="width:33px;height:28px" value="0"></td>
-			<td style="text-align:center"><input class="num" type=button name="e3" onclick="changeSign()" style="width:33px;height:28px" value="+/-"></td>
-			<td style="text-align:center"><input class="num" type=button name="dot" onclick="addChar('.')" style="width:33px;height:28px" value="."></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="add" onclick="addChar('+')" style="width:33px;height:28px" value="+"></td>
-			<td style="text-align:center"><input class="BasFunc" type=submit name="enter" onclick="compute()" style="width:33px;height:28px" value="="></td>
-			<td style="text-align:center"><input class="BasFunc" type=button onclick="flip()" style="width:40px;height:28px" name="e7" value="1/x"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="mPlus" onclick="MemPlus()" style="width:40px;height:28px" value="M+"></td>
+			<td style="text-align:center"><input class="num" type="button" name="btn0" onclick="addChar('0')" style="width:33px;height:28px" value="0"></td>
+			<td style="text-align:center"><input class="num" type="button" name="e3" onclick="changeSign()" style="width:33px;height:28px" value="+/-"></td>
+			<td style="text-align:center"><input class="num" type="button" name="dot" onclick="addChar('.')" style="width:33px;height:28px" value="."></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="add" onclick="addChar('+')" style="width:33px;height:28px" value="+"></td>
+			<td style="text-align:center"><input class="BasFunc" type="submit" name="enter" style="width:33px;height:28px" value="="></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" onclick="flip()" style="width:40px;height:28px" name="e7" value="1/x"></td>
 		</tr>
 		<tr>
-			<td style="text-align:center"><input class="num" type=button name="pi" onclick="addChar('pi')" style="width:40px;height:28px;font-family:times;" value="&pi;"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="parl" onclick="addChar('(')" style="width:33px;height:28px" value="("></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="parr" onclick="addChar(')')" style="width:33px;height:28px" value=")"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="f4" onclick="cos()" style="width:33px;height:28px" value="cos"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="f5" onclick="sin()" style="width:33px;height:28px" value="sin"></td>
-			<td style="text-align:center"><input class="AdvFunc" type=button name="f6" onclick="tan()" style="width:40px;height:28px" value="tan"></td>
-			<td style="text-align:center"><input class="BasFunc" type=button name="ekey" onclick="addChar('e')" style="width:40px;height:28px" value="EE"></td>
+			<td style="text-align:center"><input class="num" type="button" name="pi" onclick="addChar('pi')" style="width:40px;height:28px;font-family:times;" value="π"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="parl" onclick="addChar('(')" style="width:33px;height:28px" value="("></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="parr" onclick="addChar(')')" style="width:33px;height:28px" value=")"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="f4" onclick="cos()" style="width:33px;height:28px" value="cos"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="f5" onclick="sin()" style="width:33px;height:28px" value="sin"></td>
+			<td style="text-align:center"><input class="AdvFunc" type="button" name="f6" onclick="tan()" style="width:40px;height:28px" value="tan"></td>
+			<td style="text-align:center"><input class="BasFunc" type="button" name="ekey" onclick="addChar('e')" style="width:40px;height:28px" value="EE"></td>
 		</tr>
 		</table>
 	</form>
@@ -223,6 +226,6 @@
 
 	<!--Hidden field below is for pasting text from IE into the Display-->
 
-	<input type=text id="paste" style="position:absolute;top:0;visibility:hidden;">
+	<input type="text" id="paste" style="position:absolute;top:0;visibility:hidden;">
 </body>
 </html>
