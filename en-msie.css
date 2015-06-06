@@ -1,0 +1,17 @@
+/*Internet Explorer settings*/
+/*This is not W3C complaint but written according to MSDN specifications.*/
+
+.menu
+{
+	filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=3, OffY=3, Color='#22000', Positive='true', type='inset');
+}
+
+a.menuItem
+{
+	border: 1px solid #FFF;
+}
+
+a.menuDisabled
+{
+	border: 1px solid #FFF;
+}

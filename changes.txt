@@ -1,0 +1,44 @@
+Why was this calculator created?
+This calculator was created to have easy integration into web applications.  There are many advanced javascript/web interface 
+calculators on the web.  This calculator was programmed to be totally standards compliant unless a specific browser is being used (Internet
+Explorer to be exact).  Not only is it W3C and MSDN (for IE) standards compliant, but the code itself has a consistent format.  All 
+javascript is tabbed the same way, all CSS it tabbed the same way, and all of the HTML is tabbed the same way.  What this calculator aims
+to do is to work in every condition, be standards compliant, and when the code is searched through it is very easy to read.  Not only that
+but it is heavily commented to explain the different functions and features from within.
+
+Whats new in 1.2?
+
+HTML/CSS Changes:
+1.	Converted HTML (it used to be a mess) to HTML 4.01 transitional but allows future compatability with XHTML by using all lowercase tags
+	and properties.
+2.	All html files have been validated successfully at http://validator.w3.org/
+3.	The base template (en-default.css) has been validated successfully at http://jigsaw.w3.org/css-validator/
+4.	Rewrote the stylesheets to incorportate a base template and then add in needed changes on a per browser basis (only for IE 
+	basically).  The base template (lang-default.css, right now its just en-default.css) is W3C complaint.  Any other additions
+	or modifications to the style due to other style sheets may not be W3C compliant since it is browser specific.
+
+Javascript Changes (core functionality of the calculator):
+1.	Rewrote all code according to MSDN and W3C.
+2.	Totally rewrote the function for converting between bases (e.g. base2, base10, etc.).  Now there is a convert object.
+3.	Added feature.  Now handles octal conversion (base8) because of the new convert object.
+4.	Rewrote the function that shows/hides the base conversion list in the menu (to incorporate the new convert object)
+5.	rewrote checkNum() to use the new convert.test object method.
+6.	reformatted all programming to have a standard format and indentation that is easiest to read.
+7.	rewrote setFloat() to use the new convert.test object method
+
+THE BIG CHANGE OVER 1.0 AND 1.1
+	Reorganized the code into SEPARATE css and js files.  It used to all be in the same file.
+
+This section isn't needed but I left it anyway:
+	I could not find a validator for the Javascript so I assume there isn't one.
+	It has been programmed according to W3C and w3schools.com guidelines unless there is browser specific programming (for IE).
+	IE specific javascript was written according to MSDN specifications.
+
+Created by Sam Gleske
+If you want to use bits and pieces of this code in other projects of yours then please do so!  It would be nice to get recognition if you
+use a piece of my code in another project however since you are not using this calculator (and just a piece of it, such as that convert 
+object, it really is nice and took me a long time to write/refine/optimize) then I don't require recognition or copyrights to be posted.
+
+Just remember where you get your code from and it would be nice to let others benefit from it just as you may have.
+
+The help source is not available for download, sorry.  This may change in the future but it is not the case for the time being.
